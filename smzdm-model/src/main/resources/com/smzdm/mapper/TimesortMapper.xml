@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.smzdm.mapper.TimesortMapper" >
+  <resultMap id="BaseResultMap" type="com.smzdm.model.Timesort" >
+    <constructor >
+      <idArg column="id" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="timesort" jdbcType="BIGINT" javaType="java.lang.Long" />
+    </constructor>
+  </resultMap>
+  <insert id="insert" parameterType="com.smzdm.model.Timesort" >
+    insert into timesort (id, timesort)
+    values (#{id,jdbcType=INTEGER}, #{timesort,jdbcType=BIGINT})
+  </insert>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select id, timesort
+    from timesort
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap" >
+    select id, timesort
+    from timesort
+  </select>
+
+  <update id="updateByPrimaryKey" parameterType="com.smzdm.model.Timesort">
+    UPDATE  timesort set timesort =#{timesort} where id =#{id}
+  </update>
+</mapper>

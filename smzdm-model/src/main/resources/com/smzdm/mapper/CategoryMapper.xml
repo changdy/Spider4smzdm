@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.smzdm.mapper.CategoryMapper" >
+  <resultMap id="BaseResultMap" type="com.smzdm.model.Category" >
+    <constructor >
+      <idArg column="id" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="title" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="parent_id" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="url_nicktitle" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="level" jdbcType="INTEGER" javaType="java.lang.Integer" />
+    </constructor>
+  </resultMap>
+  <insert id="insert" parameterType="com.smzdm.model.Category" >
+    insert into category (id, title, parent_id, 
+      url_nicktitle, level)
+    values (#{id,jdbcType=INTEGER}, #{title,jdbcType=VARCHAR}, #{parentId,jdbcType=INTEGER}, 
+      #{urlNicktitle,jdbcType=VARCHAR}, #{level,jdbcType=INTEGER})
+  </insert>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select id, title, parent_id, url_nicktitle, level
+    from category
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap" >
+    select id, title, parent_id, url_nicktitle, level
+    from category
+  </select>
+
+  <insert id="insertCategoryList" parameterType="java.util.List">
+    insert into category (id, title, parent_id,
+    url_nicktitle, level)
+    values
+    <foreach item="item" index="index" collection="list" separator="," >
+      (#{item.id,jdbcType=INTEGER}, #{item.title,jdbcType=VARCHAR}, #{item.parentId,jdbcType=INTEGER},
+      #{item.urlNicktitle,jdbcType=VARCHAR}, #{item.level,jdbcType=INTEGER})
+    </foreach>
+  </insert>
+  <select id="getCategoryIds" resultType="java.lang.String">
+    SELECT GROUP_CONCAT(id) id  FROM category
+  </select>
+</mapper>

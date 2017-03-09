@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.smzdm.mapper.JsonsMapper">
+    <resultMap id="BaseResultMap" type="com.smzdm.model.Jsons">
+        <constructor>
+            <idArg column="id" jdbcType="BIGINT" javaType="java.lang.Long"/>
+            <arg column="create_date" jdbcType="TIMESTAMP" javaType="java.util.Date"/>
+            <arg column="original_date" jdbcType="VARCHAR" javaType="java.lang.String"/>
+            <arg column="time_sort" jdbcType="BIGINT" javaType="java.lang.Long"/>
+            <arg column="content" jdbcType="LONGVARCHAR" javaType="java.lang.String"/>
+        </constructor>
+    </resultMap>
+    <insert id="insert" parameterType="com.smzdm.model.Jsons">
+    insert into jsons (id, create_date, original_date,time_sort, content)
+    values (#{id,jdbcType=BIGINT}, #{createDate,jdbcType=TIMESTAMP}, #{originalDate,jdbcType=VARCHAR},#{timeSort,jdbcType=BIGINT}, #{content,jdbcType=LONGVARCHAR})
+  </insert>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long">
+    select id, create_date, original_date, time_sort, content from jsons where id = #{id,jdbcType=BIGINT}
+  </select>
+    <select id="selectAll" resultMap="BaseResultMap">
+    select id, create_date, original_date, time_sort, content from jsons
+  </select>
+    <insert id="insertList" parameterType="list">
+        insert into jsons (id, create_date, original_date,time_sort, content)
+        values
+        <foreach collection="list" item="item" separator=",">
+            (#{item.id,jdbcType=BIGINT}, #{item.createDate,jdbcType=TIMESTAMP}, #{item.originalDate,jdbcType=VARCHAR},#{item.timeSort,jdbcType=BIGINT},#{item.content,jdbcType=LONGVARCHAR})
+        </foreach>
+    </insert>
+</mapper>

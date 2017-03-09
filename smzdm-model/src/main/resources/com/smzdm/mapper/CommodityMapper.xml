@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.smzdm.mapper.CommodityMapper" >
+  <resultMap id="BaseResultMap" type="com.smzdm.model.Commodity" >
+    <constructor >
+      <idArg column="id" jdbcType="BIGINT" javaType="java.lang.Long" />
+      <arg column="title" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="content" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="tags" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="info_title" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="brand" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="price_string" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="price_number" jdbcType="BIGINT" javaType="java.lang.Long" />
+      <arg column="referral_name" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="pic_url" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="info_url" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="channel_id" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="mall" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="mall_url" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="shopping_url" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="referral_date" jdbcType="TIMESTAMP" javaType="java.time.LocalDateTime" />
+      <arg column="time_sort" jdbcType="BIGINT" javaType="java.lang.Long" />
+    </constructor>
+  </resultMap>
+  <insert id="insert" parameterType="com.smzdm.model.Commodity" >
+    insert into commodity (id, title, content, 
+      tags, info_title, brand, 
+      price_string, price_number, referral_name, 
+      pic_url, info_url, channel_id, 
+      mall, mall_url, shopping_url, 
+      referral_date, time_sort)
+    values (#{id,jdbcType=BIGINT}, #{title,jdbcType=VARCHAR}, #{content,jdbcType=VARCHAR}, 
+      #{tags,jdbcType=VARCHAR}, #{infoTitle,jdbcType=VARCHAR}, #{brand,jdbcType=VARCHAR}, 
+      #{priceString,jdbcType=VARCHAR}, #{priceNumber,jdbcType=BIGINT}, #{referralName,jdbcType=VARCHAR}, 
+      #{picUrl,jdbcType=VARCHAR}, #{infoUrl,jdbcType=VARCHAR}, #{channelId,jdbcType=INTEGER}, 
+      #{mall,jdbcType=VARCHAR}, #{mallUrl,jdbcType=VARCHAR}, #{shoppingUrl,jdbcType=VARCHAR}, 
+      #{referralDate,jdbcType=TIMESTAMP}, #{timeSort,jdbcType=BIGINT})
+  </insert>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select id, title, content, tags, info_title, brand, price_string, price_number, referral_name, 
+    pic_url, info_url, channel_id, mall, mall_url, shopping_url, referral_date, time_sort
+    from commodity
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap" >
+    select id, title, content, tags, info_title, brand, price_string, price_number, referral_name, 
+    pic_url, info_url, channel_id, mall, mall_url, shopping_url, referral_date, time_sort
+    from commodity
+  </select>
+  <insert id="insertList" parameterType="list">
+    insert into commodity (id, title, content,
+      tags, info_title, brand,
+      price_string, price_number, referral_name,
+      pic_url, info_url, channel_id,
+      mall, mall_url, shopping_url,
+      referral_date, time_sort)
+    values
+    <foreach collection="list" item="item" separator=",">
+      (#{item.id,jdbcType=BIGINT}, #{item.title,jdbcType=VARCHAR}, #{item.content,jdbcType=VARCHAR}, #{item.tags,jdbcType=VARCHAR}, #{item.infoTitle,jdbcType=VARCHAR}, #{item.brand,jdbcType=VARCHAR}, #{item.priceString,jdbcType=VARCHAR}, #{item.priceNumber,jdbcType=BIGINT}, #{item.referralName,jdbcType=VARCHAR}, #{item.picUrl,jdbcType=VARCHAR}, #{item.infoUrl,jdbcType=VARCHAR}, #{item.channelId,jdbcType=INTEGER}, #{item.mall,jdbcType=VARCHAR}, #{item.mallUrl,jdbcType=VARCHAR}, #{item.shoppingUrl,jdbcType=VARCHAR}, #{item.referralDate,jdbcType=TIMESTAMP}, #{item.timeSort,jdbcType=BIGINT})
+    </foreach>
+  </insert>
+
+</mapper>
