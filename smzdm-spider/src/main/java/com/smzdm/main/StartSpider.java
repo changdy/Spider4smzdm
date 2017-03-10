@@ -39,19 +39,18 @@ public class StartSpider {
     @Autowired
     private CommodityTimeInfoMapper commodityTimeInfoMapper;
 
-    //@Scheduled(cron = "0 0/2 6-23 * * ?")
-    @Scheduled(cron = "0 0/5 * * * ?")
+    @Scheduled(cron = "0 0/5 6-23 * * ?")
+    //@Scheduled(cron = "0 0/5 * * * ?")
     public void startHomePageSpider() {
         JSONArray jsonArray = homePageSpider.getJSONArray();
-        //Timesort timesort = timesortMapper.selectByPrimaryKey(1);
-        HotArray hotArray = hotInfoHandler.parseJSONArray(jsonArray, 1l);
+        Timesort timesort = timesortMapper.selectByPrimaryKey(1);
+        HotArray hotArray = hotInfoHandler.parseJSONArray(jsonArray, timesort.getTimesort());
         List<Commodity> commodityList = hotArray.getCommodityList();
-        //System.out.println();
         if (commodityList.size()> 0) {
             commodityMapper.insertList(commodityList);
             jsonsMapper.insertList(hotArray.getJsonsList());
             relationMapper.insertList(hotArray.getRelationList());
-            //timesortMapper.updateByPrimaryKey(new Timesort(1,commodityList.get(0).getTimeSort()));
+            timesortMapper.updateByPrimaryKey(new Timesort(1,commodityList.get(0).getTimeSort()));
         }
         commodityTimeInfoMapper.insertList(hotArray.getCommodityTimeInfoList());
     }

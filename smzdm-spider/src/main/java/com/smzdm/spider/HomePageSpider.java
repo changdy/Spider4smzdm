@@ -17,8 +17,7 @@ import us.codecraft.webmagic.processor.PageProcessor;
 public class HomePageSpider implements PageProcessor {
     private Site site = Site.me().setRetryTimes(3).setSleepTime(1000).setUseGzip(true);
 
-    private Long timsort = 148906000000L;
-
+    //private Long timsort = 148906000000L;
     @Override
     public void process(Page page) {
         page.putField("json", JSON.parseArray(page.getJson().get()));
@@ -31,9 +30,10 @@ public class HomePageSpider implements PageProcessor {
 
     public JSONArray getJSONArray() {
         Spider spider = Spider.create(new HomePageSpider());
-        ResultItems resultItems = spider.get("http://www.smzdm.com/json_more?timesort=" + timsort);
+        //ResultItems resultItems = spider.get("http://www.smzdm.com/json_more?timesort=" + timsort);
+        ResultItems resultItems = spider.get("http://www.smzdm.com/json_more");
         spider.close();
-        timsort = timsort -800000;
+        //timsort = timsort -800000;
         return (JSONArray) resultItems.get("json");
     }
 }
