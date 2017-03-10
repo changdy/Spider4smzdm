@@ -36,7 +36,7 @@ public class StartSpider {
     @Autowired
     private CommodityTimeInfoMapper commodityTimeInfoMapper;
 
-    @Scheduled(cron = "0 0/5 6-23 * * ?")
+    @Scheduled(cron = "0 0/5 * * * ?")
     //@Scheduled(cron = "0 0/5 * * * ?")
     public void startHomePageSpider() {
         JSONArray jsonArray = homePageSpider.getJSONArray();
