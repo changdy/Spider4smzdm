@@ -3,10 +3,7 @@ package com.smzdm.main;
 import com.alibaba.fastjson.JSONArray;
 import com.smzdm.jsonhandler.HotInfoHandler;
 import com.smzdm.mapper.*;
-import com.smzdm.model.Commodity;
-import com.smzdm.model.CommodityTimeInfo;
-import com.smzdm.model.HotArray;
-import com.smzdm.model.Timesort;
+import com.smzdm.model.*;
 import com.smzdm.spider.HomePageSpider;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
@@ -49,7 +46,10 @@ public class StartSpider {
         if (commodityList.size()> 0) {
             commodityMapper.insertList(commodityList);
             jsonsMapper.insertList(hotArray.getJsonsList());
-            relationMapper.insertList(hotArray.getRelationList());
+            List<Relation> relationList = hotArray.getRelationList();
+            if (relationList.size()>0) {
+                relationMapper.insertList(relationList);
+            }
             timesortMapper.updateByPrimaryKey(new Timesort(1,commodityList.get(0).getTimeSort()));
         }
         commodityTimeInfoMapper.insertList(hotArray.getCommodityTimeInfoList());
