@@ -31,7 +31,6 @@ public class CategoryHandler {
 
     public void initIds() {
         categoryIds = categoryMapper.getCategoryIds();
-        System.out.println(categoryIds);
     }
 
     public void tryToInsertCategory(JSONObject jsonContent) {
