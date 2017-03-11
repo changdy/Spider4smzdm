@@ -37,7 +37,6 @@ public class StartSpider {
     private CommodityTimeInfoMapper commodityTimeInfoMapper;
 
     @Scheduled(cron = "0 0/5 * * * ?")
-    //@Scheduled(cron = "0 0/5 * * * ?")
     public void startHomePageSpider() {
         JSONArray jsonArray = homePageSpider.getJSONArray();
         Timesort timesort = timesortMapper.selectByPrimaryKey(1);
