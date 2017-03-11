@@ -16,16 +16,12 @@ http://www.springframework.org/schema/mvc/spring-mvc-3.0.xsd">
     </context:component-scan>
 
     <!-- 对模型视图名称的解析，即在模型视图名称添加前后缀 -->
-    <bean id="viewResolver"
-          class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+    <bean id="viewResolver"  class="org.springframework.web.servlet.view.InternalResourceViewResolver">
         <!-- 这里的配置我的理解是自动给后面action的方法return的字符串加上前缀和后缀，变成一个 可用的url地址 -->
         <property name="prefix" value="/WEB-INF/jsp/"/>
         <property name="suffix" value=".jsp"/>
     </bean>
     <!-- 开启注解 -->
+    <mvc:default-servlet-handler/>
     <mvc:annotation-driven/>
-    <!-- 配置静态资源，直接映射到对应的文件夹，不被DispatcherServlet处理，3.04新增功能，需要重新设置spring-mvc-3.0.xsd -->
-    <mvc:resources mapping="/img/**" location="/img/"/>
-    <mvc:resources mapping="/js/**" location="/js/"/>
-    <mvc:resources mapping="/html/**" location="/html/"/>
 </beans>
