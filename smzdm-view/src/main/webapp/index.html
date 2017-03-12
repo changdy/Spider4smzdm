@@ -3,24 +3,43 @@
 <head>
     <meta charset="utf-8">
     <title>爬虫</title>
+    <link href="js/bootstrap-3.3.7-dist/css/bootstrap.css" rel="stylesheet">
+    <link href="js/bootstrap-table-develop/dist/bootstrap-table.css" rel="stylesheet">
 </head>
 <body>
-    <div class="container-fluid">
+    <div class="container">
         <div class="row">
             <div class="col-md-12">
                 <div class="jumbotron well">
-                    <h1>这是一个简单的什么值得买爬虫</h1>
-                    <p>This is a template for a simple marketing or informational website. It includes a large callout called the hero unit and three supporting pieces of content. Use it as a starting point to create something more unique.</p>
-                </div>
-                <div class="row">
-                    <div class="col-md-12">
-                    </div>
+                    <h1>什么值得买爬虫</h1>
+                    <p>这是一个基于什么值得买的爬虫站点，为了方便您的剁手</p>
                 </div>
             </div>
-            <div class="row">
-
+            <div class="col-md-12">
+                <table id="table"></table>
             </div>
         </div>
     </div>
+    <script src="js/jquery-3.1.1.js"></script>
+    <script src="js/bootstrap-3.3.7-dist/js/bootstrap.js"></script>
+    <script src="js/bootstrap-table-develop/dist/bootstrap-table.js"></script>
+    <script src="js/bootstrap-table-develop/dist/locale/bootstrap-table-zh-CN.js"></script>
+    <script type="text/javascript">
+        var $table = $('#table');
+        $table.bootstrapTable({
+            url: 'get-commodity',
+            dataType: "json",
+            striped: true,                      //是否显示行间隔色
+            singleSelect: true,
+            pagination: true, //分页
+            pageNumber:1,                       //初始化加载第一页，默认第一页
+            pageSize: 10,                       //每页的记录行数（*）
+            pageList: [10, 25, 50, 100],        //可供选择的每页的行数（*）
+            showColumns:true,
+            showToggle:true,
+            sidePagination: "server", //服务端处理分页
+            columns:[{field:'id',align:'center',valign:'middle',sortable:true,title:'序号'},{field:'title',align:'center',valign:'middle',title:'标题'},{field:'category',align:'center',valign:'middle',title:'目录'},{field:'priceString',align:'center',valign:'middle',title:'价格'},{field:'mall',align:'center',valign:'middle',title:'商城'},{field:'comment',align:'center',valign:'middle',title:'评价'},{field:'timeSort',align:'center',valign:'middle',sortable:true,title:'timesort'},{field:'referralDate',align:'center',valign:'middle',sortable:true,title:'爆料时间'}]
+        });
+    </script>
 </body>
 </html>
