@@ -70,6 +70,9 @@ public class HotInfoHandler implements InfoHandler {
                         }
                     }
                 }
+                if (jsonContent.getJSONObject("article_category") != null) {
+                    commodity.setLastCategoryId(jsonContent.getJSONObject("article_category").getInteger("ID"));
+                }
                 commodity.setReferralName(jsonContent.getString("article_referrals"));
                 commodity.setPicUrl(jsonContent.getString("article_pic"));
                 commodity.setInfoUrl(jsonContent.getString("article_url"));

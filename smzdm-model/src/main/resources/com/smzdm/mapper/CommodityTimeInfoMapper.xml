@@ -42,4 +42,9 @@
       (#{item.id,jdbcType=INTEGER},#{item.commodityId,jdbcType=BIGINT},#{item.comment,jdbcType=INTEGER},#{item.collection,jdbcType=INTEGER},#{item.worthy,jdbcType=INTEGER},#{item.unworthy,jdbcType=INTEGER},#{item.soldOut,jdbcType=INTEGER},#{item.timeout,jdbcType=INTEGER},#{item.updateTime,jdbcType=TIMESTAMP})
     </foreach>
   </insert>
+
+  <select id="getLastComment" resultType="java.lang.String">
+    SELECT CONCAT_WS('/',worthy,unworthy,comment) from commodity_time_info where commodity_id = #{commodityId} order by update_time desc limit 1;
+  </select>
+
 </mapper>

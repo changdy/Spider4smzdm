@@ -19,6 +19,8 @@ public class Commodity {
 
     private Long priceNumber;
 
+    private Integer lastCategoryId;
+
     private String referralName;
 
     private String picUrl;
@@ -37,7 +39,10 @@ public class Commodity {
 
     private Long timeSort;
 
-    public Commodity(Long id, String title, String content, String tags, String infoTitle, String brand, String priceString, Long priceNumber, String referralName, String picUrl, String infoUrl, Integer channelId, String mall, String mallUrl, String shoppingUrl, LocalDateTime referralDate, Long timeSort) {
+    public Commodity() {
+    }
+
+    public Commodity(Long id, String title, String content, String tags, String infoTitle, String brand, String priceString, Long priceNumber, Integer lastCategoryId, String referralName, String picUrl, String infoUrl, Integer channelId, String mall, String mallUrl, String shoppingUrl, LocalDateTime referralDate, Long timeSort) {
         this.id = id;
         this.title = title;
         this.content = content;
@@ -46,6 +51,7 @@ public class Commodity {
         this.brand = brand;
         this.priceString = priceString;
         this.priceNumber = priceNumber;
+        this.lastCategoryId = lastCategoryId;
         this.referralName = referralName;
         this.picUrl = picUrl;
         this.infoUrl = infoUrl;
@@ -55,10 +61,6 @@ public class Commodity {
         this.shoppingUrl = shoppingUrl;
         this.referralDate = referralDate;
         this.timeSort = timeSort;
-    }
-
-    public Commodity() {
-        super();
     }
 
     public Long getId() {
@@ -74,7 +76,7 @@ public class Commodity {
     }
 
     public void setTitle(String title) {
-        this.title = title == null ? null : title.trim();
+        this.title = title;
     }
 
     public String getContent() {
@@ -82,7 +84,7 @@ public class Commodity {
     }
 
     public void setContent(String content) {
-        this.content = content == null ? null : content.trim();
+        this.content = content;
     }
 
     public String getTags() {
@@ -90,7 +92,7 @@ public class Commodity {
     }
 
     public void setTags(String tags) {
-        this.tags = tags == null ? null : tags.trim();
+        this.tags = tags;
     }
 
     public String getInfoTitle() {
@@ -98,7 +100,7 @@ public class Commodity {
     }
 
     public void setInfoTitle(String infoTitle) {
-        this.infoTitle = infoTitle == null ? null : infoTitle.trim();
+        this.infoTitle = infoTitle;
     }
 
     public String getBrand() {
@@ -106,7 +108,7 @@ public class Commodity {
     }
 
     public void setBrand(String brand) {
-        this.brand = brand == null ? null : brand.trim();
+        this.brand = brand;
     }
 
     public String getPriceString() {
@@ -114,7 +116,7 @@ public class Commodity {
     }
 
     public void setPriceString(String priceString) {
-        this.priceString = priceString == null ? null : priceString.trim();
+        this.priceString = priceString;
     }
 
     public Long getPriceNumber() {
@@ -125,12 +127,20 @@ public class Commodity {
         this.priceNumber = priceNumber;
     }
 
+    public Integer getLastCategoryId() {
+        return lastCategoryId;
+    }
+
+    public void setLastCategoryId(Integer lastCategoryId) {
+        this.lastCategoryId = lastCategoryId;
+    }
+
     public String getReferralName() {
         return referralName;
     }
 
     public void setReferralName(String referralName) {
-        this.referralName = referralName == null ? null : referralName.trim();
+        this.referralName = referralName;
     }
 
     public String getPicUrl() {
@@ -138,7 +148,7 @@ public class Commodity {
     }
 
     public void setPicUrl(String picUrl) {
-        this.picUrl = picUrl == null ? null : picUrl.trim();
+        this.picUrl = picUrl;
     }
 
     public String getInfoUrl() {
@@ -146,7 +156,7 @@ public class Commodity {
     }
 
     public void setInfoUrl(String infoUrl) {
-        this.infoUrl = infoUrl == null ? null : infoUrl.trim();
+        this.infoUrl = infoUrl;
     }
 
     public Integer getChannelId() {
@@ -162,7 +172,7 @@ public class Commodity {
     }
 
     public void setMall(String mall) {
-        this.mall = mall == null ? null : mall.trim();
+        this.mall = mall;
     }
 
     public String getMallUrl() {
@@ -170,7 +180,7 @@ public class Commodity {
     }
 
     public void setMallUrl(String mallUrl) {
-        this.mallUrl = mallUrl == null ? null : mallUrl.trim();
+        this.mallUrl = mallUrl;
     }
 
     public String getShoppingUrl() {
@@ -178,7 +188,7 @@ public class Commodity {
     }
 
     public void setShoppingUrl(String shoppingUrl) {
-        this.shoppingUrl = shoppingUrl == null ? null : shoppingUrl.trim();
+        this.shoppingUrl = shoppingUrl;
     }
 
     public LocalDateTime getReferralDate() {

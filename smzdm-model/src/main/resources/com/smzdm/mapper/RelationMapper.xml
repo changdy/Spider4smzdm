@@ -28,4 +28,7 @@
       (#{item.id,jdbcType=INTEGER}, #{item.commodityId,jdbcType=BIGINT}, #{item.categoryId,jdbcType=INTEGER})
     </foreach>
   </insert>
+  <select id="getLastTitle" resultType="String">
+    SELECT category.title FROM relation ,category where relation.category_id = category.id and relation.commodity_id = #{id} order by category.level desc limit 1;
+  </select>
 </mapper>

@@ -11,4 +11,6 @@ public interface CommodityTimeInfoMapper {
     List<CommodityTimeInfo> selectAll();
 
     int insertList(List<CommodityTimeInfo> commodityTimeInfoList);
+
+    String getLastComment(Long commodityId);
 }

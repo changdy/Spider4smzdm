@@ -11,4 +11,6 @@ public interface RelationMapper {
     List<Relation> selectAll();
 
     int insertList(List<Relation> relationList);
+
+    String getLastTitle(Long commodityId);
 }
