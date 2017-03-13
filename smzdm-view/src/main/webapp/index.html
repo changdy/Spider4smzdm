@@ -24,7 +24,17 @@
     <script src="js/bootstrap-3.3.7-dist/js/bootstrap.js"></script>
     <script src="js/bootstrap-table-develop/dist/bootstrap-table.js"></script>
     <script src="js/bootstrap-table-develop/dist/locale/bootstrap-table-zh-CN.js"></script>
+    <script src="js/moment.js"></script>
     <script type="text/javascript">
+        //得到偏移量，方便时间比较
+        var today =new moment();
+        today.millisecond(0);
+        today.second(0);
+        today.minute(0);
+        today.hour(0);
+        dayUnix = today.valueOf();
+        yearUnix =(new moment(String(today.year()),'YYYY')).valueOf();
+        //table初始化
         var $table = $('#table');
         $table.bootstrapTable({
             url: 'get-commodity',
@@ -38,8 +48,17 @@
             showColumns:true,
             showToggle:true,
             sidePagination: "server", //服务端处理分页
-            columns:[{field:'id',align:'center',valign:'middle',sortable:true,title:'序号'},{field:'title',align:'center',valign:'middle',title:'标题'},{field:'category',align:'center',valign:'middle',title:'目录'},{field:'priceString',align:'center',valign:'middle',title:'价格'},{field:'mall',align:'center',valign:'middle',title:'商城'},{field:'comment',align:'center',valign:'middle',title:'评价'},{field:'timeSort',align:'center',valign:'middle',sortable:true,title:'timeSort'},{field:'referralDate',align:'center',valign:'middle',sortable:true,title:'爆料时间'}]
+            columns:[{field:'id',align:'center',valign:'middle',sortable:true,title:'序号'},{field:'title',align:'center',valign:'middle',title:'标题'},{field:'category',align:'center',valign:'middle',title:'目录'},{field:'priceString',align:'center',valign:'middle',title:'价格'},{field:'mall',align:'center',valign:'middle',title:'商城'},{field:'comment',align:'center',valign:'middle',title:'评价'},{field:'timeSort',align:'center',valign:'middle',sortable:true,title:'timeSort'},{field:'referralDate',align:'center',valign:'middle',sortable:true,title:'爆料时间',formatter:'timeFormatter'}]
         });
+        function timeFormatter(value) {
+            if (value > dayUnix) {
+                return (new moment(value)).format('HH:mm:ss');
+            }else if(value > yearUnix){
+                return (new moment(value)).format('MM-DD HH:mm');
+            }else{
+                return (new moment(value)).format('YYYY-MM-DD HH:mm');
+            }
+        }
     </script>
 </body>
 </html>
