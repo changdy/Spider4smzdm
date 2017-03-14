@@ -44,25 +44,30 @@ CREATE TABLE `channel` (
 -- ----------------------------
 DROP TABLE IF EXISTS `commodity`;
 CREATE TABLE `commodity` (
-  `id` bigint(20) NOT NULL COMMENT 'IDIDIDIDID',
-  `title` varchar(128) DEFAULT NULL COMMENT '标题',
-  `content` varchar(1024) DEFAULT NULL COMMENT '内容',
-  `tags` varchar(64) DEFAULT NULL COMMENT 'article_tese_tags.name的拼接',
-  `info_title` varchar(64) DEFAULT NULL COMMENT 'mall_more_info.title的拼接',
-  `brand` varchar(64) DEFAULT NULL COMMENT 'gtm.brand 商标名称',
-  `price_string` varchar(128) DEFAULT NULL COMMENT 'article_price 显示价格',
-  `price_number` bigint(20) DEFAULT NULL COMMENT 'gtm.rmb_price 原价',
-  `referral_name` varchar(64) DEFAULT NULL COMMENT '爆料人',
-  `pic_url` varchar(128) DEFAULT NULL COMMENT '照片url',
-  `info_url` varchar(64) DEFAULT NULL COMMENT '详情页',
-  `channel_id` int(11) DEFAULT NULL COMMENT '频道ID',
-  `mall` varchar(64) DEFAULT NULL COMMENT '商城名称',
-  `mall_url` varchar(128) DEFAULT NULL COMMENT '商城介绍',
-  `shopping_url` varchar(512) DEFAULT NULL COMMENT '购买链接',
-  `referral_date` datetime DEFAULT NULL COMMENT '爆料时间',
-  `time_sort` bigint(20) DEFAULT NULL COMMENT '排序的',
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='物品表';
+	`id` BIGINT(20) NOT NULL COMMENT 'IDIDIDIDID',
+	`title` VARCHAR(128) NULL DEFAULT NULL COMMENT '标题',
+	`content` VARCHAR(1024) NULL DEFAULT NULL COMMENT '内容',
+	`tags` VARCHAR(64) NULL DEFAULT NULL COMMENT 'article_tese_tags.name的拼接',
+	`info_title` VARCHAR(64) NULL DEFAULT NULL COMMENT 'mall_more_info.title的拼接',
+	`brand` VARCHAR(64) NULL DEFAULT NULL COMMENT 'gtm.brand 商标名称',
+	`price_string` VARCHAR(128) NULL DEFAULT NULL COMMENT 'article_price 显示价格',
+	`price_number` BIGINT(20) NULL DEFAULT NULL COMMENT 'gtm.rmb_price 原价',
+	`last_category_id` INT(11) NULL DEFAULT NULL COMMENT '最后的目录ID',
+	`referral_name` VARCHAR(64) NULL DEFAULT NULL COMMENT '爆料人',
+	`pic_url` VARCHAR(128) NULL DEFAULT NULL COMMENT '照片url',
+	`info_url` VARCHAR(64) NULL DEFAULT NULL COMMENT '详情页',
+	`channel_id` INT(11) NULL DEFAULT NULL COMMENT '频道ID',
+	`mall` VARCHAR(64) NULL DEFAULT NULL COMMENT '商城名称',
+	`mall_url` VARCHAR(128) NULL DEFAULT NULL COMMENT '商城介绍',
+	`shopping_url` VARCHAR(512) NULL DEFAULT NULL COMMENT '购买链接',
+	`referral_date` DATETIME NULL DEFAULT NULL COMMENT '爆料时间',
+	`time_sort` BIGINT(20) NULL DEFAULT NULL COMMENT '排序的',
+	PRIMARY KEY (`id`)
+)
+COMMENT='物品表'
+COLLATE='utf8_general_ci'
+ENGINE=InnoDB
+;
 
 -- ----------------------------
 -- Table structure for commodity_time_info

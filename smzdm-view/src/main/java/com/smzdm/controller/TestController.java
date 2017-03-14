@@ -25,7 +25,6 @@ public class TestController {
     @RequestMapping("/get-commodity")
     public @ResponseBody String  getcommodity(CommodityParams CommodityParams) {
         String s = JSON.toJSONString(testService.test());
-        System.out.println(s);
         return s;
     }
 }
