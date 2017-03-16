@@ -1,14 +1,30 @@
 package com.smzdm.model;
 
+import java.time.LocalDateTime;
+
 /**
  * Created by Changdy on 2017/3/12.
  */
 public class CommodityParams {
+    //正序反序
     private String sort;
+    //排序的列名
     private String order;
+    //偏移量
     private Long offset;
+    //取多少
     private Long limit;
-    private String title;
+
+    //开始时间
+    private LocalDateTime startTime;
+
+    //结束时间
+    private LocalDateTime endTime;
+
+
+
+
+
 
     public String getSort() {
         return sort;
@@ -40,13 +56,5 @@ public class CommodityParams {
 
     public void setLimit(Long limit) {
         this.limit = limit;
-    }
-
-    public String getTitle() {
-        return title;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
     }
 }
