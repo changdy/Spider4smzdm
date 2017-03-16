@@ -29,7 +29,7 @@ public class HomePageSpider implements PageProcessor {
 
     public JSONArray getJSONArray() {
         Spider spider = Spider.create(new HomePageSpider());
-        ResultItems resultItems = spider.get("http://faxian.smzdm.com/json_more?page=1");
+        ResultItems resultItems = spider.get("http://www.smzdm.com/json_more");
         spider.close();
         return (JSONArray) resultItems.get("json");
     }
