@@ -5,6 +5,10 @@ import java.time.LocalDateTime;
 public class Commodity {
     private Long id;
 
+    private Long articleId;
+
+    private Integer discoveryFlag;
+
     private String title;
 
     private String content;
@@ -39,11 +43,15 @@ public class Commodity {
 
     private Long timeSort;
 
+    private LocalDateTime createDate;
+
     public Commodity() {
     }
 
-    public Commodity(Long id, String title, String content, String tags, String infoTitle, String brand, String priceString, Long priceNumber, Integer lastCategoryId, String referralName, String picUrl, String infoUrl, Integer channelId, String mall, String mallUrl, String shoppingUrl, LocalDateTime referralDate, Long timeSort) {
+    public Commodity(Long id, Long articleId, Integer discoveryFlag, String title, String content, String tags, String infoTitle, String brand, String priceString, Long priceNumber, Integer lastCategoryId, String referralName, String picUrl, String infoUrl, Integer channelId, String mall, String mallUrl, String shoppingUrl, LocalDateTime referralDate, Long timeSort, LocalDateTime createDate) {
         this.id = id;
+        this.articleId = articleId;
+        this.discoveryFlag = discoveryFlag;
         this.title = title;
         this.content = content;
         this.tags = tags;
@@ -61,6 +69,7 @@ public class Commodity {
         this.shoppingUrl = shoppingUrl;
         this.referralDate = referralDate;
         this.timeSort = timeSort;
+        this.createDate = createDate;
     }
 
     public Long getId() {
@@ -69,6 +78,22 @@ public class Commodity {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public Long getArticleId() {
+        return articleId;
+    }
+
+    public void setArticleId(Long articleId) {
+        this.articleId = articleId;
+    }
+
+    public Integer getDiscoveryFlag() {
+        return discoveryFlag;
+    }
+
+    public void setDiscoveryFlag(Integer discoveryFlag) {
+        this.discoveryFlag = discoveryFlag;
     }
 
     public String getTitle() {
@@ -205,5 +230,13 @@ public class Commodity {
 
     public void setTimeSort(Long timeSort) {
         this.timeSort = timeSort;
+    }
+
+    public LocalDateTime getCreateDate() {
+        return createDate;
+    }
+
+    public void setCreateDate(LocalDateTime createDate) {
+        this.createDate = createDate;
     }
 }

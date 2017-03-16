@@ -1,27 +1,26 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.smzdm.mapper.TimesortMapper" >
-  <resultMap id="BaseResultMap" type="com.smzdm.model.Timesort" >
+<mapper namespace="com.smzdm.mapper.TimeSortMapper" >
+  <resultMap id="BaseResultMap" type="com.smzdm.model.TimeSort" >
     <constructor >
       <idArg column="id" jdbcType="INTEGER" javaType="java.lang.Integer" />
-      <arg column="timesort" jdbcType="BIGINT" javaType="java.lang.Long" />
+      <arg column="time_sort" jdbcType="BIGINT" javaType="java.lang.Long" />
     </constructor>
   </resultMap>
   <insert id="insert" parameterType="com.smzdm.model.Timesort" >
-    insert into timesort (id, timesort)
-    values (#{id,jdbcType=INTEGER}, #{timesort,jdbcType=BIGINT})
+    insert into time_sort (id, time_sort)
+    values (#{id,jdbcType=INTEGER}, #{timeSort,jdbcType=BIGINT})
   </insert>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
-    select id, timesort
-    from timesort
+    select id, time_sort
+    from time_sort
     where id = #{id,jdbcType=INTEGER}
   </select>
   <select id="selectAll" resultMap="BaseResultMap" >
-    select id, timesort
-    from timesort
+    select id, time_sort
+    from time_sort
   </select>
-
-  <update id="updateByPrimaryKey" parameterType="com.smzdm.model.Timesort">
-    UPDATE  timesort set timesort =#{timesort} where id =#{id}
+  <update id="updateByPrimaryKey" parameterType="com.smzdm.model.TimeSort">
+    UPDATE  timesort set time_sort =#{timeSort} where id =#{id}
   </update>
 </mapper>

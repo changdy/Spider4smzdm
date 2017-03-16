@@ -1,8 +1,6 @@
 /*
 Navicat MySQL Data Transfer
 
-Source Server         : 读写
-Source Server Version : 100119
 Source Host           : localhost:3306
 Source Database       : smzdm_commodity
 
@@ -10,7 +8,7 @@ Target Server Type    : MYSQL
 Target Server Version : 100119
 File Encoding         : 65001
 
-Date: 2017-03-09 21:37:38
+Date: 2017-03-16 22:55:28
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -44,30 +42,29 @@ CREATE TABLE `channel` (
 -- ----------------------------
 DROP TABLE IF EXISTS `commodity`;
 CREATE TABLE `commodity` (
-	`id` BIGINT(20) NOT NULL COMMENT 'IDIDIDIDID',
-	`title` VARCHAR(128) NULL DEFAULT NULL COMMENT '标题',
-	`content` VARCHAR(1024) NULL DEFAULT NULL COMMENT '内容',
-	`tags` VARCHAR(64) NULL DEFAULT NULL COMMENT 'article_tese_tags.name的拼接',
-	`info_title` VARCHAR(64) NULL DEFAULT NULL COMMENT 'mall_more_info.title的拼接',
-	`brand` VARCHAR(64) NULL DEFAULT NULL COMMENT 'gtm.brand 商标名称',
-	`price_string` VARCHAR(128) NULL DEFAULT NULL COMMENT 'article_price 显示价格',
-	`price_number` BIGINT(20) NULL DEFAULT NULL COMMENT 'gtm.rmb_price 原价',
-	`last_category_id` INT(11) NULL DEFAULT NULL COMMENT '最后的目录ID',
-	`referral_name` VARCHAR(64) NULL DEFAULT NULL COMMENT '爆料人',
-	`pic_url` VARCHAR(128) NULL DEFAULT NULL COMMENT '照片url',
-	`info_url` VARCHAR(64) NULL DEFAULT NULL COMMENT '详情页',
-	`channel_id` INT(11) NULL DEFAULT NULL COMMENT '频道ID',
-	`mall` VARCHAR(64) NULL DEFAULT NULL COMMENT '商城名称',
-	`mall_url` VARCHAR(128) NULL DEFAULT NULL COMMENT '商城介绍',
-	`shopping_url` VARCHAR(512) NULL DEFAULT NULL COMMENT '购买链接',
-	`referral_date` DATETIME NULL DEFAULT NULL COMMENT '爆料时间',
-	`time_sort` BIGINT(20) NULL DEFAULT NULL COMMENT '排序的',
-	PRIMARY KEY (`id`)
-)
-COMMENT='物品表'
-COLLATE='utf8_general_ci'
-ENGINE=InnoDB
-;
+  `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '主键ID',
+  `article_id` bigint(20) DEFAULT NULL,
+  `discovery_flag` int(11) DEFAULT NULL COMMENT '是否是发现频道（0不是，1是）',
+  `title` varchar(128) DEFAULT NULL COMMENT '标题',
+  `content` varchar(1024) DEFAULT NULL COMMENT '内容',
+  `tags` varchar(64) DEFAULT NULL COMMENT 'article_tese_tags.name的拼接',
+  `info_title` varchar(64) DEFAULT NULL COMMENT 'mall_more_info.title的拼接',
+  `brand` varchar(64) DEFAULT NULL COMMENT 'gtm.brand 商标名称',
+  `price_string` varchar(128) DEFAULT NULL COMMENT 'article_price 显示价格',
+  `price_number` bigint(20) DEFAULT NULL COMMENT 'gtm.rmb_price 原价',
+  `last_category_id` int(11) DEFAULT NULL COMMENT '最后的目录ID',
+  `referral_name` varchar(64) DEFAULT NULL COMMENT '爆料人',
+  `pic_url` varchar(128) DEFAULT NULL COMMENT '照片url',
+  `info_url` varchar(64) DEFAULT NULL COMMENT '详情页',
+  `channel_id` int(11) DEFAULT NULL COMMENT '频道ID',
+  `mall` varchar(64) DEFAULT NULL COMMENT '商城名称',
+  `mall_url` varchar(128) DEFAULT NULL COMMENT '商城介绍',
+  `shopping_url` varchar(512) DEFAULT NULL COMMENT '购买链接',
+  `referral_date` datetime DEFAULT NULL COMMENT '爆料时间',
+  `time_sort` bigint(20) DEFAULT NULL COMMENT '排序的',
+  `create_date` datetime DEFAULT NULL COMMENT '创建时间',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=921 DEFAULT CHARSET=utf8 COMMENT='物品表';
 
 -- ----------------------------
 -- Table structure for commodity_time_info
@@ -84,7 +81,7 @@ CREATE TABLE `commodity_time_info` (
   `timeout` int(11) DEFAULT NULL COMMENT '过时',
   `update_time` datetime DEFAULT NULL COMMENT '更新时间',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='物品更新表';
+) ENGINE=InnoDB AUTO_INCREMENT=14179 DEFAULT CHARSET=utf8 COMMENT='物品更新表';
 
 -- ----------------------------
 -- Table structure for jsons
@@ -97,7 +94,7 @@ CREATE TABLE `jsons` (
   `original_date` varchar(32) DEFAULT NULL COMMENT '字符串时间',
   `time_sort` bigint(20) DEFAULT NULL COMMENT '排序',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8 COMMENT='原字符串';
+) ENGINE=InnoDB AUTO_INCREMENT=2291 DEFAULT CHARSET=utf8 COMMENT='原字符串';
 
 -- ----------------------------
 -- Table structure for relation
@@ -108,15 +105,15 @@ CREATE TABLE `relation` (
   `commodity_id` bigint(20) DEFAULT NULL,
   `category_id` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='对应目录表';
+) ENGINE=InnoDB AUTO_INCREMENT=7010 DEFAULT CHARSET=utf8 COMMENT='对应目录表';
 
 -- ----------------------------
--- Table structure for timesort
+-- Table structure for time_sort
 -- ----------------------------
-DROP TABLE IF EXISTS `timesort`;
-CREATE TABLE `timesort` (
+DROP TABLE IF EXISTS `time_sort`;
+CREATE TABLE `time_sort` (
   `id` int(11) NOT NULL AUTO_INCREMENT COMMENT '1 首页',
-  `timesort` bigint(20) DEFAULT NULL,
+  `time_sort` bigint(20) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 SET FOREIGN_KEY_CHECKS=1;

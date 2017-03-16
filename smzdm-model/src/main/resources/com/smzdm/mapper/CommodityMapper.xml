@@ -4,6 +4,8 @@
   <resultMap id="BaseResultMap" type="com.smzdm.model.Commodity" >
     <constructor >
       <idArg column="id" jdbcType="BIGINT" javaType="java.lang.Long" />
+      <arg column="article_id" jdbcType="BIGINT" javaType="java.lang.Long" />
+      <arg column="discovery_flag" jdbcType="INTEGER" javaType="java.lang.Integer" />
       <arg column="title" jdbcType="VARCHAR" javaType="java.lang.String" />
       <arg column="content" jdbcType="VARCHAR" javaType="java.lang.String" />
       <arg column="tags" jdbcType="VARCHAR" javaType="java.lang.String" />
@@ -21,44 +23,46 @@
       <arg column="shopping_url" jdbcType="VARCHAR" javaType="java.lang.String" />
       <arg column="referral_date" jdbcType="TIMESTAMP" javaType="java.time.LocalDateTime" />
       <arg column="time_sort" jdbcType="BIGINT" javaType="java.lang.Long" />
+      <arg column="create_date" jdbcType="TIMESTAMP" javaType="java.time.LocalDateTime" />
     </constructor>
   </resultMap>
   <insert id="insert" parameterType="com.smzdm.model.Commodity" >
-    insert into commodity (id, title, content, 
+    insert into commodity (id, article_id, discovery_flag, title, content,
       tags, info_title, brand, 
       price_string, price_number, last_category_id,referral_name,
       pic_url, info_url, channel_id, 
       mall, mall_url, shopping_url, 
-      referral_date, time_sort)
-    values (#{id,jdbcType=BIGINT}, #{title,jdbcType=VARCHAR}, #{content,jdbcType=VARCHAR}, 
+      referral_date, time_sort, create_date)
+    values (#{id,jdbcType=BIGINT}, #{articleId,jdbcType=BIGINT}, #{discoveryFlag,jdbcType=INTEGER},#{title,jdbcType=VARCHAR}, #{content,jdbcType=VARCHAR},
       #{tags,jdbcType=VARCHAR}, #{infoTitle,jdbcType=VARCHAR}, #{brand,jdbcType=VARCHAR}, 
       #{priceString,jdbcType=VARCHAR}, #{priceNumber,jdbcType=BIGINT}, #{lastCategoryId,jdbcType=INTEGER}, #{referralName,jdbcType=VARCHAR},
       #{picUrl,jdbcType=VARCHAR}, #{infoUrl,jdbcType=VARCHAR}, #{channelId,jdbcType=INTEGER}, 
       #{mall,jdbcType=VARCHAR}, #{mallUrl,jdbcType=VARCHAR}, #{shoppingUrl,jdbcType=VARCHAR}, 
-      #{referralDate,jdbcType=TIMESTAMP}, #{timeSort,jdbcType=BIGINT})
+      #{referralDate,jdbcType=TIMESTAMP}, #{timeSort,jdbcType=BIGINT},#{createDate,jdbcType=TIMESTAMP})
   </insert>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
-    select id, title, content, tags, info_title, brand, price_string, price_number, last_category_id,referral_name,
-    pic_url, info_url, channel_id, mall, mall_url, shopping_url, referral_date, time_sort
+    select id, article_id, discovery_flag, title, content, tags, info_title, brand, price_string, price_number, last_category_id,referral_name,
+    pic_url, info_url, channel_id, mall, mall_url, shopping_url, referral_date, time_sort,create_date
     from commodity
     where id = #{id,jdbcType=BIGINT}
   </select>
 
   <insert id="insertList" parameterType="list">
-    insert into commodity (id, title, content,
+    insert into commodity (id, article_id, discovery_flag, title, content,
       tags, info_title, brand,
       price_string, price_number, last_category_id,referral_name,
       pic_url, info_url, channel_id,
       mall, mall_url, shopping_url,
-      referral_date, time_sort)
+      referral_date, time_sort,create_date)
     values
     <foreach collection="list" item="item" separator=",">
-      (#{item.id,jdbcType=BIGINT}, #{item.title,jdbcType=VARCHAR}, #{item.content,jdbcType=VARCHAR}, #{item.tags,jdbcType=VARCHAR}, #{item.infoTitle,jdbcType=VARCHAR}, #{item.brand,jdbcType=VARCHAR}, #{item.priceString,jdbcType=VARCHAR}, #{item.priceNumber,jdbcType=BIGINT},#{item.lastCategoryId,jdbcType=INTEGER}, #{item.referralName,jdbcType=VARCHAR}, #{item.picUrl,jdbcType=VARCHAR}, #{item.infoUrl,jdbcType=VARCHAR}, #{item.channelId,jdbcType=INTEGER}, #{item.mall,jdbcType=VARCHAR}, #{item.mallUrl,jdbcType=VARCHAR}, #{item.shoppingUrl,jdbcType=VARCHAR}, #{item.referralDate,jdbcType=TIMESTAMP}, #{item.timeSort,jdbcType=BIGINT})
+      (#{item.id,jdbcType=BIGINT}, #{item.articleId,jdbcType=BIGINT}, #{item.discoveryFlag,jdbcType=INTEGER}, #{item.title,jdbcType=VARCHAR}, #{item.content,jdbcType=VARCHAR}, #{item.tags,jdbcType=VARCHAR}, #{item.infoTitle,jdbcType=VARCHAR}, #{item.brand,jdbcType=VARCHAR}, #{item.priceString,jdbcType=VARCHAR}, #{item.priceNumber,jdbcType=BIGINT},#{item.lastCategoryId,jdbcType=INTEGER}, #{item.referralName,jdbcType=VARCHAR}, #{item.picUrl,jdbcType=VARCHAR}, #{item.infoUrl,jdbcType=VARCHAR}, #{item.channelId,jdbcType=INTEGER}, #{item.mall,jdbcType=VARCHAR}, #{item.mallUrl,jdbcType=VARCHAR}, #{item.shoppingUrl,jdbcType=VARCHAR}, #{item.referralDate,jdbcType=TIMESTAMP}, #{item.timeSort,jdbcType=BIGINT},#{item.createDate,jdbcType=TIMESTAMP})
     </foreach>
   </insert>
   <select id="getKeyInfoMap" resultType="HashMap">
   SELECT
    a.id,
+   a.articleId,
    a.title,
    a.content,
    a.price_string priceString,
