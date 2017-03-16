@@ -7,7 +7,7 @@
       <arg column="time_sort" jdbcType="BIGINT" javaType="java.lang.Long" />
     </constructor>
   </resultMap>
-  <insert id="insert" parameterType="com.smzdm.model.Timesort" >
+  <insert id="insert" parameterType="com.smzdm.model.TimeSort" >
     insert into time_sort (id, time_sort)
     values (#{id,jdbcType=INTEGER}, #{timeSort,jdbcType=BIGINT})
   </insert>
