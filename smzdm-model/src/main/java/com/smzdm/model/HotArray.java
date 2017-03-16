@@ -7,10 +7,10 @@ import java.util.List;
  * Created by Changdy on 2017/3/6.
  */
 public class HotArray {
-    private List<Commodity> commodityList = new ArrayList();
-    private List<CommodityTimeInfo> commodityTimeInfoList = new ArrayList();
-    private List<Jsons> jsonsList = new ArrayList();
-    private List<Relation> relationList = new ArrayList();
+    private List<Commodity> commodityList = new ArrayList<>();
+    private List<CommodityTimeInfo> commodityTimeInfoList = new ArrayList<>();
+    private List<Jsons> jsonsList = new ArrayList<>();
+    private List<Relation> relationList = new ArrayList<>();
 
     @Override
     public String toString() {
