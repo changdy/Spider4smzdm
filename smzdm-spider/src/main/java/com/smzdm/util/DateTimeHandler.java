@@ -24,7 +24,7 @@ public class DateTimeHandler {
                     LocalDate today = LocalDate.now();
                     int year = today.getYear();
                     string = year + "-" + string;
-                    localDateTime = LocalDateTime.parse(string,dateTimeFormatter);//略不爽，我还以为java8已经默认有日期自动转换了
+                    localDateTime = LocalDateTime.parse(string, dateTimeFormatter);//略不爽，我还以为java8已经默认有日期自动转换了
                 } else {
                     LocalDate localDate = LocalDate.parse(string);
                     localDateTime = localDate.atTime(20, 0);

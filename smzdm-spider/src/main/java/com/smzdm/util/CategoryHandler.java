@@ -55,9 +55,9 @@ public class CategoryHandler {
                 break;
             }
         }
-        if (categoryList.size()>1) {
+        if (categoryList.size() > 1) {
             categoryMapper.insertCategoryList(categoryList);
-        }else {
+        } else {
             categoryMapper.insert(categoryList.get(0));
         }
     }

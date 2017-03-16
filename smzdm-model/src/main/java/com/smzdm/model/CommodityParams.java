@@ -22,10 +22,6 @@ public class CommodityParams {
     private LocalDateTime endTime;
 
 
-
-
-
-
     public String getSort() {
         return sort;
     }

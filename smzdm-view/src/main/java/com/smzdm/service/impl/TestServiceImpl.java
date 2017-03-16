@@ -28,11 +28,11 @@ public class TestServiceImpl implements TestService {
             Map map = keyInfoMap.get(i);
             Long id = (Long) map.get("id");
             String lastComment = commodityTimeInfoMapper.getLastComment(id);
-            map.put("comment",lastComment);
+            map.put("comment", lastComment);
         }
-        Map<String,Object> map = new HashMap<>();
-        map.put("total",100);
-        map.put("rows",keyInfoMap);
+        Map<String, Object> map = new HashMap<>();
+        map.put("total", 100);
+        map.put("rows", keyInfoMap);
         return map;
     }
 }

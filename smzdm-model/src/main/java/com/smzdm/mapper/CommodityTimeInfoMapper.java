@@ -1,6 +1,7 @@
 package com.smzdm.mapper;
 
 import com.smzdm.model.CommodityTimeInfo;
+
 import java.util.List;
 
 public interface CommodityTimeInfoMapper {

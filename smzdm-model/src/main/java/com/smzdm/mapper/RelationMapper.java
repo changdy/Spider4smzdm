@@ -1,6 +1,7 @@
 package com.smzdm.mapper;
 
 import com.smzdm.model.Relation;
+
 import java.util.List;
 
 public interface RelationMapper {

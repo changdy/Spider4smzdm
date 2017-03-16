@@ -38,7 +38,8 @@ public class HotInfoHandler implements InfoHandler {
             }
             if (jsonContent.getLong("timesort") > maxTimesort) {
                 Commodity commodity = new Commodity();
-                commodity.setId(jsonContent.getLong("article_id"));
+                commodity.setDiscoveryFlag(0);
+                commodity.setArticleId(jsonContent.getLong("article_id"));
                 commodity.setTitle(jsonContent.getString("article_title"));
                 commodity.setContent(jsonContent.getString("article_content").replaceAll("<.+?>", ""));
                 commodity.setPriceString(jsonContent.getString("article_price"));
@@ -74,7 +75,7 @@ public class HotInfoHandler implements InfoHandler {
                     if (jsonContent.getJSONObject("article_category") != null) {
                         commodity.setLastCategoryId(jsonContent.getJSONObject("article_category").getInteger("ID"));
                     }
-                }catch (Exception e){
+                } catch (Exception e) {
 
                 }
                 commodity.setReferralName(jsonContent.getString("article_referrals"));

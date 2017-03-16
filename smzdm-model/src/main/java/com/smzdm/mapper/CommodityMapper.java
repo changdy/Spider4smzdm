@@ -7,7 +7,10 @@ import java.util.List;
 
 public interface CommodityMapper {
     int insert(Commodity record);
+
     Commodity selectByPrimaryKey(Long id);
+
     int insertList(List<Commodity> commodityList);
+
     List<HashMap> getKeyInfoMap();
 }
