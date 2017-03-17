@@ -62,7 +62,7 @@
   <select id="getKeyInfoMap" resultType="HashMap">
   SELECT
    a.id,
-   a.articleId,
+   a.article_id articleId,
    a.title,
    a.content,
    a.price_string priceString,

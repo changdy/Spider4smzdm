@@ -13,5 +13,4 @@ public interface CategoryMapper {
 
     int insertCategoryList(List<Category> categoryList);
 
-    String getCategoryIds();
 }

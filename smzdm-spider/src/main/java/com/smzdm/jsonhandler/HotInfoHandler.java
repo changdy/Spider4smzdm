@@ -67,7 +67,7 @@ public class HotInfoHandler implements InfoHandler {
                         try {
                             commodity.setPriceNumber(Long.valueOf(rmbPrice));
                         } catch (Exception e) {
-                            commodity.setPriceNumber(0l);
+                            commodity.setPriceNumber(0L);
                         }
                     }
                 }

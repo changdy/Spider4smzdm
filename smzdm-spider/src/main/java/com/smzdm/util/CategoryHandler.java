@@ -18,19 +18,10 @@ public class CategoryHandler {
     @Autowired
     private CategoryMapper categoryMapper;
 
-    private String categoryIds;
-
-    public String getCategoryIds() {
-        return categoryIds;
-    }
-
-    public void setCategoryIds(String categoryIds) {
-        this.categoryIds = categoryIds;
-    }
-
+    private List<Category> categoryList;
 
     public void initIds() {
-        categoryIds = categoryMapper.getCategoryIds();
+        categoryList = categoryMapper.selectAll();
     }
 
     public void tryToInsertCategory(JSONObject jsonContent) {
@@ -38,27 +29,48 @@ public class CategoryHandler {
         if (articleCategory == null) {
             return;
         }
-        if (categoryIds.contains(articleCategory.getString("ID"))) {
+        if (checkInTheList(articleCategory.getInteger("ID"))) {
             return;
         }
-        List<Category> categoryList = new ArrayList();
+        //保存新增的
+        List<Category> newCategoryList = new ArrayList<>();
         JSONArray categoryLayer = jsonContent.getJSONArray("category_layer");
         for (int i = categoryLayer.size() - 1; i >= 1; i--) {
             Integer id = categoryLayer.getJSONObject(i).getInteger("ID");
-            if (!categoryIds.contains(String.valueOf(id))) {
+            if (!checkInTheList(id)) {
                 String title = categoryLayer.getJSONObject(i).getString("title");
                 String urlNicktitle = categoryLayer.getJSONObject(i).getString("url_nicktitle");
                 Integer parentId = categoryLayer.getJSONObject(i).getInteger("parent_id");
-                categoryList.add(new Category(id, title, parentId, urlNicktitle, i));
-                categoryIds += "," + id;
+                Category category = new Category(id, title, parentId, urlNicktitle, i);
+                newCategoryList.add(category);
+                categoryList.add(category);
             } else {
                 break;
             }
         }
-        if (categoryList.size() > 1) {
-            categoryMapper.insertCategoryList(categoryList);
+        if (newCategoryList.size() > 1) {
+            categoryMapper.insertCategoryList(newCategoryList);
         } else {
-            categoryMapper.insert(categoryList.get(0));
+            categoryMapper.insert(newCategoryList.get(0));
         }
+    }
+
+    //true的时候表示在里面，false则不在
+    private boolean checkInTheList(Integer id) {
+        for (Category category : categoryList) {
+            if (category.getId().compareTo(id) == 0) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public Integer getCategoryId(String title){
+        for (Category category : categoryList) {
+            if (category.getTitle().equals(title)) {
+                return category.getId();
+            }
+        }
+        return null;
     }
 }

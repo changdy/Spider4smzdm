@@ -35,7 +35,4 @@
       #{item.urlNicktitle,jdbcType=VARCHAR}, #{item.level,jdbcType=INTEGER})
     </foreach>
   </insert>
-  <select id="getCategoryIds" resultType="java.lang.String">
-    SELECT GROUP_CONCAT(id) id  FROM category
-  </select>
 </mapper>

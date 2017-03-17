@@ -26,7 +26,7 @@ public class TestServiceImpl implements TestService {
         List<HashMap> keyInfoMap = commodityMapper.getKeyInfoMap();
         for (int i = 0; i < keyInfoMap.size(); i++) {
             Map map = keyInfoMap.get(i);
-            Long id = (Long) map.get("id");
+            Long id = (Long) map.get("articleId");
             String lastComment = commodityTimeInfoMapper.getLastComment(id);
             map.put("comment", lastComment);
         }

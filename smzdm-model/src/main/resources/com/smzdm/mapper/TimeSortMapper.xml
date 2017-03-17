@@ -21,6 +21,6 @@
     from time_sort
   </select>
   <update id="updateByPrimaryKey" parameterType="com.smzdm.model.TimeSort">
-    UPDATE  timesort set time_sort =#{timeSort} where id =#{id}
+    UPDATE  time_sort set time_sort =#{timeSort} where id =#{id}
   </update>
 </mapper>
