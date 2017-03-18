@@ -6,7 +6,7 @@ import java.util.List;
 /**
  * Created by Changdy on 2017/3/6.
  */
-public class HotArray {
+public class CommodityContent {
     private List<Commodity> commodityList = new ArrayList<>();
     private List<CommodityTimeInfo> commodityTimeInfoList = new ArrayList<>();
     private List<Jsons> jsonsList = new ArrayList<>();
@@ -14,7 +14,7 @@ public class HotArray {
 
     @Override
     public String toString() {
-        return "HotArray{" +
+        return "CommodityContent{" +
                 "commodityList=" + commodityList +
                 ", commodityTimeInfoList=" + commodityTimeInfoList +
                 ", jsonsList=" + jsonsList +

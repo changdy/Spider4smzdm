@@ -1,4 +1,4 @@
-package com.smzdm.util;
+package com.smzdm.handler;
 
 import com.alibaba.fastjson.JSONObject;
 import com.smzdm.mapper.ChannelMapper;

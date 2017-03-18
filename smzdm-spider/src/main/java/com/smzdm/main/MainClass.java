@@ -1,7 +1,7 @@
 package com.smzdm.main;
 
-import com.smzdm.util.CategoryHandler;
-import com.smzdm.util.ChannelHandler;
+import com.smzdm.handler.CategoryHandler;
+import com.smzdm.handler.ChannelHandler;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.ApplicationContext;

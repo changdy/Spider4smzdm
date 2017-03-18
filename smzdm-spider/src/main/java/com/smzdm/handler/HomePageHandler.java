@@ -1,11 +1,8 @@
-package com.smzdm.jsonhandler;
+package com.smzdm.handler;
 
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.smzdm.model.*;
-import com.smzdm.util.CategoryHandler;
-import com.smzdm.util.ChannelHandler;
-import com.smzdm.util.DateTimeHandler;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -15,7 +12,7 @@ import java.util.Date;
  * Created by Changdy on 2017/3/5.
  */
 @Service
-public class HotInfoHandler implements InfoHandler {
+public class HomePageHandler implements InfoHandler {
     @Autowired
     private ChannelHandler channelHandler;
 
@@ -27,8 +24,8 @@ public class HotInfoHandler implements InfoHandler {
 
 
     @Override
-    public HotArray parseJSONArray(JSONArray jsonArray, Long maxTimesort) {
-        HotArray hotArray = new HotArray();
+    public CommodityContent parseJSONArray(JSONArray jsonArray, Long maxTimesort) {
+        CommodityContent commodityContent = new CommodityContent();
         for (int arrayIndex = 0; arrayIndex < jsonArray.size(); arrayIndex++) {
             JSONObject jsonContent = jsonArray.getJSONObject(arrayIndex);
             boolean skip = false;
@@ -94,7 +91,7 @@ public class HotInfoHandler implements InfoHandler {
                     categoryHandler.tryToInsertCategory(jsonContent);
                     for (int i = 0; i < categoryLayer.size(); i++) {
                         JSONObject jsonObject = categoryLayer.getJSONObject(i);
-                        hotArray.getRelationList().add(new Relation(null, jsonContent.getLong("article_id"), jsonObject.getInteger("ID")));
+                        commodityContent.getRelationList().add(new Relation(null, jsonContent.getLong("article_id"), jsonObject.getInteger("ID")));
                     }
                 }
                 Jsons jsons = new Jsons();
@@ -102,8 +99,8 @@ public class HotInfoHandler implements InfoHandler {
                 jsons.setContent(jsonArray.getJSONObject(arrayIndex).toJSONString());
                 jsons.setOriginalDate(articleDate);
                 jsons.setTimeSort(timesort);
-                hotArray.getCommodityList().add(commodity);
-                hotArray.getJsonsList().add(jsons);
+                commodityContent.getCommodityList().add(commodity);
+                commodityContent.getJsonsList().add(jsons);
             }
             if (!skip) {
                 CommodityTimeInfo commodityTimeInfo = new CommodityTimeInfo();
@@ -115,9 +112,9 @@ public class HotInfoHandler implements InfoHandler {
                 commodityTimeInfo.setCommodityId(jsonContent.getLong("article_id"));
                 commodityTimeInfo.setComment(jsonContent.getInteger("article_comment"));
                 commodityTimeInfo.setUpdateTime(new Date());
-                hotArray.getCommodityTimeInfoList().add(commodityTimeInfo);
+                commodityContent.getCommodityTimeInfoList().add(commodityTimeInfo);
             }
         }
-        return hotArray;
+        return commodityContent;
     }
 }
