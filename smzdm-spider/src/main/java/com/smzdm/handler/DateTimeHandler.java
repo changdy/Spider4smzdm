@@ -12,7 +12,7 @@ import java.time.format.DateTimeFormatter;
  * Created by Changdy on 2017/3/6.
  */
 @Service
-public class DateTimeHandler {
+class DateTimeHandler {
     private DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
 
 

@@ -15,10 +15,14 @@ import java.util.List;
  */
 @Service
 public class CategoryHandler {
-    @Autowired
-    private CategoryMapper categoryMapper;
+    private final CategoryMapper categoryMapper;
 
     private List<Category> categoryList;
+
+    @Autowired
+    public CategoryHandler(CategoryMapper categoryMapper) {
+        this.categoryMapper = categoryMapper;
+    }
 
     public void initIds() {
         categoryList = categoryMapper.selectAll();
@@ -65,7 +69,10 @@ public class CategoryHandler {
         return false;
     }
 
-    public Integer getCategoryId(String title){
+    public Integer getCategoryId(String title) {
+        if (title.isEmpty()) {
+            return null;
+        }
         for (Category category : categoryList) {
             if (category.getTitle().equals(title)) {
                 return category.getId();

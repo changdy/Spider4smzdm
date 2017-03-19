@@ -14,10 +14,14 @@ import java.util.List;
  */
 @Service
 public class ChannelHandler {
-    @Autowired
-    ChannelMapper channelMapper;
+    private final ChannelMapper channelMapper;
 
-    private List<Channel> channelList = new ArrayList();
+    private List<Channel> channelList = new ArrayList<>();
+
+    @Autowired
+    public ChannelHandler(ChannelMapper channelMapper) {
+        this.channelMapper = channelMapper;
+    }
 
     public List<Channel> getChannelList() {
         return channelList;

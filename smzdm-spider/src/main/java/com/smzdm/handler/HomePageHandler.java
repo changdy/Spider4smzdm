@@ -6,21 +6,21 @@ import com.smzdm.model.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.Date;
 
 /**
  * Created by Changdy on 2017/3/5.
  */
 @Service
-public class HomePageHandler implements InfoHandler {
-    @Autowired
-    private ChannelHandler channelHandler;
+public class HomePageHandler extends AbsInfoHandler {
+    private final ChannelHandler channelHandler;
+
+    private final CategoryHandler categoryHandler;
 
     @Autowired
-    private CategoryHandler categoryHandler;
-
-    @Autowired
-    private DateTimeHandler dateTimeHandler;
+    public HomePageHandler(ChannelHandler channelHandler, CategoryHandler categoryHandler) {
+        this.channelHandler = channelHandler;
+        this.categoryHandler = categoryHandler;
+    }
 
 
     @Override
@@ -34,12 +34,10 @@ public class HomePageHandler implements InfoHandler {
                 skip = true;
             }
             if (jsonContent.getLong("timesort") > maxTimesort) {
-                Commodity commodity = new Commodity();
+                //初始化
+                Commodity commodity = initCommodity(jsonContent);
+                commodity.setChannelId(channelId);
                 commodity.setDiscoveryFlag(0);
-                commodity.setArticleId(jsonContent.getLong("article_id"));
-                commodity.setTitle(jsonContent.getString("article_title"));
-                commodity.setContent(jsonContent.getString("article_content").replaceAll("<.+?>", ""));
-                commodity.setPriceString(jsonContent.getString("article_price"));
                 JSONArray articleTeseTags = jsonContent.getJSONArray("article_tese_tags");
                 if (articleTeseTags != null && articleTeseTags.size() > 0) {
                     String tags = "";
@@ -56,36 +54,6 @@ public class HomePageHandler implements InfoHandler {
                     }
                     commodity.setInfoTitle(infoTitle);
                 }
-                JSONObject gtm = jsonContent.getJSONObject("gtm");
-                if (gtm != null) {
-                    commodity.setBrand(gtm.getString("brand"));
-                    String rmbPrice = gtm.getString("rmb_price");
-                    if (rmbPrice != null && !rmbPrice.equals("") && !rmbPrice.equals("无")) {
-                        try {
-                            commodity.setPriceNumber(Long.valueOf(rmbPrice));
-                        } catch (Exception e) {
-                            commodity.setPriceNumber(0L);
-                        }
-                    }
-                }
-                try {
-                    if (jsonContent.getJSONObject("article_category") != null) {
-                        commodity.setLastCategoryId(jsonContent.getJSONObject("article_category").getInteger("ID"));
-                    }
-                } catch (Exception e) {
-
-                }
-                commodity.setReferralName(jsonContent.getString("article_referrals"));
-                commodity.setPicUrl(jsonContent.getString("article_pic"));
-                commodity.setInfoUrl(jsonContent.getString("article_url"));
-                commodity.setChannelId(channelId);
-                commodity.setMall(jsonContent.getString("article_mall"));
-                commodity.setMallUrl(jsonContent.getString("article_mall_url"));
-                commodity.setShoppingUrl(jsonContent.getString("article_link"));
-                String articleDate = jsonContent.getString("article_date").trim();
-                commodity.setReferralDate(dateTimeHandler.convertToDate(articleDate));
-                Long timesort = jsonContent.getLong("timesort");
-                commodity.setTimeSort(timesort);
                 JSONArray categoryLayer = jsonContent.getJSONArray("category_layer");
                 if (categoryLayer != null && categoryLayer.size() > 0) {
                     categoryHandler.tryToInsertCategory(jsonContent);
@@ -94,25 +62,11 @@ public class HomePageHandler implements InfoHandler {
                         commodityContent.getRelationList().add(new Relation(null, jsonContent.getLong("article_id"), jsonObject.getInteger("ID")));
                     }
                 }
-                Jsons jsons = new Jsons();
-                jsons.setCreateDate(new Date());
-                jsons.setContent(jsonArray.getJSONObject(arrayIndex).toJSONString());
-                jsons.setOriginalDate(articleDate);
-                jsons.setTimeSort(timesort);
                 commodityContent.getCommodityList().add(commodity);
-                commodityContent.getJsonsList().add(jsons);
+                commodityContent.getJsonsList().add(initJsons(jsonContent));
             }
             if (!skip) {
-                CommodityTimeInfo commodityTimeInfo = new CommodityTimeInfo();
-                commodityTimeInfo.setCollection(jsonContent.getInteger("article_collection"));
-                commodityTimeInfo.setWorthy(jsonContent.getInteger("article_worthy"));
-                commodityTimeInfo.setUnworthy(jsonContent.getInteger("article_unworthy"));
-                commodityTimeInfo.setSoldOut(jsonContent.getInteger("article_is_sold_out"));
-                commodityTimeInfo.setTimeout(jsonContent.getInteger("article_is_timeout"));
-                commodityTimeInfo.setCommodityId(jsonContent.getLong("article_id"));
-                commodityTimeInfo.setComment(jsonContent.getInteger("article_comment"));
-                commodityTimeInfo.setUpdateTime(new Date());
-                commodityContent.getCommodityTimeInfoList().add(commodityTimeInfo);
+                commodityContent.getCommodityTimeInfoList().add(initCommodityTimeInfo(jsonContent,false));
             }
         }
         return commodityContent;

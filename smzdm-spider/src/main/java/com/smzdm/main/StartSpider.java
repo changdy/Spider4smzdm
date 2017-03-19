@@ -1,6 +1,7 @@
 package com.smzdm.main;
 
 import com.alibaba.fastjson.JSONArray;
+import com.smzdm.handler.DiscoveryHandler;
 import com.smzdm.handler.HomePageHandler;
 import com.smzdm.mapper.*;
 import com.smzdm.model.Commodity;
@@ -20,34 +21,34 @@ import java.util.List;
  */
 @Service
 public class StartSpider {
-    @Autowired
-    private HomePageSpider homePageSpider;
+    private final HomePageSpider homePageSpider;
+
+    private final HomePageHandler homePageHandler;
+    private final TimeSortMapper timeSortMapper;
+    private final CommodityMapper commodityMapper;
+    private final JsonsMapper jsonsMapper;
+    private final RelationMapper relationMapper;
+    private final CommodityTimeInfoMapper commodityTimeInfoMapper;
+    private final DiscoverySpider discoverySpider;
+    private final DiscoveryHandler discoveryHandler;
 
     @Autowired
-    private HomePageHandler homePageHandler;
-    @Autowired
-    private TimeSortMapper timeSortMapper;
-
-    @Autowired
-    private CommodityMapper commodityMapper;
-
-    @Autowired
-    private JsonsMapper jsonsMapper;
-
-    @Autowired
-    private RelationMapper relationMapper;
-
-    @Autowired
-    private CommodityTimeInfoMapper commodityTimeInfoMapper;
-
-    @Autowired
-    private DiscoverySpider discoverySpider;
+    public StartSpider(HomePageSpider homePageSpider, HomePageHandler homePageHandler, TimeSortMapper timeSortMapper, CommodityMapper commodityMapper, JsonsMapper jsonsMapper, RelationMapper relationMapper, CommodityTimeInfoMapper commodityTimeInfoMapper, DiscoverySpider discoverySpider, DiscoveryHandler discoveryHandler) {
+        this.homePageSpider = homePageSpider;
+        this.homePageHandler = homePageHandler;
+        this.timeSortMapper = timeSortMapper;
+        this.commodityMapper = commodityMapper;
+        this.jsonsMapper = jsonsMapper;
+        this.relationMapper = relationMapper;
+        this.commodityTimeInfoMapper = commodityTimeInfoMapper;
+        this.discoverySpider = discoverySpider;
+        this.discoveryHandler = discoveryHandler;
+    }
 
     @Scheduled(cron = "0 0/5 * * * ?")
     public void startHomePageSpider() {
         JSONArray jsonArray = homePageSpider.getJSONArray();
-        TimeSort timesort = timeSortMapper.selectByPrimaryKey(1);
-        CommodityContent commodityContent = homePageHandler.parseJSONArray(jsonArray, timesort.getTimeSort());
+        CommodityContent commodityContent = homePageHandler.parseJSONArray(jsonArray, timeSortMapper.selectByPrimaryKey(1).getTimeSort());
         List<Commodity> commodityList = commodityContent.getCommodityList();
         if (commodityList.size() > 0) {
             commodityMapper.insertList(commodityList);
@@ -62,12 +63,15 @@ public class StartSpider {
     }
 
 
-
+    @Scheduled(cron = "30 0/3 * * * ?")
     public void startDiscoverySpider(){
-        JSONArray jsonArray = discoverySpider.getJSONArray();
-        TimeSort timesort = timeSortMapper.selectByPrimaryKey(2);
-
+        CommodityContent commodityContent = discoveryHandler.parseJSONArray(discoverySpider.getJSONArray(), timeSortMapper.selectByPrimaryKey(2).getTimeSort());
+        List<Commodity> commodityList = commodityContent.getCommodityList();
+        if (commodityList.size() > 0) {
+            commodityMapper.insertList(commodityList);
+            jsonsMapper.insertList(commodityContent.getJsonsList());
+            timeSortMapper.updateByPrimaryKey(new TimeSort(2, commodityList.get(0).getTimeSort()));
+        }
+        commodityTimeInfoMapper.insertList(commodityContent.getCommodityTimeInfoList());
     }
-
-
 }
