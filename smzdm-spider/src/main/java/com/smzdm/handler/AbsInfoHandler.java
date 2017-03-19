@@ -36,12 +36,13 @@ abstract class AbsInfoHandler implements InfoHandler {
             }
         }
         commodity.setReferralName(content.getString("article_referrals"));
-        commodity.setPicUrl(content.getString("article_pic"));
-        if (content.getString("article_url") != null) {
-            commodity.setInfoUrl(content.getString("article_url") );
+        String articlePic = content.getString("article_pic");
+        if (articlePic != null) {
+            commodity.setPicUrl(articlePic);
         }else {
-            commodity.setInfoUrl(content.getString("article_pic_url") );
+            commodity.setPicUrl(content.getString("article_pic_url"));
         }
+        commodity.setInfoUrl(content.getString("article_url") );
         commodity.setMall(content.getString("article_mall"));
         commodity.setMallUrl(content.getString("article_mall_url"));
         commodity.setShoppingUrl(content.getString("article_link"));
@@ -56,7 +57,7 @@ abstract class AbsInfoHandler implements InfoHandler {
         Jsons jsons = new Jsons();
         jsons.setCreateDate(new Date());
         jsons.setContent(content.toJSONString());
-        jsons.setOriginalDate(content.getString("article_date"));
+        jsons.setOriginalDate(content.getString("article_date").trim());
         jsons.setTimeSort(content.getLong("timesort"));
         return jsons;
     }
