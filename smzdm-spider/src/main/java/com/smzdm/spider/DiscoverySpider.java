@@ -33,8 +33,8 @@ public class DiscoverySpider implements PageProcessor {
         Spider spider = Spider.create(new DiscoverySpider());
         List<ResultItems> resultItems = spider.getAll(Arrays.asList("http://faxian.smzdm.com/json_more?page=2", "http://faxian.smzdm.com/json_more?page=1"));
         JSONArray jsonArray = new JSONArray();
-        jsonArray.add(resultItems.get(1).get("json"));
-        jsonArray.add(resultItems.get(0).get("json"));
+        jsonArray.addAll(resultItems.get(1).get("json"));
+        jsonArray.addAll(resultItems.get(0).get("json"));
         spider.close();
         return jsonArray;
     }
