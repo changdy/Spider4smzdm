@@ -54,7 +54,7 @@
         });
         function timeFormatter(value,row,index) {
             if (value > dayUnix) {
-                return (new moment(value)).format('HH:mm:ss');
+                return (new moment(value)).format('HH:mm');
             }else if(value > yearUnix){
                 return (new moment(value)).format('MM-DD HH:mm');
             }else{
