@@ -30,6 +30,6 @@ public class HomePageSpider implements PageProcessor {
         Spider spider = Spider.create(new HomePageSpider());
         ResultItems resultItems = spider.get("http://www.smzdm.com/json_more");
         spider.close();
-        return (JSONArray) resultItems.get("json");
+        return resultItems.get("json");
     }
 }
