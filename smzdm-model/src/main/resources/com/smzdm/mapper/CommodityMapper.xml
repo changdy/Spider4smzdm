@@ -77,4 +77,36 @@
   LIMIT 25;
   </select>
 
+  <select id="queryCommodity" parameterType="com.smzdm.model.CommodityParams" resultType="Map">
+     SELECT a.id, a.article_id articleId, a.title, a.content, a.price_string priceString, a.mall, a.referral_date referralDate, a.time_sort timeSort, b.title category FROM commodity a LEFT JOIN category b ON a.last_category_id = b.id
+    <where>
+     <if test="search!=null and search!=''">
+       a.title LIKE CONCAT(CONCAT('%', #{search, jdbcType=VARCHAR}),'%')
+     </if>
+    </where>
+    <choose>
+      <when test="sort!=null and order!=null">
+        order by ${sort} ${order}
+      </when>
+      <otherwise>
+        order by a.referral_date DESC
+      </otherwise>
+    </choose>
+    <choose>
+      <when test="offset!=null and limit!=null">
+        limit #{offset},#{limit}
+      </when>
+      <otherwise>
+        limit 25
+      </otherwise>
+    </choose>
+  </select>
+<select id="getCommodityCount" parameterType="com.smzdm.model.CommodityParams" resultType="int">
+  SELECT COUNT(*) FROM commodity a
+  <where>
+    <if test="search!=null and search!=''">
+      a.title LIKE CONCAT(CONCAT('%', #{search, jdbcType=VARCHAR}),'%')
+    </if>
+  </where>
+</select>
 </mapper>

@@ -37,18 +37,20 @@
         //table初始化
         var $table = $('#table');
         $table.bootstrapTable({
-            url: 'get-commodity',
+            url: 'query-commodity',
             dataType: "json",
             striped: true,                      //是否显示行间隔色
             singleSelect: true,
+            search:true,
             detailView:true,//显示细节
             detailFormatter:"detailFormatter",
             pagination: true, //分页
             pageNumber:1,                       //初始化加载第一页，默认第一页
-            pageSize: 10,                       //每页的记录行数（*）
-            pageList: [10, 25, 50, 100],        //可供选择的每页的行数（*）
+            pageSize: 25,                       //每页的记录行数（*）
+            pageList: [25, 50, 100],        //可供选择的每页的行数（*）
             showColumns:true,
-            showToggle:true,
+            sortName:'referral_date',
+            sortOrder:'desc',
             sidePagination: "server", //服务端处理分页
             columns:[{field:'id',align:'center',valign:'middle',sortable:true,title:'序号',visible:false},{field:'title',align:'center',valign:'middle',title:'标题'},{field:'category',align:'center',valign:'middle',title:'目录',width:100},{field:'priceString',align:'center',valign:'middle',title:'价格'},{field:'mall',align:'center',valign:'middle',title:'商城'},{field:'comment',align:'center',valign:'middle',title:'评价'},{field:'timeSort',align:'center',valign:'middle',sortable:true,title:'timeSort',visible:false},{field:'referralDate',align:'center',valign:'middle',sortable:true,title:'爆料时间',formatter:'timeFormatter'}]
         });

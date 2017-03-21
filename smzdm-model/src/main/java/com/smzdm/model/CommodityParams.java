@@ -1,6 +1,5 @@
 package com.smzdm.model;
 
-import java.time.LocalDateTime;
 
 /**
  * Created by Changdy on 2017/3/12.
@@ -14,12 +13,12 @@ public class CommodityParams {
     private Long offset;
     //取多少
     private Long limit;
+    //标题
+    private String search;
 
-    //开始时间
-    private LocalDateTime startTime;
+    public CommodityParams() {
+    }
 
-    //结束时间
-    private LocalDateTime endTime;
 
 
     public String getSort() {
@@ -52,5 +51,13 @@ public class CommodityParams {
 
     public void setLimit(Long limit) {
         this.limit = limit;
+    }
+
+    public String getSearch() {
+        return search;
+    }
+
+    public void setSearch(String search) {
+        this.search = search;
     }
 }
