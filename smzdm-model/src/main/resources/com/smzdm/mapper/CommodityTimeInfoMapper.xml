@@ -44,7 +44,11 @@
   </insert>
 
   <select id="getLastComment" resultType="java.lang.String">
-    SELECT CONCAT_WS('/',worthy,unworthy,comment) from commodity_time_info where commodity_id = #{commodityId} order by update_time desc limit 1;
+    SELECT CONCAT_WS('/',worthy,unworthy,comment) from commodity_time_info WHERE commodity_id = #{commodityId}
+      <if test="discoveryFlag !=null and discoveryFlag == false">
+        AND unworthy != -1
+      </if>
+    order by update_time desc limit 1;
   </select>
 
 </mapper>

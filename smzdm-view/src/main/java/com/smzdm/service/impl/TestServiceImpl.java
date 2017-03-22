@@ -27,7 +27,7 @@ public class TestServiceImpl implements TestService {
         for (int i = 0; i < keyInfoMap.size(); i++) {
             Map map = keyInfoMap.get(i);
             Long id = (Long) map.get("articleId");
-            String lastComment = commodityTimeInfoMapper.getLastComment(id);
+            String lastComment = commodityTimeInfoMapper.getLastComment(id,null);
             map.put("comment", lastComment);
         }
         Map<String, Object> map = new HashMap<>();

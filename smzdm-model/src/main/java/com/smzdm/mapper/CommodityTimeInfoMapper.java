@@ -1,6 +1,7 @@
 package com.smzdm.mapper;
 
 import com.smzdm.model.CommodityTimeInfo;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -13,5 +14,5 @@ public interface CommodityTimeInfoMapper {
 
     int insertList(List<CommodityTimeInfo> commodityTimeInfoList);
 
-    String getLastComment(Long commodityId);
+    String getLastComment(@Param("commodityId")Long commodityId,@Param("discoveryFlag")Boolean discoveryFlag);
 }
