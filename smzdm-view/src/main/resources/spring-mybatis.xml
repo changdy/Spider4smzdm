@@ -4,14 +4,8 @@
        xsi:schemaLocation="http://www.springframework.org/schema/beans
 http://www.springframework.org/schema/beans/spring-beans-3.0.xsd http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd">
 
-    <!-- 配置数据源 -->
-    <!--<bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">-->
-        <!--<property name="driverClassName" value="com.mysql.jdbc.Driver"/>-->
-        <!--<property name="url" value="jdbc:mysql://localhost:3306/smzdm_commodity?serverTimezone=GMT%2b8"/>-->
-        <!--<property name="username" value="root"/>-->
-        <!--<property name="password" value="test"/>-->
-    <!--</bean>-->
     <tx:annotation-driven transaction-manager="transactionManager"/>
+    <!-- 配置数据源 -->
     <bean name="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
         <property name="dataSource" ref="dataSource"/>
     </bean>
