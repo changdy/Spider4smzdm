@@ -1,8 +1,8 @@
 package com.smzdm.main;
 
 import com.alibaba.fastjson.JSONArray;
-import com.smzdm.handler.DiscoveryHandler;
-import com.smzdm.handler.HomePageHandler;
+import com.smzdm.service.DiscoveryHandler;
+import com.smzdm.service.HomePageHandler;
 import com.smzdm.mapper.*;
 import com.smzdm.model.Commodity;
 import com.smzdm.model.CommodityContent;
