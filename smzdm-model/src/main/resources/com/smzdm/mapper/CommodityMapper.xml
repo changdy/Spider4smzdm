@@ -109,4 +109,9 @@
     </if>
   </where>
 </select>
+<delete id="deleteDupl" parameterType="java.time.LocalDateTime">
+DELETE FROM smzdm_commodity.commodity WHERE  article_id IN
+(SELECT * FROM (select article_id from smzdm_commodity.commodity  where create_date >#{time} GROUP BY article_id HAVING  count(article_id)>1) as temp) and discovery_flag =1
+</delete>
+
 </mapper>

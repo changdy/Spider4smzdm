@@ -3,6 +3,7 @@ package com.smzdm.mapper;
 import com.smzdm.model.Commodity;
 import com.smzdm.model.CommodityParams;
 
+import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -19,4 +20,6 @@ public interface CommodityMapper {
     List<Map<String,Object>> queryCommodity(CommodityParams CommodityParams);
 
     int getCommodityCount(CommodityParams CommodityParams);
+
+    int deleteDupl(LocalDateTime time);
 }
