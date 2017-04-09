@@ -8,6 +8,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.HashMap;
 import java.util.List;
@@ -17,6 +18,7 @@ import java.util.Map;
  * Created by Changdy on 2017/3/21.
  */
 @Service
+@Transactional
 public class QueryCommodityServiceImpl implements QueryCommodityService {
     private final CommodityMapper commodityMapper;
 
