@@ -1,8 +1,10 @@
-package com.smzdm.service;
+package com.smzdm.service.json;
 
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.smzdm.model.*;
+import com.smzdm.service.CategoryHandler;
+import com.smzdm.service.ChannelHandler;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
