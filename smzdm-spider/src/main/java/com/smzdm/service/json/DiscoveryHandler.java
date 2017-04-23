@@ -46,7 +46,7 @@ public class DiscoveryHandler extends AbsInfoHandler {
                         }
                     }
                 }
-                commodity.setLastCategoryId(categoryHandler.getCategoryId(jsonContent.getString("article_top_category")));
+                commodity.setLastCategoryId(categoryHandler.getCategoryId(jsonContent.getString("top_category")));
                 commodityContent.getCommodityList().add(commodity);
                 commodityContent.getJsonsList().add(initJsons(jsonContent));
             }
