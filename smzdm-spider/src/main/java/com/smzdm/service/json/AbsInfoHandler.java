@@ -68,7 +68,7 @@ public abstract class AbsInfoHandler implements InfoHandler {
         CommodityTimeInfo commodityTimeInfo = new CommodityTimeInfo();
         commodityTimeInfo.setCollection(content.getInteger("article_collection"));
         commodityTimeInfo.setComment(content.getInteger("article_comment"));
-        commodityTimeInfo.setCommodityId(content.getLong("article_id"));
+        commodityTimeInfo.setArticleId(content.getLong("article_id"));
         commodityTimeInfo.setUpdateTime(new Date());
         if (!discovery) {
             commodityTimeInfo.setWorthy(content.getInteger("article_worthy"));

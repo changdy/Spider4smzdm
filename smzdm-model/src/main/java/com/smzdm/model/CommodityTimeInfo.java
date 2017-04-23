@@ -5,7 +5,7 @@ import java.util.Date;
 public class CommodityTimeInfo {
     private Integer id;
 
-    private Long commodityId;
+    private Long articleId;
 
     private Integer comment;
 
@@ -21,9 +21,9 @@ public class CommodityTimeInfo {
 
     private Date updateTime;
 
-    public CommodityTimeInfo(Integer id, Long commodityId, Integer comment, Integer collection, Integer worthy, Integer unworthy, Integer soldOut, Integer timeout, Date updateTime) {
+    public CommodityTimeInfo(Integer id, Long articleId, Integer comment, Integer collection, Integer worthy, Integer unworthy, Integer soldOut, Integer timeout, Date updateTime) {
         this.id = id;
-        this.commodityId = commodityId;
+        this.articleId = articleId;
         this.comment = comment;
         this.collection = collection;
         this.worthy = worthy;
@@ -45,12 +45,12 @@ public class CommodityTimeInfo {
         this.id = id;
     }
 
-    public Long getCommodityId() {
-        return commodityId;
+    public Long getArticleId() {
+        return articleId;
     }
 
-    public void setCommodityId(Long commodityId) {
-        this.commodityId = commodityId;
+    public void setArticleId(Long articleId) {
+        this.articleId = articleId;
     }
 
     public Integer getComment() {

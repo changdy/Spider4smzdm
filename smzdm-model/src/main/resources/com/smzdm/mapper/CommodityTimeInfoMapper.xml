@@ -4,7 +4,7 @@
   <resultMap id="BaseResultMap" type="com.smzdm.model.CommodityTimeInfo" >
     <constructor >
       <idArg column="id" jdbcType="INTEGER" javaType="java.lang.Integer" />
-      <arg column="commodity_id" jdbcType="BIGINT" javaType="java.lang.Long" />
+      <arg column="article_id" jdbcType="BIGINT" javaType="java.lang.Long" />
       <arg column="comment" jdbcType="INTEGER" javaType="java.lang.Integer" />
       <arg column="collection" jdbcType="INTEGER" javaType="java.lang.Integer" />
       <arg column="worthy" jdbcType="INTEGER" javaType="java.lang.Integer" />
@@ -15,36 +15,36 @@
     </constructor>
   </resultMap>
   <insert id="insert" parameterType="com.smzdm.model.CommodityTimeInfo" >
-    insert into commodity_time_info (id, commodity_id, comment, 
-      collection, worthy, unworthy, 
-      sold_out, timeout, update_time
-      )
-    values (#{id,jdbcType=INTEGER}, #{commodityId,jdbcType=BIGINT}, #{comment,jdbcType=INTEGER}, 
-      #{collection,jdbcType=INTEGER}, #{worthy,jdbcType=INTEGER}, #{unworthy,jdbcType=INTEGER}, 
-      #{soldOut,jdbcType=INTEGER}, #{timeout,jdbcType=INTEGER}, #{updateTime,jdbcType=TIMESTAMP}
-      )
+    insert into commodity_time_info (id, article_id, comment,
+    collection, worthy, unworthy,
+    sold_out, timeout, update_time
+    )
+    values (#{id,jdbcType=INTEGER}, #{articleId,jdbcType=BIGINT}, #{comment,jdbcType=INTEGER},
+    #{collection,jdbcType=INTEGER}, #{worthy,jdbcType=INTEGER}, #{unworthy,jdbcType=INTEGER},
+    #{soldOut,jdbcType=INTEGER}, #{timeout,jdbcType=INTEGER}, #{updateTime,jdbcType=TIMESTAMP}
+    )
   </insert>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
-    select id, commodity_id, comment, collection, worthy, unworthy, sold_out, timeout, 
+    select id, article_id, comment, collection, worthy, unworthy, sold_out, timeout,
     update_time
     from commodity_time_info
     where id = #{id,jdbcType=INTEGER}
   </select>
   <select id="selectAll" resultMap="BaseResultMap" >
-    select id, commodity_id, comment, collection, worthy, unworthy, sold_out, timeout, 
+    select id, article_id, comment, collection, worthy, unworthy, sold_out, timeout,
     update_time
     from commodity_time_info
   </select>
 
   <insert id="insertList" parameterType="list">
-    insert into commodity_time_info (id, commodity_id, comment,collection, worthy, unworthy,sold_out, timeout, update_time) values
+    insert into commodity_time_info (id, article_id, comment,collection, worthy, unworthy,sold_out, timeout, update_time) values
     <foreach collection="list" item="item" separator=",">
-      (#{item.id,jdbcType=INTEGER},#{item.commodityId,jdbcType=BIGINT},#{item.comment,jdbcType=INTEGER},#{item.collection,jdbcType=INTEGER},#{item.worthy,jdbcType=INTEGER},#{item.unworthy,jdbcType=INTEGER},#{item.soldOut,jdbcType=INTEGER},#{item.timeout,jdbcType=INTEGER},#{item.updateTime,jdbcType=TIMESTAMP})
+      (#{item.id,jdbcType=INTEGER},#{item.articleId,jdbcType=BIGINT},#{item.comment,jdbcType=INTEGER},#{item.collection,jdbcType=INTEGER},#{item.worthy,jdbcType=INTEGER},#{item.unworthy,jdbcType=INTEGER},#{item.soldOut,jdbcType=INTEGER},#{item.timeout,jdbcType=INTEGER},#{item.updateTime,jdbcType=TIMESTAMP})
     </foreach>
   </insert>
 
   <select id="getLastComment" resultType="java.lang.String">
-    SELECT CONCAT_WS('/',worthy,unworthy,comment) from commodity_time_info WHERE commodity_id = #{commodityId} order by update_time desc limit 1;
+    SELECT CONCAT_WS('/',worthy,unworthy,comment) from commodity_time_info WHERE article_id = #{articleId} order by update_time desc limit 1;
   </select>
 
 </mapper>
