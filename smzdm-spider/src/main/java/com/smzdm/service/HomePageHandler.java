@@ -40,19 +40,19 @@ public class HomePageHandler extends AbsInfoHandler {
                 commodity.setDiscoveryFlag(0);
                 JSONArray articleTeseTags = jsonContent.getJSONArray("article_tese_tags");
                 if (articleTeseTags != null && articleTeseTags.size() > 0) {
-                    String tags = "";
+                    StringBuilder tags = new StringBuilder();
                     for (int i = 0; i < articleTeseTags.size(); i++) {
-                        tags += articleTeseTags.getJSONObject(i).getString("name");
+                        tags.append(articleTeseTags.getJSONObject(i).getString("name"));
                     }
-                    commodity.setTags(tags);
+                    commodity.setTags(tags.toString());
                 }
                 JSONArray mallMoreInfo = jsonContent.getJSONArray("mall_more_info");
                 if (mallMoreInfo != null && mallMoreInfo.size() > 0) {
-                    String infoTitle = "";
+                    StringBuilder infoTitle = new StringBuilder();
                     for (int i = 0; i < mallMoreInfo.size(); i++) {
-                        infoTitle += mallMoreInfo.getJSONObject(i).getString("title");
+                        infoTitle.append(mallMoreInfo.getJSONObject(i).getString("title"));
                     }
-                    commodity.setInfoTitle(infoTitle);
+                    commodity.setInfoTitle(infoTitle.toString());
                 }
                 JSONArray categoryLayer = jsonContent.getJSONArray("category_layer");
                 if (categoryLayer != null && categoryLayer.size() > 0) {
