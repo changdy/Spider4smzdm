@@ -1,9 +1,11 @@
-package com.smzdm.service;
+package com.smzdm.service.json;
 
 import com.alibaba.fastjson.JSONObject;
 import com.smzdm.model.Commodity;
 import com.smzdm.model.CommodityTimeInfo;
 import com.smzdm.model.Jsons;
+import com.smzdm.service.DateTimeHandler;
+import com.smzdm.service.InfoHandler;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.time.LocalDateTime;
@@ -12,12 +14,12 @@ import java.util.Date;
 /**
  * Created by Changdy on 2017/3/18.
  */
-abstract class AbsInfoHandler implements InfoHandler {
+public abstract class AbsInfoHandler implements InfoHandler {
 
     @Autowired
     private DateTimeHandler dateTimeHandler;
 
-    Commodity initCommodity(JSONObject content) {
+    public Commodity initCommodity(JSONObject content) {
         Commodity commodity = new Commodity();
         commodity.setArticleId(content.getLong("article_id"));
         commodity.setTitle(content.getString("article_title"));
@@ -53,7 +55,7 @@ abstract class AbsInfoHandler implements InfoHandler {
         return commodity;
     }
 
-    Jsons initJsons(JSONObject content) {
+    public Jsons initJsons(JSONObject content) {
         Jsons jsons = new Jsons();
         jsons.setCreateDate(new Date());
         jsons.setContent(content.toJSONString());
@@ -62,7 +64,7 @@ abstract class AbsInfoHandler implements InfoHandler {
         return jsons;
     }
 
-    CommodityTimeInfo initCommodityTimeInfo(JSONObject content, boolean discovery) {
+    public CommodityTimeInfo initCommodityTimeInfo(JSONObject content, boolean discovery) {
         CommodityTimeInfo commodityTimeInfo = new CommodityTimeInfo();
         commodityTimeInfo.setCollection(content.getInteger("article_collection"));
         commodityTimeInfo.setComment(content.getInteger("article_comment"));
