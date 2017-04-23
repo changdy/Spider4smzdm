@@ -43,8 +43,16 @@
     </foreach>
   </insert>
 
-  <select id="getLastComment" resultType="java.lang.String">
-    SELECT CONCAT_WS('/',worthy,unworthy,comment) from commodity_time_info WHERE article_id = #{articleId} order by update_time desc limit 1;
-  </select>
+
+  <delete id="deleteByArticleIds">
+    delete FROM commodity_last_info WHERE FIND_IN_SET(article_id,#{articleIds})
+  </delete>
+
+  <insert id="insertListToLast" parameterType="list">
+    insert into commodity_last_info (id, article_id, comment,collection, worthy, unworthy,sold_out, timeout, update_time) values
+    <foreach collection="list" item="item" separator=",">
+      (#{item.id,jdbcType=INTEGER},#{item.articleId,jdbcType=BIGINT},#{item.comment,jdbcType=INTEGER},#{item.collection,jdbcType=INTEGER},#{item.worthy,jdbcType=INTEGER},#{item.unworthy,jdbcType=INTEGER},#{item.soldOut,jdbcType=INTEGER},#{item.timeout,jdbcType=INTEGER},#{item.updateTime,jdbcType=TIMESTAMP})
+    </foreach>
+  </insert>
 
 </mapper>

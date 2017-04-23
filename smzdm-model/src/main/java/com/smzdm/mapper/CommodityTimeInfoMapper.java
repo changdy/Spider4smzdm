@@ -14,5 +14,7 @@ public interface CommodityTimeInfoMapper {
 
     int insertList(List<CommodityTimeInfo> commodityTimeInfoList);
 
-    String getLastComment(@Param("commodityId")Long commodityId,@Param("discoveryFlag")Boolean discoveryFlag);
+    int deleteByArticleIds(String articleIds);
+
+    int insertListToLast(List<CommodityTimeInfo> commodityTimeInfoList);
 }

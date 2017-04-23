@@ -1,18 +1,16 @@
 package com.smzdm.main;
 
 import com.alibaba.fastjson.JSONArray;
+import com.smzdm.mapper.*;
+import com.smzdm.model.*;
 import com.smzdm.service.json.DiscoveryHandler;
 import com.smzdm.service.json.HomePageHandler;
-import com.smzdm.mapper.*;
-import com.smzdm.model.Commodity;
-import com.smzdm.model.CommodityContent;
-import com.smzdm.model.Relation;
-import com.smzdm.model.TimeSort;
 import com.smzdm.spider.DiscoverySpider;
 import com.smzdm.spider.HomePageSpider;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -20,6 +18,7 @@ import java.util.List;
  * Created by Changdy on 2017/3/7.
  */
 @Service
+@Transactional
 public class StartSpider {
     private final HomePageSpider homePageSpider;
 
@@ -59,12 +58,12 @@ public class StartSpider {
             }
             timeSortMapper.updateByPrimaryKey(new TimeSort(1, commodityList.get(0).getTimeSort()));
         }
-        commodityTimeInfoMapper.insertList(commodityContent.getCommodityTimeInfoList());
+        addTimeInfo(commodityContent.getCommodityTimeInfoList());
     }
 
 
     @Scheduled(cron = "30 0/3 * * * ?")
-    public void startDiscoverySpider(){
+    public void startDiscoverySpider() {
         CommodityContent commodityContent = discoveryHandler.parseJSONArray(discoverySpider.getJSONArray(), timeSortMapper.selectByPrimaryKey(2).getTimeSort());
         List<Commodity> commodityList = commodityContent.getCommodityList();
         if (commodityList.size() > 0) {
@@ -72,6 +71,16 @@ public class StartSpider {
             jsonsMapper.insertList(commodityContent.getJsonsList());
             timeSortMapper.updateByPrimaryKey(new TimeSort(2, commodityList.get(0).getTimeSort()));
         }
-        commodityTimeInfoMapper.insertList(commodityContent.getCommodityTimeInfoList());
+        addTimeInfo(commodityContent.getCommodityTimeInfoList());
+    }
+
+    private void addTimeInfo(List<CommodityTimeInfo> infoList) {
+        commodityTimeInfoMapper.insertList(infoList);
+        StringBuilder stringBuilder = new StringBuilder();
+        for (CommodityTimeInfo commodityTimeInfo : infoList) {
+            stringBuilder.append(commodityTimeInfo.getArticleId().toString()).append(",");
+        }
+        commodityTimeInfoMapper.deleteByArticleIds(stringBuilder.toString());
+        commodityTimeInfoMapper.insertListToLast(infoList);
     }
 }
