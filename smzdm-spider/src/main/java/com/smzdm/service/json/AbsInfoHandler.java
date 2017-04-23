@@ -77,7 +77,7 @@ public abstract class AbsInfoHandler implements InfoHandler {
             commodityTimeInfo.setTimeout(content.getInteger("article_is_timeout"));
         } else {
             commodityTimeInfo.setWorthy(content.getInteger("article_rating"));
-            commodityTimeInfo.setUnworthy(-1);
+            commodityTimeInfo.setUnworthy(0);
             commodityTimeInfo.setTimeout(content.getInteger("is_timeout"));
         }
         return commodityTimeInfo;

@@ -78,20 +78,13 @@
   </select>
 
   <select id="queryCommodity" parameterType="com.smzdm.model.CommodityParams" resultType="Map">
-     SELECT a.id, a.article_id articleId,a.discovery_flag flag,a.title, a.content, a.price_string priceString, a.mall, a.referral_date referralDate, a.time_sort timeSort, b.title category FROM commodity a LEFT JOIN category b ON a.last_category_id = b.id
+     SELECT a.id, a.article_id articleId,a.title, a.content, a.price_string priceString, a.mall, a.referral_date referralDate, a.time_sort timeSort, b.title category ,CONCAT_WS('/',info.worthy,info.unworthy,info.comment) comment FROM commodity_last_info info,commodity a ,category b
     <where>
+      info.article_id = a.article_id AND  a.last_category_id = b.id
      <if test="search!=null and search!=''">
-       a.title LIKE CONCAT(CONCAT('%', #{search, jdbcType=VARCHAR}),'%')
+      AND a.title LIKE CONCAT(CONCAT('%', #{search, jdbcType=VARCHAR}),'%')
      </if>
     </where>
-    <choose>
-      <when test="sort!=null and order!=null">
-        order by ${sort} ${order}
-      </when>
-      <otherwise>
-        order by a.referral_date DESC
-      </otherwise>
-    </choose>
     <choose>
       <when test="offset!=null and limit!=null">
         limit #{offset},#{limit}
@@ -102,7 +95,7 @@
     </choose>
   </select>
 <select id="getCommodityCount" parameterType="com.smzdm.model.CommodityParams" resultType="int">
-  SELECT COUNT(*) FROM commodity a
+  SELECT COUNT(*) FROM commodity
   <where>
     <if test="search!=null and search!=''">
       a.title LIKE CONCAT(CONCAT('%', #{search, jdbcType=VARCHAR}),'%')

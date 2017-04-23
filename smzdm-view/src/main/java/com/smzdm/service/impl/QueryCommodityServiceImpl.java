@@ -39,8 +39,11 @@ public class QueryCommodityServiceImpl implements QueryCommodityService {
         try {
             resultMap.put("rows", commodityList);
             if (commodityList != null) {
-                for (Map<String, Object> commodityMap : commodityList) {
-                    commodityMap.put("comment", 0);
+                for (Map<String, Object> map : commodityList) {
+                    String comment = map.get("comment").toString();
+                    if (comment.equals("0/-1/0") || comment.equals("0/0/0")) {
+                        map.put("comment", 0);
+                    }
                 }
                 resultMap.put("total", commodityMapper.getCommodityCount(commodityParams));
             } else {
