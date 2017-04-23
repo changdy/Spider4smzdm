@@ -2,7 +2,9 @@ package com.smzdm.service.json;
 
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
-import com.smzdm.model.*;
+import com.smzdm.model.Commodity;
+import com.smzdm.model.CommodityContent;
+import com.smzdm.model.Relation;
 import com.smzdm.service.CategoryHandler;
 import com.smzdm.service.ChannelHandler;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,10 +34,10 @@ public class HomePageHandler extends AbsInfoHandler {
             JSONObject jsonContent = jsonArray.getJSONObject(arrayIndex);
             boolean skip = false;
             Integer channelId = channelHandler.getChannelId(jsonContent);
-            if (channelId < 6) {
+            if (channelId < 6 || channelId > 9) {
                 skip = true;
             }
-            if (jsonContent.getLong("timesort") > maxTimesort) {
+            if (jsonContent.getLong("timesort") > maxTimesort && !skip) {
                 //初始化
                 Commodity commodity = initCommodity(jsonContent);
                 commodity.setChannelId(channelId);
@@ -68,7 +70,7 @@ public class HomePageHandler extends AbsInfoHandler {
                 commodityContent.getJsonsList().add(initJsons(jsonContent));
             }
             if (!skip) {
-                commodityContent.getCommodityTimeInfoList().add(initCommodityTimeInfo(jsonContent,false));
+                commodityContent.getCommodityTimeInfoList().add(initCommodityTimeInfo(jsonContent, false));
             }
         }
         return commodityContent;
