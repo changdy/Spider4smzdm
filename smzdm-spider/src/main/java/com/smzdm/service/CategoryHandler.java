@@ -43,9 +43,9 @@ public class CategoryHandler {
             Integer id = categoryLayer.getJSONObject(i).getInteger("ID");
             if (!checkInTheList(id)) {
                 String title = categoryLayer.getJSONObject(i).getString("title");
-                String urlNicktitle = categoryLayer.getJSONObject(i).getString("url_nicktitle");
+                String urlNickTitle = categoryLayer.getJSONObject(i).getString("url_nicktitle");
                 Integer parentId = categoryLayer.getJSONObject(i).getInteger("parent_id");
-                Category category = new Category(id, title, parentId, urlNicktitle, i);
+                Category category = new Category(id, title, parentId, urlNickTitle, i);
                 newCategoryList.add(category);
                 categoryList.add(category);
             } else {
