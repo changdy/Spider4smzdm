@@ -46,7 +46,7 @@ public class HomePageHandler extends AbsInfoHandler {
                 if (articleTeseTags != null && articleTeseTags.size() > 0) {
                     StringBuilder tags = new StringBuilder();
                     for (int i = 0; i < articleTeseTags.size(); i++) {
-                        tags.append(articleTeseTags.getJSONObject(i).getString("name"));
+                        tags.append(articleTeseTags.getJSONObject(i).getString("name")).append(",");
                     }
                     commodity.setTags(tags.toString());
                 }
@@ -54,7 +54,7 @@ public class HomePageHandler extends AbsInfoHandler {
                 if (mallMoreInfo != null && mallMoreInfo.size() > 0) {
                     StringBuilder infoTitle = new StringBuilder();
                     for (int i = 0; i < mallMoreInfo.size(); i++) {
-                        infoTitle.append(mallMoreInfo.getJSONObject(i).getString("title"));
+                        infoTitle.append(mallMoreInfo.getJSONObject(i).getString("title")).append(",");
                     }
                     commodity.setInfoTitle(infoTitle.toString());
                 }
