@@ -24,7 +24,6 @@ public class DiscoveryHandler extends AbsInfoHandler {
 
 
 
-    @Override
     public CommodityContent parseJSONArray(JSONArray jsonArray, Long maxTimesort) {
         CommodityContent commodityContent = new CommodityContent();
         for (int arrayIndex = 0; arrayIndex < jsonArray.size(); arrayIndex++) {
@@ -46,7 +45,7 @@ public class DiscoveryHandler extends AbsInfoHandler {
                         }
                     }
                 }
-                commodity.setLastCategoryId(categoryHandler.getCategoryId(jsonContent.getString("top_category")));
+                commodity.setTopCategoryId(categoryHandler.getCategoryId(jsonContent.getString("article_top_category")));
                 commodityContent.getCommodityList().add(commodity);
                 commodityContent.getJsonsList().add(initJsons(jsonContent));
             }

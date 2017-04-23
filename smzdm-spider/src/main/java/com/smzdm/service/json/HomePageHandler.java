@@ -27,7 +27,6 @@ public class HomePageHandler extends AbsInfoHandler {
     }
 
 
-    @Override
     public CommodityContent parseJSONArray(JSONArray jsonArray, Long maxTimesort) {
         CommodityContent commodityContent = new CommodityContent();
         for (int arrayIndex = 0; arrayIndex < jsonArray.size(); arrayIndex++) {
@@ -68,6 +67,7 @@ public class HomePageHandler extends AbsInfoHandler {
                 }
                 commodityContent.getCommodityList().add(commodity);
                 commodityContent.getJsonsList().add(initJsons(jsonContent));
+                commodity.setTopCategoryId(categoryHandler.getCategoryId(jsonContent.getString("top_category")));
             }
             if (!skip) {
                 commodityContent.getCommodityTimeInfoList().add(initCommodityTimeInfo(jsonContent, false));

@@ -5,7 +5,6 @@ import com.smzdm.model.Commodity;
 import com.smzdm.model.CommodityTimeInfo;
 import com.smzdm.model.Jsons;
 import com.smzdm.service.DateTimeHandler;
-import com.smzdm.service.InfoHandler;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.time.LocalDateTime;
@@ -14,7 +13,7 @@ import java.util.Date;
 /**
  * Created by Changdy on 2017/3/18.
  */
-public abstract class AbsInfoHandler implements InfoHandler {
+public abstract class AbsInfoHandler{
 
     @Autowired
     private DateTimeHandler dateTimeHandler;

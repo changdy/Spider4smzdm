@@ -70,7 +70,7 @@ public class CategoryHandler {
     }
 
     public Integer getCategoryId(String title) {
-        if (title.isEmpty()) {
+        if (title == null || title.isEmpty()) {
             return null;
         }
         for (Category category : categoryList) {
