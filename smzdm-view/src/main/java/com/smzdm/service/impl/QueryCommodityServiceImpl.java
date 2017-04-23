@@ -40,26 +40,7 @@ public class QueryCommodityServiceImpl implements QueryCommodityService {
             resultMap.put("rows", commodityList);
             if (commodityList != null) {
                 for (Map<String, Object> commodityMap : commodityList) {
-                    Integer flag = (Integer) commodityMap.get("flag");
-                    if (flag == null || flag == 0) {
-                        //非发现
-                        String comment = commodityTimeInfoMapper.getLastComment((Long) commodityMap.get("articleId"), false);
-                        if (comment != null) {
-                            if (comment.equals("0/0/0")) {
-                                commodityMap.put("comment", 0);
-                            } else {
-                                commodityMap.put("comment", comment);
-                            }
-                        }
-                    } else {
-                        //发现
-                        String comment = commodityTimeInfoMapper.getLastComment((Long) commodityMap.get("articleId"), true);
-                        if (comment.equals("0/-1/0") || comment.equals("0/0/0")) {
-                            commodityMap.put("comment", 0);
-                        } else {
-                            commodityMap.put("comment", comment);
-                        }
-                    }
+                    commodityMap.put("comment", 0);
                 }
                 resultMap.put("total", commodityMapper.getCommodityCount(commodityParams));
             } else {
