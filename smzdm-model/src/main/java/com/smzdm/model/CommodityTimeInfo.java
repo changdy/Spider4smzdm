@@ -19,9 +19,15 @@ public class CommodityTimeInfo {
 
     private Integer timeout;
 
+    private Integer discoveryFlag;
+
     private Date updateTime;
 
-    public CommodityTimeInfo(Integer id, Long articleId, Integer comment, Integer collection, Integer worthy, Integer unworthy, Integer soldOut, Integer timeout, Date updateTime) {
+    public CommodityTimeInfo() {
+    }
+
+    public CommodityTimeInfo(Integer id, Long articleId, Integer comment, Integer collection, Integer worthy, Integer unworthy, Integer soldOut, Integer timeout, Integer discoveryFlag, Date updateTime) {
+
         this.id = id;
         this.articleId = articleId;
         this.comment = comment;
@@ -30,14 +36,12 @@ public class CommodityTimeInfo {
         this.unworthy = unworthy;
         this.soldOut = soldOut;
         this.timeout = timeout;
+        this.discoveryFlag = discoveryFlag;
         this.updateTime = updateTime;
     }
 
-    public CommodityTimeInfo() {
-        super();
-    }
-
     public Integer getId() {
+
         return id;
     }
 
@@ -101,11 +105,35 @@ public class CommodityTimeInfo {
         this.timeout = timeout;
     }
 
+    public Integer getDiscoveryFlag() {
+        return discoveryFlag;
+    }
+
+    public void setDiscoveryFlag(Integer discoveryFlag) {
+        this.discoveryFlag = discoveryFlag;
+    }
+
     public Date getUpdateTime() {
         return updateTime;
     }
 
     public void setUpdateTime(Date updateTime) {
         this.updateTime = updateTime;
+    }
+
+    @Override
+    public String toString() {
+        return "CommodityTimeInfo{" +
+                "id=" + id +
+                ", articleId=" + articleId +
+                ", comment=" + comment +
+                ", collection=" + collection +
+                ", worthy=" + worthy +
+                ", unworthy=" + unworthy +
+                ", soldOut=" + soldOut +
+                ", timeout=" + timeout +
+                ", discoveryFlag=" + discoveryFlag +
+                ", updateTime=" + updateTime +
+                '}';
     }
 }

@@ -18,5 +18,8 @@ public class MainClass {
         ApplicationContext ctx = new ClassPathXmlApplicationContext("spring.xml");
         ctx.getBean(CategoryHandler.class).initIds();
         ctx.getBean(ChannelHandler.class).initList();
+        //StartSpider bean = ctx.getBean(StartSpider.class);
+        //bean.startDiscoverySpider();
+        //bean.startHomePageSpider();
     }
 }

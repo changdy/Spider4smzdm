@@ -11,35 +11,34 @@
       <arg column="unworthy" jdbcType="INTEGER" javaType="java.lang.Integer" />
       <arg column="sold_out" jdbcType="INTEGER" javaType="java.lang.Integer" />
       <arg column="timeout" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="discovery_flag" jdbcType="INTEGER" javaType="java.lang.Integer" />
       <arg column="update_time" jdbcType="TIMESTAMP" javaType="java.util.Date" />
     </constructor>
   </resultMap>
   <insert id="insert" parameterType="com.smzdm.model.CommodityTimeInfo" >
     insert into commodity_time_info (id, article_id, comment,
     collection, worthy, unworthy,
-    sold_out, timeout, update_time
+    sold_out, timeout,discovery_flag, update_time
     )
     values (#{id,jdbcType=INTEGER}, #{articleId,jdbcType=BIGINT}, #{comment,jdbcType=INTEGER},
     #{collection,jdbcType=INTEGER}, #{worthy,jdbcType=INTEGER}, #{unworthy,jdbcType=INTEGER},
-    #{soldOut,jdbcType=INTEGER}, #{timeout,jdbcType=INTEGER}, #{updateTime,jdbcType=TIMESTAMP}
+    #{soldOut,jdbcType=INTEGER}, #{timeout,jdbcType=INTEGER}, #{discoveryFlag,jdbcType=INTEGER}, #{updateTime,jdbcType=TIMESTAMP}
     )
   </insert>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
-    select id, article_id, comment, collection, worthy, unworthy, sold_out, timeout,
-    update_time
+    select id, article_id, comment, collection, worthy, unworthy, sold_out, timeout,discovery_flag,update_time
     from commodity_time_info
     where id = #{id,jdbcType=INTEGER}
   </select>
   <select id="selectAll" resultMap="BaseResultMap" >
-    select id, article_id, comment, collection, worthy, unworthy, sold_out, timeout,
-    update_time
+    select id, article_id, comment, collection, worthy, unworthy, sold_out, timeout,discovery_flag,update_time
     from commodity_time_info
   </select>
 
   <insert id="insertList" parameterType="list">
-    insert into commodity_time_info (id, article_id, comment,collection, worthy, unworthy,sold_out, timeout, update_time) values
+    insert into commodity_time_info (id, article_id, comment,collection, worthy, unworthy,sold_out, timeout,discovery_flag,update_time) values
     <foreach collection="list" item="item" separator=",">
-      (#{item.id,jdbcType=INTEGER},#{item.articleId,jdbcType=BIGINT},#{item.comment,jdbcType=INTEGER},#{item.collection,jdbcType=INTEGER},#{item.worthy,jdbcType=INTEGER},#{item.unworthy,jdbcType=INTEGER},#{item.soldOut,jdbcType=INTEGER},#{item.timeout,jdbcType=INTEGER},#{item.updateTime,jdbcType=TIMESTAMP})
+      (#{item.id,jdbcType=INTEGER},#{item.articleId,jdbcType=BIGINT},#{item.comment,jdbcType=INTEGER},#{item.collection,jdbcType=INTEGER},#{item.worthy,jdbcType=INTEGER},#{item.unworthy,jdbcType=INTEGER},#{item.soldOut,jdbcType=INTEGER},#{item.timeout,jdbcType=INTEGER},#{item.discoveryFlag,jdbcType=INTEGER},#{item.updateTime,jdbcType=TIMESTAMP})
     </foreach>
   </insert>
 
@@ -49,9 +48,9 @@
   </delete>
 
   <insert id="insertListToLast" parameterType="list">
-    insert into commodity_last_info (id, article_id, comment,collection, worthy, unworthy,sold_out, timeout, update_time) values
+    insert into commodity_last_info (id, article_id, comment,collection, worthy, unworthy,sold_out, timeout, discovery_flag,update_time) values
     <foreach collection="list" item="item" separator=",">
-      (#{item.id,jdbcType=INTEGER},#{item.articleId,jdbcType=BIGINT},#{item.comment,jdbcType=INTEGER},#{item.collection,jdbcType=INTEGER},#{item.worthy,jdbcType=INTEGER},#{item.unworthy,jdbcType=INTEGER},#{item.soldOut,jdbcType=INTEGER},#{item.timeout,jdbcType=INTEGER},#{item.updateTime,jdbcType=TIMESTAMP})
+      (#{item.id,jdbcType=INTEGER},#{item.articleId,jdbcType=BIGINT},#{item.comment,jdbcType=INTEGER},#{item.collection,jdbcType=INTEGER},#{item.worthy,jdbcType=INTEGER},#{item.unworthy,jdbcType=INTEGER},#{item.soldOut,jdbcType=INTEGER},#{item.timeout,jdbcType=INTEGER},#{item.discoveryFlag,jdbcType=INTEGER},#{item.updateTime,jdbcType=TIMESTAMP})
     </foreach>
   </insert>
 

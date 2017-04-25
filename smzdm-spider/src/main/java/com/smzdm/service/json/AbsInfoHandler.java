@@ -71,8 +71,8 @@ public abstract class AbsInfoHandler{
         commodityTimeInfo.setUpdateTime(new Date());
         if (discovery) {
             commodityTimeInfo.setWorthy(content.getInteger("article_rating"));
-            commodityTimeInfo.setUnworthy(-1);
             commodityTimeInfo.setTimeout(content.getInteger("is_timeout"));
+            commodityTimeInfo.setDiscoveryFlag(1);
         } else {
             commodityTimeInfo.setWorthy(content.getInteger("article_worthy"));
             commodityTimeInfo.setUnworthy(content.getInteger("article_unworthy"));

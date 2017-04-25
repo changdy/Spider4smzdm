@@ -41,7 +41,7 @@ public class QueryCommodityServiceImpl implements QueryCommodityService {
             if (commodityList != null) {
                 for (Map<String, Object> map : commodityList) {
                     String comment = map.get("comment").toString();
-                    if (comment.equals("0/-1/0/0") || comment.equals("0/0/0/0")) {
+                    if (comment.equals("0/0/0/0")) {
                         map.put("comment", 0);
                     }
                 }
