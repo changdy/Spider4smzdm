@@ -61,13 +61,14 @@
   </insert>
 
   <select id="queryCommodity" parameterType="com.smzdm.model.CommodityParams" resultType="Map">
-     SELECT a.id, a.article_id articleId,a.title, a.content, a.price_string priceString, a.mall, a.referral_date referralDate, a.time_sort timeSort, b.title category ,CONCAT_WS('/',info.worthy,info.unworthy,info.comment) comment FROM commodity_last_info info,commodity a ,category b
+     SELECT a.id, a.article_id articleId,a.title, a.content, a.price_string priceString, a.mall, a.referral_date referralDate, a.time_sort timeSort, b.title category ,CONCAT_WS('/',info.worthy,info.unworthy,info.comment,info.collection) comment FROM commodity_last_info info,commodity a ,category b
     <where>
       info.article_id = a.article_id AND  a.top_category_id = b.id
      <if test="search!=null and search!=''">
       AND a.title LIKE CONCAT(CONCAT('%', #{search, jdbcType=VARCHAR}),'%')
      </if>
     </where>
+    order by id desc
     <choose>
       <when test="offset!=null and limit!=null">
         limit #{offset},#{limit}

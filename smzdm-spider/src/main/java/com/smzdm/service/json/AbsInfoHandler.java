@@ -69,15 +69,15 @@ public abstract class AbsInfoHandler{
         commodityTimeInfo.setComment(content.getInteger("article_comment"));
         commodityTimeInfo.setArticleId(content.getLong("article_id"));
         commodityTimeInfo.setUpdateTime(new Date());
-        if (!discovery) {
+        if (discovery) {
+            commodityTimeInfo.setWorthy(content.getInteger("article_rating"));
+            commodityTimeInfo.setUnworthy(-1);
+            commodityTimeInfo.setTimeout(content.getInteger("is_timeout"));
+        } else {
             commodityTimeInfo.setWorthy(content.getInteger("article_worthy"));
             commodityTimeInfo.setUnworthy(content.getInteger("article_unworthy"));
             commodityTimeInfo.setSoldOut(content.getInteger("article_is_sold_out"));
             commodityTimeInfo.setTimeout(content.getInteger("article_is_timeout"));
-        } else {
-            commodityTimeInfo.setWorthy(content.getInteger("article_rating"));
-            commodityTimeInfo.setUnworthy(0);
-            commodityTimeInfo.setTimeout(content.getInteger("is_timeout"));
         }
         return commodityTimeInfo;
     }
