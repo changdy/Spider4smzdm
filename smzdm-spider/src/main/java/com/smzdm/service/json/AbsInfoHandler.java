@@ -13,7 +13,7 @@ import java.util.Date;
 /**
  * Created by Changdy on 2017/3/18.
  */
-public abstract class AbsInfoHandler{
+public abstract class AbsInfoHandler {
 
     @Autowired
     private DateTimeHandler dateTimeHandler;
@@ -40,10 +40,10 @@ public abstract class AbsInfoHandler{
         String articlePic = content.getString("article_pic");
         if (articlePic != null) {
             commodity.setPicUrl(articlePic);
-        }else {
+        } else {
             commodity.setPicUrl(content.getString("article_pic_url"));
         }
-        commodity.setInfoUrl(content.getString("article_url") );
+        commodity.setInfoUrl(content.getString("article_url"));
         commodity.setMall(content.getString("article_mall"));
         commodity.setMallUrl(content.getString("article_mall_url"));
         commodity.setShoppingUrl(content.getString("article_link"));
@@ -73,6 +73,7 @@ public abstract class AbsInfoHandler{
             commodityTimeInfo.setWorthy(content.getInteger("article_rating"));
             commodityTimeInfo.setTimeout(content.getInteger("is_timeout"));
             commodityTimeInfo.setDiscoveryFlag(1);
+            commodityTimeInfo.setUnworthy(0);
         } else {
             commodityTimeInfo.setWorthy(content.getInteger("article_worthy"));
             commodityTimeInfo.setUnworthy(content.getInteger("article_unworthy"));
