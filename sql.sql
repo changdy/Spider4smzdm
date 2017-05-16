@@ -1,14 +1,16 @@
 /*
 Navicat MySQL Data Transfer
 
+Source Server         : 本地测试
+Source Server Version : 50505
 Source Host           : localhost:3306
 Source Database       : smzdm_commodity
 
 Target Server Type    : MYSQL
-Target Server Version : 100119
+Target Server Version : 50505
 File Encoding         : 65001
 
-Date: 2017-03-16 22:55:28
+Date: 2017-05-16 18:31:36
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -52,7 +54,7 @@ CREATE TABLE `commodity` (
   `brand` varchar(64) DEFAULT NULL COMMENT 'gtm.brand 商标名称',
   `price_string` varchar(128) DEFAULT NULL COMMENT 'article_price 显示价格',
   `price_number` bigint(20) DEFAULT NULL COMMENT 'gtm.rmb_price 原价',
-  `last_category_id` int(11) DEFAULT NULL COMMENT '最后的目录ID',
+  `top_category_id` int(11) DEFAULT NULL COMMENT '最后的目录ID',
   `referral_name` varchar(64) DEFAULT NULL COMMENT '爆料人',
   `pic_url` varchar(128) DEFAULT NULL COMMENT '照片url',
   `info_url` varchar(64) DEFAULT NULL COMMENT '详情页',
@@ -64,7 +66,25 @@ CREATE TABLE `commodity` (
   `time_sort` bigint(20) DEFAULT NULL COMMENT '排序的',
   `create_date` datetime DEFAULT NULL COMMENT '创建时间',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=921 DEFAULT CHARSET=utf8 COMMENT='物品表';
+) ENGINE=InnoDB AUTO_INCREMENT=118 DEFAULT CHARSET=utf8 COMMENT='物品表';
+
+-- ----------------------------
+-- Table structure for commodity_last_info
+-- ----------------------------
+DROP TABLE IF EXISTS `commodity_last_info`;
+CREATE TABLE `commodity_last_info` (
+  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT '自增长ID',
+  `article_id` bigint(20) DEFAULT NULL COMMENT '不解释了',
+  `comment` int(11) DEFAULT NULL COMMENT '评论数',
+  `collection` int(11) DEFAULT NULL COMMENT '收藏数',
+  `worthy` int(11) DEFAULT NULL COMMENT '值',
+  `unworthy` int(11) DEFAULT NULL COMMENT '不值',
+  `sold_out` int(11) DEFAULT NULL COMMENT '售罄',
+  `timeout` int(11) DEFAULT NULL COMMENT '过时',
+  `discovery_flag` int(11) DEFAULT NULL,
+  `update_time` datetime DEFAULT NULL COMMENT '更新时间',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=301 DEFAULT CHARSET=utf8 COMMENT='物品更新表';
 
 -- ----------------------------
 -- Table structure for commodity_time_info
@@ -72,16 +92,17 @@ CREATE TABLE `commodity` (
 DROP TABLE IF EXISTS `commodity_time_info`;
 CREATE TABLE `commodity_time_info` (
   `id` int(11) NOT NULL AUTO_INCREMENT COMMENT '自增长ID',
-  `commodity_id` bigint(20) DEFAULT NULL COMMENT '不解释了',
+  `article_id` bigint(20) DEFAULT NULL COMMENT '不解释了',
   `comment` int(11) DEFAULT NULL COMMENT '评论数',
   `collection` int(11) DEFAULT NULL COMMENT '收藏数',
   `worthy` int(11) DEFAULT NULL COMMENT '值',
   `unworthy` int(11) DEFAULT NULL COMMENT '不值',
   `sold_out` int(11) DEFAULT NULL COMMENT '售罄',
   `timeout` int(11) DEFAULT NULL COMMENT '过时',
+  `discovery_flag` int(11) DEFAULT NULL,
   `update_time` datetime DEFAULT NULL COMMENT '更新时间',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=14179 DEFAULT CHARSET=utf8 COMMENT='物品更新表';
+) ENGINE=InnoDB AUTO_INCREMENT=301 DEFAULT CHARSET=utf8 COMMENT='物品更新表';
 
 -- ----------------------------
 -- Table structure for jsons
@@ -94,7 +115,7 @@ CREATE TABLE `jsons` (
   `original_date` varchar(32) DEFAULT NULL COMMENT '字符串时间',
   `time_sort` bigint(20) DEFAULT NULL COMMENT '排序',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2291 DEFAULT CHARSET=utf8 COMMENT='原字符串';
+) ENGINE=InnoDB AUTO_INCREMENT=477 DEFAULT CHARSET=utf8 COMMENT='原字符串';
 
 -- ----------------------------
 -- Table structure for relation
@@ -105,7 +126,7 @@ CREATE TABLE `relation` (
   `commodity_id` bigint(20) DEFAULT NULL,
   `category_id` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=7010 DEFAULT CHARSET=utf8 COMMENT='对应目录表';
+) ENGINE=InnoDB AUTO_INCREMENT=341 DEFAULT CHARSET=utf8 COMMENT='对应目录表';
 
 -- ----------------------------
 -- Table structure for time_sort
@@ -115,5 +136,4 @@ CREATE TABLE `time_sort` (
   `id` int(11) NOT NULL AUTO_INCREMENT COMMENT '1 首页',
   `time_sort` bigint(20) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
-SET FOREIGN_KEY_CHECKS=1;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
