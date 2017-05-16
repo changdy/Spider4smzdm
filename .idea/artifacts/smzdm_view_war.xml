@@ -1,8 +1,0 @@
-<component name="ArtifactManager">
-  <artifact type="war" name="smzdm-view:war">
-    <output-path>$PROJECT_DIR$/smzdm-view/target</output-path>
-    <root id="archive" name="smzdm-view.war">
-      <element id="artifact" artifact-name="smzdm-view:war exploded" />
-    </root>
-  </artifact>
-</component>
