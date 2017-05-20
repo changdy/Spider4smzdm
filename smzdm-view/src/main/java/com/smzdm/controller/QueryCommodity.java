@@ -21,8 +21,12 @@ public class QueryCommodity {
     }
 
     @RequestMapping("/query-commodity")
-    public @ResponseBody String getcommodity(CommodityParams commodityParams) {
+    public @ResponseBody String getCommodity(CommodityParams commodityParams) {
         return JSON.toJSONString(queryCommodityService.queryCommodity(commodityParams));
     }
 
+    @RequestMapping("/commodity-list")
+    public @ResponseBody String getCommodityList(CommodityParams commodityParams) {
+        return JSON.toJSONString(queryCommodityService.queryCommodity(commodityParams));
+    }
 }

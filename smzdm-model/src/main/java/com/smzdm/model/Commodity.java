@@ -25,6 +25,8 @@ public class Commodity {
 
     private Integer topCategoryId;
 
+    private String categories;
+
     private String referralName;
 
     private String picUrl;
@@ -48,7 +50,7 @@ public class Commodity {
     public Commodity() {
     }
 
-    public Commodity(Long id, Long articleId, Integer discoveryFlag, String title, String content, String tags, String infoTitle, String brand, String priceString, Long priceNumber, Integer topCategoryId, String referralName, String picUrl, String infoUrl, Integer channelId, String mall, String mallUrl, String shoppingUrl, LocalDateTime referralDate, Long timeSort, LocalDateTime createDate) {
+    public Commodity(Long id, Long articleId, Integer discoveryFlag, String title, String content, String tags, String infoTitle, String brand, String priceString, Long priceNumber, Integer topCategoryId, String categories, String referralName, String picUrl, String infoUrl, Integer channelId, String mall, String mallUrl, String shoppingUrl, LocalDateTime referralDate, Long timeSort, LocalDateTime createDate) {
         this.id = id;
         this.articleId = articleId;
         this.discoveryFlag = discoveryFlag;
@@ -60,6 +62,7 @@ public class Commodity {
         this.priceString = priceString;
         this.priceNumber = priceNumber;
         this.topCategoryId = topCategoryId;
+        this.categories = categories;
         this.referralName = referralName;
         this.picUrl = picUrl;
         this.infoUrl = infoUrl;
@@ -70,6 +73,14 @@ public class Commodity {
         this.referralDate = referralDate;
         this.timeSort = timeSort;
         this.createDate = createDate;
+    }
+
+    public String getCategories() {
+        return categories;
+    }
+
+    public void setCategories(String categories) {
+        this.categories = categories;
     }
 
     public Long getId() {
