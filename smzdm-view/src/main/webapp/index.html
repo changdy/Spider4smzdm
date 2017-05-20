@@ -7,67 +7,89 @@
     <link href="js/bootstrap-table-develop/dist/bootstrap-table.css" rel="stylesheet">
 </head>
 <body>
-    <div class="container">
-        <div class="row">
-            <div class="col-md-12">
-                <div class="jumbotron well">
-                    <h1>什么值得买爬虫</h1>
-                    <p>这是一个基于什么值得买的爬虫站点，为了方便您的剁手</p>
-                </div>
-            </div>
-            <div class="col-md-12">
-                <table id="table"></table>
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="jumbotron well">
+                <h1>什么值得买爬虫</h1>
+                <p>这是一个基于什么值得买的爬虫站点，为了方便您的剁手</p>
             </div>
         </div>
+        <div class="col-md-12">
+            <table id="table"></table>
+        </div>
     </div>
-    <script src="js/jquery-3.1.1.js"></script>
-    <script src="js/bootstrap-3.3.7-dist/js/bootstrap.js"></script>
-    <script src="js/bootstrap-table-develop/dist/bootstrap-table.js"></script>
-    <script src="js/bootstrap-table-develop/dist/locale/bootstrap-table-zh-CN.js"></script>
-    <script src="js/moment.js"></script>
-    <script type="text/javascript">
-        //得到偏移量，方便时间比较
-        var today =new moment();
-        today.millisecond(0);
-        today.second(0);
-        today.minute(0);
-        today.hour(0);
-        dayUnix = today.valueOf();
-        yearUnix =(new moment(String(today.year()),'YYYY')).valueOf();
-        //table初始化
-        var $table = $('#table');
-        $table.bootstrapTable({
-            url: 'query-commodity',
-            dataType: "json",
-            striped: true,                      //是否显示行间隔色
-            singleSelect: true,
-            search:true,
-            detailView:true,//显示细节
-            detailFormatter:"detailFormatter",
-            pagination: true, //分页
-            pageNumber:1,                       //初始化加载第一页，默认第一页
-            pageSize: 25,                       //每页的记录行数（*）
-            pageList: [25, 50, 100],        //可供选择的每页的行数（*）
-            showColumns:true,
-            sortName:'referral_date',
-            sortOrder:'desc',
-            sidePagination: "server", //服务端处理分页
-            columns:[{field:'id',align:'center',valign:'middle',sortable:true,title:'序号',visible:false},{field:'title',align:'center',valign:'middle',title:'标题'},{field:'category',align:'center',valign:'middle',title:'目录',width:100},{field:'priceString',align:'center',valign:'middle',title:'价格'},{field:'mall',align:'center',valign:'middle',title:'商城'},{field:'comment',align:'center',valign:'middle',title:'评价'},{field:'timeSort',align:'center',valign:'middle',sortable:true,title:'timeSort',visible:false},{field:'referralDate',align:'center',valign:'middle',sortable:true,title:'爆料时间',formatter:'timeFormatter'}]
-        });
-        function timeFormatter(value,row,index) {
-            if (value > dayUnix) {
-                return (new moment(value)).format('HH:mm');
-            }else if(value > yearUnix){
-                return (new moment(value)).format('MM-DD HH:mm');
-            }else{
-                return (new moment(value)).format('YYYY-MM-DD HH:mm');
-            }
+</div>
+<script src="js/jquery-3.1.1.js"></script>
+<script src="js/bootstrap-3.3.7-dist/js/bootstrap.js"></script>
+<script src="js/bootstrap-table-develop/dist/bootstrap-table.js"></script>
+<script src="js/bootstrap-table-develop/dist/locale/bootstrap-table-zh-CN.js"></script>
+<script src="js/moment.js"></script>
+<script type="text/javascript">
+    //得到偏移量，方便时间比较
+    const today = new moment();
+    today.millisecond(0);
+    today.second(0);
+    today.minute(0);
+    today.hour(0);
+    dayUnix = today.valueOf();
+    yearUnix = (new moment(String(today.year()), 'YYYY')).valueOf();
+    //table初始化
+    let $table = $('#table');
+    $table.bootstrapTable({
+        url: 'query-commodity',
+        dataType: "json",
+        striped: true,                      //是否显示行间隔色
+        singleSelect: true,
+        search: true,
+        detailView: true,//显示细节
+        detailFormatter: "detailFormatter",
+        pagination: true, //分页
+        pageNumber: 1,                       //初始化加载第一页，默认第一页
+        pageSize: 25,                       //每页的记录行数（*）
+        pageList: [25, 50, 100],        //可供选择的每页的行数（*）
+        showColumns: true,
+        sortName: 'referral_date',
+        sortOrder: 'desc',
+        sidePagination: "server", //服务端处理分页
+        columns: [{field: 'id', align: 'center', valign: 'middle', sortable: true, title: '序号', visible: false}, {
+            field: 'title',
+            align: 'center',
+            valign: 'middle',
+            title: '标题'
+        }, {field: 'category', align: 'center', valign: 'middle', title: '目录', width: 100}, {
+            field: 'priceString',
+            align: 'center',
+            valign: 'middle',
+            title: '价格'
+        }, {field: 'mall', align: 'center', valign: 'middle', title: '商城'}, {
+            field: 'comment',
+            align: 'center',
+            valign: 'middle',
+            title: '评价'
+        }, {field: 'timeSort', align: 'center', valign: 'middle', sortable: true, title: 'timeSort', visible: false}, {
+            field: 'referralDate',
+            align: 'center',
+            valign: 'middle',
+            sortable: true,
+            title: '爆料时间',
+            formatter: 'timeFormatter'
+        }]
+    });
+    function timeFormatter(value, row, index) {
+        if (value > dayUnix) {
+            return (new moment(value)).format('HH:mm');
+        } else if (value > yearUnix) {
+            return (new moment(value)).format('MM-DD HH:mm');
+        } else {
+            return (new moment(value)).format('YYYY-MM-DD HH:mm');
         }
-        function detailFormatter(index,row){
-            var html = [];
-            html.push('<p>' + row.content + '</p>');
-            return html.join('');
-        }
-    </script>
+    }
+    function detailFormatter(index, row) {
+        let html = [];
+        html.push('<p>' + row.content + '</p>');
+        return html.join('');
+    }
+</script>
 </body>
 </html>

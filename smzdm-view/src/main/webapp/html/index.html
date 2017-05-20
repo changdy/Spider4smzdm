@@ -6,6 +6,47 @@
     <link href="../js/bootstrap-3.3.7-dist/css/bootstrap.css" rel="stylesheet">
     <link href="../js/bootstrap-table-develop/dist/bootstrap-table.css" rel="stylesheet">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        .commodity {
+            display: flex;
+            margin-top: 10px;
+        }
+
+        .commodity img {
+            flex-basis: 210px
+        }
+
+        .commodity .commodity-panel {
+            margin-left: 10px;
+            position: relative;
+        }
+
+        .commodity .commodity-title {
+            font-size: 20px;
+            text-align: center;
+        }
+
+        .commodity .commodity-info {
+            color: #808080;
+        }
+
+        .commodity .commodity-info, .commodity .commodity-content {
+            font-size: 16px;
+            margin-top: 10px
+        }
+
+        .commodity .commodity-comment {
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            position: absolute;
+        }
+
+        .btn:focus, .btn > :focus {
+            outline: 0 !important;
+        }
+
+    </style>
 </head>
 <body>
 <div class="container">
@@ -13,28 +54,112 @@
         <h1>什么值得买爬虫</h1>
         <p>这是一个基于什么值得买的爬虫站点，为了方便您的剁手</p>
     </div>
-    <div style="display: flex;">
-        <img src="http://tp-y.zdmimg.com/201703/19/58340da1689217088.jpg_d200.jpg" class="img-thumbnail center-block" style="flex-basis:210px"/>
-        <div style="margin-left: 10px;position:relative;">
-            <div style="font-size: 20px;text-align: center;">微信端：RaZER 雷蛇 BlackWidow X 黑寡妇蜘蛛X 竞技版 87键 机械键盘 254元包邮（下单立减）</div>
-            <div style="font-size: 16px;margin-top: 10px">
-                在即将到来的装修季之中，空调将会是消费者的一大选购热点。立柜式空调，匹数普遍较大，因而成为大面积空间中的首选。AUX（奥克斯）也在AWE2017期间推出了新品立柜式空调，型号为KFR-51LW/BpNHA1+1（金色），并提供了全新的金色配色。新品最大的...
-            </div>
-            <div class="btn-group" style="position:absolute;bottom:0; right: 0">
-                <button type="button" class="btn btn-info"><span class="glyphicon glyphicon-thumbs-up"></span>1</button>
-                <button type="button" class="btn btn-info"><span class="glyphicon glyphicon-thumbs-down"></span>2</button>
-                <button type="button" class="btn btn-info"><span class="glyphicon glyphicon-star"></span>10</button>
-                <button type="button" class="btn btn-info"><span class="glyphicon glyphicon-comment"></span>20</button>
-                <button type="button" class="btn btn-info"><span class="glyphicon glyphicon-tag"></span>中文目录</button>
-                <button type="button" class="btn btn-info"><span class="glyphicon glyphicon-time"></span>2017-08-08</button>
-            </div>
+    <div class="row">
+        <div class="col-xs-3">
+            <input id="search-title" type="text" class="form-control" placeholder="输入关键字">
+        </div>
+        <div class="col-xs-3">
+            <button class="btn btn-default" type="button" id="search-btn"><span class="glyphicon glyphicon-search"></span> 搜索</button>
         </div>
     </div>
+    <div class="commodity-list">
+        <div v-for="item in items">
+            <div class="commodity">
+                <img :src="item.pic_url" class="img-thumbnail"/>
+                <div class="commodity-panel">
+                    <div class="commodity-title">{{item.title}}</div>
+                    <div class="commodity-info"><span>频道:</span>{{item.channel}} <span>目录:</span> {{item.categories}} <span>标签</span>:{{item.tag}}</div>
+                    <div class="commodity-content">{{item.content}}</div>
+                    <div class="commodity-comment">
+                        <div class="btn-group">
+                            <a class="btn btn-info" v-if="item.worthy!=0"><span class="glyphicon glyphicon-thumbs-up"></span> {{item.worthy}}</a>
+                            <a class="btn btn-info" v-if="item.unworthy!=0"><span class="glyphicon glyphicon-thumbs-down"></span> {{item.unworthy}}</a>
+                            <a class="btn btn-info" v-if="item.collection!=0"><span class="glyphicon glyphicon-star"></span> {{item.collection}}</a>
+                            <a class="btn btn-info" v-if="item.comment!=0"><span class="glyphicon glyphicon-comment"></span> {{item.comment}}</a>
+                            <a class="btn btn-info"><span class="glyphicon glyphicon-tag"></span> {{item.category}}</a>
+                            <a class="btn btn-info"><span class="glyphicon glyphicon-time"></span> {{item.referralDate|timeHandler}}</a>
+                        </div>
+                        <a class="btn btn-danger pull-right" :href="item.info_url" target="_blank"><span class="glyphicon glyphicon-shopping-cart"></span>
+                            剁手</a>
+                    </div>
+                </div>
+            </div>
+            <hr style="margin: 10px 0"/>
+        </div>
+    </div>
+    <ul class="pagination" style="margin: 10px 0;">
+        <li><a href="#">&laquo;</a></li>
+        <li><a href="#">1</a></li>
+        <li><a href="#">2</a></li>
+        <li><a href="#">3</a></li>
+        <li><a href="#">4</a></li>
+        <li><a href="#">5</a></li>
+        <li><a href="#">&raquo;</a></li>
+    </ul>
 </div>
+
 <script src="../js/jquery-3.1.1.js"></script>
 <script src="../js/bootstrap-3.3.7-dist/js/bootstrap.js"></script>
 <script src="../js/bootstrap-table-develop/dist/bootstrap-table.js"></script>
 <script src="../js/bootstrap-table-develop/dist/locale/bootstrap-table-zh-CN.js"></script>
 <script src="../js/moment.js"></script>
+<script src="../js/vue.js"></script>
+<script>
+    const today = new moment();
+    today.millisecond(0);
+    today.second(0);
+    today.minute(0);
+    today.hour(0);
+    dayUnix = today.valueOf();
+    yearUnix = (new moment(String(today.year()), 'YYYY')).valueOf();
+    let listVue = new Vue({
+        el: '.commodity-list',
+        data: {
+            items: [{
+                title: "海福盛 速食早餐粥+淮南牛肉汤粉丝 6桶装",
+                channel: "美食频道",
+                categories: " 玩模乐器 > 玩具 > 电动玩具 > 文章详情",
+                tag: "taga",
+                content: "天猫海福盛旗舰店淘抢购价27.8元，可领取一张5元优惠券，下单实付22.8元包邮，近期低价，好吃不贵，适合懒人。海福...",
+                worthy: "0",
+                unworthy: "2",
+                collection: 1,
+                comment: 2,
+                category: 3,
+                referralDate: 1495120980000,
+                pic_url: "http://tp-y.zdmimg.com/201705/16/591b15ead62737209.jpg_d200.jpg",
+                info_url: "http://www.smzdm.com/p/7262892/"
+            }, {
+                title: "海福盛 速食早餐粥+淮南牛肉汤粉丝 6桶装",
+                channel: "美食频道",
+                categories: " 玩模乐器 > 玩具 > 电动玩具 > 文章详情",
+                tag: "taga",
+                content: "天猫海福盛旗舰店淘抢购价27.8元，可领取一张5元优惠券，下单实付22.8元包邮，近期低价，好吃不贵，适合懒人。海福...",
+                worthy: "1",
+                unworthy: "2",
+                collection: 1,
+                comment: 2,
+                category: 3,
+                referralDate: 1495120980000,
+                pic_url: "http://tp-y.zdmimg.com/201705/16/591b15ead62737209.jpg_d200.jpg",
+                info_url: "http://www.smzdm.com/p/7262892/"
+            }]
+        },
+        filters: {
+            timeHandler: function (value) {
+                if (value > dayUnix) {
+                    return (new moment(value)).format('HH:mm');
+                } else if (value > yearUnix) {
+                    return (new moment(value)).format('MM-DD HH:mm');
+                } else {
+                    return (new moment(value)).format('YYYY-MM-DD HH:mm');
+                }
+            }
+        }
+    });
+    $("#search-btn").click(function () {
+        
+    })
+</script>
 </body>
 </html>
