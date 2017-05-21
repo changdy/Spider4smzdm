@@ -59,8 +59,10 @@ $(document).ready(function () {
                 getList(pageNo);
             },
             submit: function () {
-                if (typeof(this.jumpPageNo) === "number") {
+                if (typeof(this.jumpPageNo) === "number" && this.jumpPageNo < this.pageCount) {
                     this.jumpPage(this.jumpPageNo);
+                } else {
+                    this.jumpPageNo = 1;
                 }
             }
         }
