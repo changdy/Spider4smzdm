@@ -22,19 +22,17 @@ import java.util.Map;
 public class QueryCommodityServiceImpl implements QueryCommodityService {
     private final CommodityMapper commodityMapper;
 
-    private final CommodityTimeInfoMapper commodityTimeInfoMapper;
 
     private static Logger logger = LogManager.getLogger(QueryCommodityServiceImpl.class.getName());
 
     @Autowired
-    public QueryCommodityServiceImpl(CommodityMapper commodityMapper, CommodityTimeInfoMapper commodityTimeInfoMapper) {
+    public QueryCommodityServiceImpl(CommodityMapper commodityMapper) {
         this.commodityMapper = commodityMapper;
-        this.commodityTimeInfoMapper = commodityTimeInfoMapper;
     }
 
     @Override
-    public Map<String, Object> queryCommodity(CommodityParams commodityParams) {
-        List<Map<String, Object>> commodityList = commodityMapper.queryCommodity(commodityParams);
+    public Map<String, Object> queryList(CommodityParams commodityParams) {
+        List<Map<String, Object>> commodityList = commodityMapper.queryList(commodityParams);
         Map<String, Object> resultMap = new HashMap<>();
         try {
             resultMap.put("rows", commodityList);

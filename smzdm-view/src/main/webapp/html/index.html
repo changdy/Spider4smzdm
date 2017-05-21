@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:v-on="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="utf-8">
     <title>爬虫</title>
     <link href="../js/bootstrap-3.3.7-dist/css/bootstrap.css" rel="stylesheet">
-    <link href="../js/bootstrap-table-develop/dist/bootstrap-table.css" rel="stylesheet">
+    <link href="../css/font-awesome-4.7.0/css/font-awesome.css" rel="stylesheet">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <style>
         .commodity {
@@ -12,13 +12,15 @@
             margin-top: 10px;
         }
 
-        .commodity img {
-            flex-basis: 210px
+        .commodity .commodity-img {
+            flex-basis: 210px;
+            text-align: center;
         }
 
         .commodity .commodity-panel {
             margin-left: 10px;
             position: relative;
+            flex: 1;
         }
 
         .commodity .commodity-title {
@@ -28,6 +30,10 @@
 
         .commodity .commodity-info {
             color: #808080;
+        }
+
+        .commodity .info-title {
+            color: black;
         }
 
         .commodity .commodity-info, .commodity .commodity-content {
@@ -42,10 +48,44 @@
             position: absolute;
         }
 
-        .btn:focus, .btn > :focus {
+        .commodity hr {
+            margin: 10px 0
+        }
+
+        input:focus, .btn:focus, .btn > :focus {
             outline: 0 !important;
         }
 
+        .pagination > li > input {
+            width: 55px;
+            float: left;
+            padding: 6px 12px;
+            margin-left: -1px;
+            position: relative;
+            border: 1px solid #ddd;
+            box-shadow: inset 0 2px 2px rgba(0, 0, 0, .075);
+            line-height: 1.42857143;
+        }
+
+        .pagination > li > input:hover {
+            background-color: #eee;
+        }
+
+        .pagination > li:last-child > input {
+            border-top-right-radius: 4px;
+            border-bottom-right-radius: 4px;
+        }
+
+        #pagination {
+            display: flex;
+            align-items: flex-end;
+            justify-content: space-between;
+            margin-bottom: 20px;
+        }
+
+        #pagination span {
+            font-size: 16px;
+        }
     </style>
 </head>
 <body>
@@ -65,10 +105,14 @@
     <div class="commodity-list">
         <div v-for="item in items">
             <div class="commodity">
-                <img :src="item.pic_url" class="img-thumbnail"/>
+                <div class="commodity-img"><img :src="item.picUrl" class="img-thumbnail"/></div>
                 <div class="commodity-panel">
                     <div class="commodity-title">{{item.title}}</div>
-                    <div class="commodity-info"><span>频道:</span>{{item.channel}} <span>目录:</span> {{item.categories}} <span>标签</span>:{{item.tag}}</div>
+                    <div class="commodity-info">
+                        <span class="info-title">频道:</span>{{item.channelTitle}}
+                        <span class="info-title">目录:</span>{{item.categories}}
+                        <span v-if="item.tags"><span class="info-title">标签:</span>{{item.tags}}</span>
+                    </div>
                     <div class="commodity-content">{{item.content}}</div>
                     <div class="commodity-comment">
                         <div class="btn-group">
@@ -79,23 +123,23 @@
                             <a class="btn btn-info"><span class="glyphicon glyphicon-tag"></span> {{item.category}}</a>
                             <a class="btn btn-info"><span class="glyphicon glyphicon-time"></span> {{item.referralDate|timeHandler}}</a>
                         </div>
-                        <a class="btn btn-danger pull-right" :href="item.info_url" target="_blank"><span class="glyphicon glyphicon-shopping-cart"></span>
-                            剁手</a>
+                        <a class="btn btn-danger pull-right" :href="item.shoppingUrl" target="_blank"><span class="glyphicon glyphicon-shopping-cart"></span>剁手</a>
                     </div>
                 </div>
             </div>
-            <hr style="margin: 10px 0"/>
+            <hr/>
         </div>
     </div>
-    <ul class="pagination" style="margin: 10px 0;">
-        <li><a href="#">&laquo;</a></li>
-        <li><a href="#">1</a></li>
-        <li><a href="#">2</a></li>
-        <li><a href="#">3</a></li>
-        <li><a href="#">4</a></li>
-        <li><a href="#">5</a></li>
-        <li><a href="#">&raquo;</a></li>
-    </ul>
+    <div id="pagination">
+        <span v-if="itemCount!=0">共{{itemCount}}条记录,当前为第{{startIndex}}条到第{{endIndex}}条</span>
+        <span v-else>未找到记录</span>
+        <ul class="pagination" style="margin: 0;" v-if="itemCount!=0">
+            <li v-if="currentPageNo!=1"><a href="javascript:void(0);" @click="jumpPage(currentPageNo-1)">&laquo;</a></li>
+            <li v-for="page in pageList"><a href="javascript:void(0);" @click="jumpPage(page)">{{page}}</a></li>
+            <li v-if="currentPageNo!=pageCount"><a href="javascript:void(0);" @click="jumpPage(currentPageNo+1)">&raquo;</a></li>
+            <li><input type="text" v-model.number="jumpPageNo" placeholder="跳转" v-on:keyup.13="submit"></li>
+        </ul>
+    </div>
 </div>
 
 <script src="../js/jquery-3.1.1.js"></script>
@@ -105,6 +149,69 @@
 <script src="../js/moment.js"></script>
 <script src="../js/vue.js"></script>
 <script>
+    page = new Vue({
+        el: '#pagination',
+        data: {
+            currentPageNo: 1,
+            defaultPageSize: 20,
+            itemCount: 1601,
+            currentResultLength: 20,
+            jumpPageNo: 1,
+            searchInfo: {
+                title: ""
+            }
+        },
+        computed: {
+            pageCount: function () {
+                return Math.ceil(this.itemCount / this.defaultPageSize);
+            },
+            pageList: function () {
+                if (this.itemCount === 0) {
+                    return [];
+                } else {
+                    let min = Math.max(1, this.currentPageNo - 2);
+                    let max = Math.min(this.pageCount, this.currentPageNo + 2);
+                    let arr = [];
+                    for (; min <= max; min++) {
+                        arr.push(min);
+                    }
+                    return arr;
+                }
+            },
+            startIndex: function () {
+                return this.defaultPageSize * (this.currentPageNo - 1) + 1;
+            },
+            endIndex: function () {
+                return this.defaultPageSize * (this.currentPageNo - 1) + this.currentResultLength;
+            }
+        },
+        methods: {
+            resetPage: function (total, resultLength, pageNo, pageSize) {
+                if (typeof(pageSize) !== "undefined") {
+                    this.defaultPageSize = pageSize;
+                }
+                if (typeof(pageNo) !== "undefined") {
+                    this.currentPageNo = pageNo;
+                } else {
+                    if (total !== 0) {
+                        this.currentPageNo = 1;
+                    } else {
+                        this.currentPageNo = 0;
+                    }
+                }
+                this.currentResultLength = resultLength;
+                this.itemCount = total;
+            },
+            jumpPage: function (pageNo) {
+                getList(pageNo);
+            },
+            submit: function () {
+                if (typeof(this.jumpPageNo) === "number") {
+                    this.jumpPage(this.jumpPageNo);
+                }
+            }
+        }
+    });
     const today = new moment();
     today.millisecond(0);
     today.second(0);
@@ -115,35 +222,7 @@
     let listVue = new Vue({
         el: '.commodity-list',
         data: {
-            items: [{
-                title: "海福盛 速食早餐粥+淮南牛肉汤粉丝 6桶装",
-                channel: "美食频道",
-                categories: " 玩模乐器 > 玩具 > 电动玩具 > 文章详情",
-                tag: "taga",
-                content: "天猫海福盛旗舰店淘抢购价27.8元，可领取一张5元优惠券，下单实付22.8元包邮，近期低价，好吃不贵，适合懒人。海福...",
-                worthy: "0",
-                unworthy: "2",
-                collection: 1,
-                comment: 2,
-                category: 3,
-                referralDate: 1495120980000,
-                pic_url: "http://tp-y.zdmimg.com/201705/16/591b15ead62737209.jpg_d200.jpg",
-                info_url: "http://www.smzdm.com/p/7262892/"
-            }, {
-                title: "海福盛 速食早餐粥+淮南牛肉汤粉丝 6桶装",
-                channel: "美食频道",
-                categories: " 玩模乐器 > 玩具 > 电动玩具 > 文章详情",
-                tag: "taga",
-                content: "天猫海福盛旗舰店淘抢购价27.8元，可领取一张5元优惠券，下单实付22.8元包邮，近期低价，好吃不贵，适合懒人。海福...",
-                worthy: "1",
-                unworthy: "2",
-                collection: 1,
-                comment: 2,
-                category: 3,
-                referralDate: 1495120980000,
-                pic_url: "http://tp-y.zdmimg.com/201705/16/591b15ead62737209.jpg_d200.jpg",
-                info_url: "http://www.smzdm.com/p/7262892/"
-            }]
+            items: []
         },
         filters: {
             timeHandler: function (value) {
@@ -157,9 +236,21 @@
             }
         }
     });
+    function getList(pageNo) {
+        $.get(location.origin + "/query-list",
+            {sort: "id", order: "desc", offset: (pageNo - 1) * page.defaultPageSize, limit: page.defaultPageSize, search: page.searchInfo.title},
+            function (data) {
+                listVue.items = data.rows;
+                page.resetPage(data.total, data.rows.length, pageNo);
+            },
+            "json"
+        );
+    }
     $("#search-btn").click(function () {
-        
-    })
+        page.searchInfo.title = $("#search-title").val().trim();
+        getList(1);
+    });
+    getList(1);
 </script>
 </body>
 </html>

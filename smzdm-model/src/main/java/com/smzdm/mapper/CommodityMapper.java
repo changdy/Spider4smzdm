@@ -15,7 +15,7 @@ public interface CommodityMapper {
 
     int insertList(List<Commodity> commodityList);
 
-    List<Map<String,Object>> queryCommodity(CommodityParams CommodityParams);
+    List<Map<String,Object>> queryList(CommodityParams CommodityParams);
 
     int getCommodityCount(CommodityParams CommodityParams);
 

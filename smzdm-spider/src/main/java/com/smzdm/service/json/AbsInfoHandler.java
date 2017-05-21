@@ -26,7 +26,7 @@ public abstract class AbsInfoHandler {
         commodity.setPriceString(content.getString("article_price"));
         JSONObject gtm = content.getJSONObject("gtm");
         if (gtm != null) {
-            commodity.setCategories(gtm.getString("cates_str"));
+            commodity.setCategories(gtm.getString("cates_str").replaceAll("/无",""));
             commodity.setBrand(gtm.getString("brand"));
             String rmbPrice = gtm.getString("rmb_price");
             if (rmbPrice != null && !rmbPrice.equals("") && !rmbPrice.equals("无")) {

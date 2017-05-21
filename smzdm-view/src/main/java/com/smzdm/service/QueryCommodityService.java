@@ -8,5 +8,5 @@ import java.util.Map;
  * Created by Changdy on 2017/3/21.
  */
 public interface QueryCommodityService {
-    Map<String,Object> queryCommodity(CommodityParams commodityParams);
+    Map<String, Object> queryList(CommodityParams commodityParams);
 }

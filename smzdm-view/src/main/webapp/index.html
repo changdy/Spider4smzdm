@@ -37,7 +37,7 @@
     //table初始化
     let $table = $('#table');
     $table.bootstrapTable({
-        url: 'query-commodity',
+        url: 'query-list',
         dataType: "json",
         striped: true,                      //是否显示行间隔色
         singleSelect: true,
@@ -63,7 +63,7 @@
             valign: 'middle',
             title: '价格'
         }, {field: 'mall', align: 'center', valign: 'middle', title: '商城'}, {
-            field: 'comment',
+            field: 'commentInfo',
             align: 'center',
             valign: 'middle',
             title: '评价'

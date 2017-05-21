@@ -8,6 +8,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import java.util.Map;
+
 /**
  * Created by Changdy on 2017/3/21.
  */
@@ -20,13 +22,8 @@ public class QueryCommodity {
         this.queryCommodityService = queryCommodityService;
     }
 
-    @RequestMapping("/query-commodity")
-    public @ResponseBody String getCommodity(CommodityParams commodityParams) {
-        return JSON.toJSONString(queryCommodityService.queryCommodity(commodityParams));
-    }
-
-    @RequestMapping("/commodity-list")
-    public @ResponseBody String getCommodityList(CommodityParams commodityParams) {
-        return JSON.toJSONString(queryCommodityService.queryCommodity(commodityParams));
+    @RequestMapping("/query-list")
+    public @ResponseBody String queryList(CommodityParams commodityParams) {
+        return JSON.toJSONString(queryCommodityService.queryList(commodityParams));
     }
 }

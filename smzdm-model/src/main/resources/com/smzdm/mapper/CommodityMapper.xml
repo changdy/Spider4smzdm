@@ -67,29 +67,35 @@
         </foreach>
     </insert>
 
-    <select id="queryCommodity" parameterType="com.smzdm.model.CommodityParams" resultType="Map">
+    <select id="queryList" parameterType="com.smzdm.model.CommodityParams" resultType="Map">
         SELECT
         a.id,
-        a.article_id articleId,
+        a.mall,
+        a.tags,
         a.title,
         a.content,
-        a.price_string priceString,
-        a.mall,
-        a.referral_date referralDate,
-        a.time_sort timeSort,
+        a.categories,
+        a.pic_url picUrl,
         b.title category ,
-        CONCAT_WS('/',info.worthy,info.unworthy,info.comment,info.collection) comment
-        FROM commodity_last_info info,
+        a.time_sort timeSort,
+        ch.title channelTitle,
+        a.article_id articleId,
+        a.shopping_url shoppingUrl,
+        a.referral_date referralDate,
+        a.price_string priceString,
+        CONCAT_WS('/',info.worthy,info.unworthy,info.comment,info.collection) commentInfo,
+        info.worthy,info.unworthy,info.comment,info.collection
+        FROM commodity_last_info info,channel ch,
         (select * from commodity
         <if test="search!=null and search!=''">
-          where title LIKE CONCAT(CONCAT('%', #{search, jdbcType=VARCHAR}),'%')
+            where title LIKE CONCAT(CONCAT('%', #{search, jdbcType=VARCHAR}),'%')
         </if>
-         order by id desc
+        order by id desc
         <choose>
             <when test="offset!=null and limit!=null">limit #{offset},#{limit}</when>
             <otherwise>limit 25</otherwise>
         </choose>
-        ) a ,category b WHERE info.article_id = a.article_id AND a.top_category_id = b.id
+        ) a ,category b WHERE info.article_id = a.article_id AND a.top_category_id = b.id AND ch.id = a.channel_id
     </select>
     <select id="getCommodityCount" parameterType="com.smzdm.model.CommodityParams" resultType="int">
         SELECT COUNT(*) FROM commodity
