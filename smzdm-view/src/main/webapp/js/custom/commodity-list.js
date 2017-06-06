@@ -88,6 +88,9 @@ $(document).ready(function () {
                 } else {
                     return (new moment(value)).format('YYYY-MM-DD HH:mm');
                 }
+            },
+            hrefHandler:function (val) {
+                return "http://www.smzdm.com/p/" + val;
             }
         }
     });

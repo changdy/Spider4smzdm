@@ -10,9 +10,14 @@
     border: 1px solid #ccc;
     border-radius: 4px;
 }
+
 .commodity {
     display: flex;
     margin-top: 10px;
+}
+
+.mobile-adupt .commodity {
+    flex-direction: column;
 }
 
 .commodity .commodity-img {

@@ -21,13 +21,16 @@
     <div class="commodity-list">
         <div v-for="item in items">
             <div class="commodity">
-                <div class="commodity-img"><img :src="item.picUrl" class="img-thumbnail"/></div>
+                <div class="commodity-img">
+                    <img :src="item.picUrl"/>
+                </div>
                 <div class="commodity-panel">
-                    <div class="commodity-title">{{item.title}}</div>
+                    <a class="commodity-title" :href="item.articleId|hrefHandler">{{item.title}}</a>
                     <div class="commodity-info">
                         <span class="info-title">频道:</span>{{item.channelTitle}}
                         <span class="info-title">目录:</span>{{item.categories}}
-                        <span v-if="item.tags"><span class="info-title">标签:</span>{{item.tags}}</span>
+                        <span class="info-title" v-if="item.tags">标签:</span>{{item.tags}}
+                        <span style="color: red;font-weight:500">{{item.priceString}}</span>
                     </div>
                     <div class="commodity-content">{{item.content}}</div>
                     <div class="commodity-comment">
