@@ -20,6 +20,30 @@
     flex-direction: column;
 }
 
+.mobile-adupt .commodity .commodity-comment {
+    position: static;
+}
+
+.commodity-img span {
+    position: absolute;
+    font-size: 14px;
+}
+
+.channel-title {
+    top: 0;
+    left: -5px;
+    background-color: #555;
+    color: white;
+    padding: 5px 10px;
+    border-radius: 6px;
+    opacity: 0.8
+}
+
+.referral-date {
+    bottom: 5px;
+    right: -5px;
+}
+
 .commodity .commodity-img {
     flex-basis: 210px;
     text-align: center;
@@ -44,6 +68,11 @@
     color: black;
 }
 
+.commodity .price-info {
+    color: #f04848;
+    font-weight: 500
+}
+
 .commodity .commodity-info, .commodity .commodity-content {
     font-size: 16px;
     margin-top: 10px
@@ -62,6 +91,25 @@
 
 input:focus, .btn:focus, .btn > :focus {
     outline: 0 !important;
+}
+
+.mobile-adupt #pagination {
+    flex-direction: column;
+    align-items: center;
+}
+.mobile-adupt #pagination span {
+    margin-bottom: 8px;
+}
+
+#pagination {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    margin-bottom: 20px;
+}
+
+#pagination span {
+    font-size: 16px;
 }
 
 .pagination > li > input {
@@ -84,13 +132,3 @@ input:focus, .btn:focus, .btn > :focus {
     border-bottom-right-radius: 4px;
 }
 
-#pagination {
-    display: flex;
-    align-items: flex-end;
-    justify-content: space-between;
-    margin-bottom: 20px;
-}
-
-#pagination span {
-    font-size: 16px;
-}

@@ -2,6 +2,7 @@
  * Created by changdy on 2017/5/21.
  */
 $(document).ready(function () {
+    window.onresize = adjust;
     page = new Vue({
         el: '#pagination',
         data: {
@@ -77,7 +78,10 @@ $(document).ready(function () {
     let listVue = new Vue({
         el: '.commodity-list',
         data: {
-            items: []
+            items: [],
+            config: {
+                pcWeb: false
+            }
         },
         filters: {
             timeHandler: function (value) {
@@ -89,7 +93,7 @@ $(document).ready(function () {
                     return (new moment(value)).format('YYYY-MM-DD HH:mm');
                 }
             },
-            hrefHandler:function (val) {
+            hrefHandler: function (val) {
                 return "http://www.smzdm.com/p/" + val;
             }
         }
@@ -111,4 +115,14 @@ $(document).ready(function () {
         getList(1);
     });
     getList(1);
+    adjust();
+    function adjust() {
+        if ($(window).width() <= 768) {
+            listVue.config.pcWeb = false;
+            $(".container").addClass("mobile-adupt");
+        } else {
+            listVue.config.pcWeb = true;
+            $(".container").removeClass("mobile-adupt");
+        }
+    }
 });

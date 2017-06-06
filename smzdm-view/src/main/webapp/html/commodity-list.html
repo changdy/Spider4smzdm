@@ -21,16 +21,17 @@
     <div class="commodity-list">
         <div v-for="item in items">
             <div class="commodity">
-                <div class="commodity-img">
+                <div class="commodity-img" style="position: relative">
                     <img :src="item.picUrl"/>
+                    <span class="channel-title">{{item.channelTitle}}</span>
+                    <span class="referral-date"  v-if="!config.pcWeb">{{item.referralDate|timeHandler}}</span>
                 </div>
                 <div class="commodity-panel">
                     <a class="commodity-title" :href="item.articleId|hrefHandler">{{item.title}}</a>
                     <div class="commodity-info">
-                        <span class="info-title">频道:</span>{{item.channelTitle}}
-                        <span class="info-title">目录:</span>{{item.categories}}
+                        <span class="info-title" v-if="item.categories">目录:</span>{{item.categories}}
                         <span class="info-title" v-if="item.tags">标签:</span>{{item.tags}}
-                        <span style="color: red;font-weight:500">{{item.priceString}}</span>
+                        <span class="price-info">{{item.priceString}}</span>
                     </div>
                     <div class="commodity-content">{{item.content}}</div>
                     <div class="commodity-comment">
@@ -39,10 +40,10 @@
                             <a class="btn btn-info" v-if="item.unworthy!=0"><span class="glyphicon glyphicon-thumbs-down"></span> {{item.unworthy}}</a>
                             <a class="btn btn-info" v-if="item.collection!=0"><span class="glyphicon glyphicon-star"></span> {{item.collection}}</a>
                             <a class="btn btn-info" v-if="item.comment!=0"><span class="glyphicon glyphicon-comment"></span> {{item.comment}}</a>
-                            <a class="btn btn-info"><span class="glyphicon glyphicon-tag"></span> {{item.category}}</a>
-                            <a class="btn btn-info"><span class="glyphicon glyphicon-time"></span> {{item.referralDate|timeHandler}}</a>
+                            <a class="btn btn-info" v-if="config.pcWeb"><span class="glyphicon glyphicon-tag"></span> {{item.category}}</a>
+                            <a class="btn btn-info" v-if="config.pcWeb"><span class="glyphicon glyphicon-time"></span> {{item.referralDate|timeHandler}}</a>
                         </div>
-                        <a class="btn btn-danger pull-right" :href="item.shoppingUrl" target="_blank"><span class="glyphicon glyphicon-shopping-cart"></span>剁手</a>
+                        <a class="btn btn-danger pull-right" :href="item.shoppingUrl" target="_blank" v-if="config.pcWeb"><span class="glyphicon glyphicon-shopping-cart"></span>剁手</a>
                     </div>
                 </div>
             </div>
