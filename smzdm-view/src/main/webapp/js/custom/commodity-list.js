@@ -58,6 +58,7 @@ $(document).ready(function () {
             },
             jumpPage: function (pageNo) {
                 getList(pageNo);
+                scrollTo(0,0);
             },
             submit: function () {
                 if (typeof(this.jumpPageNo) === "number" && this.jumpPageNo < this.pageCount) {
