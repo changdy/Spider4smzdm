@@ -40,7 +40,7 @@ public class DiscoveryHandler extends AbsInfoHandler {
                     if (articleChannel != null) {
                         switch (articleChannel) {
                             case 1:commodity.setChannelId(6);break;
-                            case 2:commodity.setChannelId(9);break;
+                            case 2:commodity.setChannelId(10);break;
                             case 5:commodity.setChannelId(7);break;
                         }
                     }
