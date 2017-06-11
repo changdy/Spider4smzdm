@@ -55,6 +55,11 @@
             <artifactId>druid</artifactId>
             <version>1.0.29</version>
         </dependency>
+        <dependency>
+            <groupId>com.sun.mail</groupId>
+            <artifactId>javax.mail</artifactId>
+            <version>1.5.6</version>
+        </dependency>
     </dependencies>
     <build>
         <finalName>smzdm</finalName>
