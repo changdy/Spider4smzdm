@@ -1,5 +1,7 @@
 package com.smzdm.service;
 
+import org.springframework.stereotype.Service;
+
 import javax.mail.Session;
 import javax.mail.Transport;
 import javax.mail.internet.InternetAddress;
@@ -11,6 +13,7 @@ import java.util.Properties;
  * Created by Changdy on 2017/6/11.
  */
 //http://blog.csdn.net/xietansheng/article/details/51673073
+@Service
 public class EmailService {
 
     private static final String EMAILACCOUNT = "117969632@qq.com";
