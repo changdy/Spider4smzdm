@@ -3,6 +3,7 @@
 <mapper namespace="com.smzdm.mapper.CommodityFilterMapper">
     <resultMap id="BaseResultMap" type="com.smzdm.model.CommodityFilter">
         <id property="id" column="id" javaType="java.lang.Long" jdbcType="BIGINT"/>
+        <result property="name" column="name" javaType="java.lang.String" jdbcType="VARCHAR"/>
         <result property="titleMatch" column="title_match" javaType="java.lang.String" jdbcType="VARCHAR"/>
         <result property="titleUnmatch" column="title_unmatch" javaType="java.lang.String" jdbcType="VARCHAR"/>
         <result property="categoryMatch" column="category_match" javaType="java.lang.String" jdbcType="VARCHAR"/>
@@ -12,9 +13,10 @@
     </resultMap>
     <insert id="insert" parameterType="com.smzdm.model.CommodityFilter">
         insert into commodity_filter
-        (id,title_match,title_unmatch,category_match,category_unmatch,rating_count,worth_percent)
+        (id,name,title_match,title_unmatch,category_match,category_unmatch,rating_count,worth_percent)
         values
         (#{id,jdbcType=BIGINT},
+        #{name,jdbcType=VARCHAR},
         #{titleMatch,jdbcType=VARCHAR},
         #{titleUnmatch,jdbcType=VARCHAR},
         #{categoryMatch,jdbcType=VARCHAR},
@@ -23,6 +25,6 @@
         #{worthPercent,jdbcType=INTEGER})
     </insert>
     <select id="selectAll" resultMap="BaseResultMap" >
-        select id,title_match,title_unmatch,category_match,category_unmatch,rating_count,worth_percent from commodity_filter
+        select id,name,title_match,title_unmatch,category_match,category_unmatch,rating_count,worth_percent from commodity_filter
     </select>
 </mapper>

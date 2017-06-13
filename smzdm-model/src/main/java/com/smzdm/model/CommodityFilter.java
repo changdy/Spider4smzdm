@@ -5,6 +5,7 @@ package com.smzdm.model;
  */
 public class CommodityFilter {
     private Long id;
+    private String name;
     private String titleMatch;
     private String titleUnmatch;
     private String categoryMatch;
@@ -12,21 +13,13 @@ public class CommodityFilter {
     private Integer ratingCount;
     private Integer worthPercent;
 
-    @Override
-    public String toString() {
-        return "CommodityFilter{" +
-                "id=" + id +
-                ", titleMatch='" + titleMatch + '\'' +
-                ", titleUnmatch='" + titleUnmatch + '\'' +
-                ", categoryMatch='" + categoryMatch + '\'' +
-                ", categoryUnmatch='" + categoryUnmatch + '\'' +
-                ", ratingCount=" + ratingCount +
-                ", worthPercent=" + worthPercent +
-                '}';
+    public CommodityFilter() {
     }
 
-    public CommodityFilter(Long id, String titleMatch, String titleUnmatch, String categoryMatch, String categoryUnmatch, Integer ratingCount, Integer worthPercent) {
+    public CommodityFilter(Long id, String name, String titleMatch, String titleUnmatch, String categoryMatch, String categoryUnmatch, Integer ratingCount, Integer worthPercent) {
+
         this.id = id;
+        this.name = name;
         this.titleMatch = titleMatch;
         this.titleUnmatch = titleUnmatch;
         this.categoryMatch = categoryMatch;
@@ -35,16 +28,20 @@ public class CommodityFilter {
         this.worthPercent = worthPercent;
     }
 
-    public CommodityFilter() {
-
-    }
-
     public Long getId() {
         return id;
     }
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getTitleMatch() {
@@ -93,5 +90,19 @@ public class CommodityFilter {
 
     public void setWorthPercent(Integer worthPercent) {
         this.worthPercent = worthPercent;
+    }
+
+    @Override
+    public String toString() {
+        return "CommodityFilter{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", titleMatch='" + titleMatch + '\'' +
+                ", titleUnmatch='" + titleUnmatch + '\'' +
+                ", categoryMatch='" + categoryMatch + '\'' +
+                ", categoryUnmatch='" + categoryUnmatch + '\'' +
+                ", ratingCount=" + ratingCount +
+                ", worthPercent=" + worthPercent +
+                '}';
     }
 }
