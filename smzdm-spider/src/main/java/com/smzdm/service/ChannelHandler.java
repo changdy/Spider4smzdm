@@ -21,6 +21,7 @@ public class ChannelHandler {
     @Autowired
     public ChannelHandler(ChannelMapper channelMapper) {
         this.channelMapper = channelMapper;
+        channelList = channelMapper.selectAll();
     }
 
     public List<Channel> getChannelList() {
@@ -31,9 +32,6 @@ public class ChannelHandler {
         this.channelList = channelList;
     }
 
-    public void initList() {
-        channelList = channelMapper.selectAll();
-    }
 
     public Integer getChannelId(JSONObject jsonContent) {
         String articleChannel = jsonContent.getString("article_channel").trim();

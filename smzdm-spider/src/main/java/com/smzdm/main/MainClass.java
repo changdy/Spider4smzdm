@@ -16,8 +16,6 @@ public class MainClass {
     public static void main(String[] args) {
         logger.info("===========爬虫开始了======");
         ApplicationContext ctx = new ClassPathXmlApplicationContext("spring.xml");
-        ctx.getBean(CategoryHandler.class).initIds();
-        ctx.getBean(ChannelHandler.class).initList();
         //StartSpider bean = ctx.getBean(StartSpider.class);
         //bean.startDiscoverySpider();
         //bean.startHomePageSpider();

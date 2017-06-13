@@ -22,9 +22,6 @@ public class CategoryHandler {
     @Autowired
     public CategoryHandler(CategoryMapper categoryMapper) {
         this.categoryMapper = categoryMapper;
-    }
-
-    public void initIds() {
         categoryList = categoryMapper.selectAll();
     }
 
