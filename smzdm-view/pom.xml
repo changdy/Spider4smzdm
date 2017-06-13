@@ -53,6 +53,12 @@
             <groupId>com.changdy.smzdm</groupId>
             <version>1.0-SNAPSHOT</version>
         </dependency>
+        <dependency>
+            <groupId>javax.servlet</groupId>
+            <artifactId>servlet-api</artifactId>
+            <version>2.5</version>
+            <scope>provided</scope>
+        </dependency>
     </dependencies>
     <build>
         <finalName>smzdm-view</finalName>
