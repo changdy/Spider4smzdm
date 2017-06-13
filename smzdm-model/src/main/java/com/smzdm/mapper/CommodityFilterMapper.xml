@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.smzdm.mapper.CommodityFilterMapper">
+    <resultMap id="BaseResultMap" type="com.smzdm.model.CommodityFilter">
+        <id property="id" column="id" javaType="java.lang.Long" jdbcType="BIGINT"/>
+        <result property="titleMatch" column="title_match" javaType="java.lang.String" jdbcType="VARCHAR"/>
+        <result property="titleUnmatch" column="title_unmatch" javaType="java.lang.String" jdbcType="VARCHAR"/>
+        <result property="categoryMatch" column="category_match" javaType="java.lang.String" jdbcType="VARCHAR"/>
+        <result property="categoryUnmatch" column="category_unmatch" javaType="java.lang.String" jdbcType="VARCHAR"/>
+        <result property="ratingCount" column="rating_count" javaType="java.lang.Integer" jdbcType="INTEGER"/>
+        <result property="worthPercent" column="worth_percent" javaType="java.lang.Integer" jdbcType="INTEGER"/>
+    </resultMap>
+    <insert id="insert" parameterType="com.smzdm.model.CommodityFilter">
+        insert into commodity_filter
+        (id,title_match,title_unmatch,category_match,category_unmatch,rating_count,worth_percent)
+        values
+        (#{id,jdbcType=BIGINT},
+        #{titleMatch,jdbcType=VARCHAR},
+        #{titleUnmatch,jdbcType=VARCHAR},
+        #{categoryMatch,jdbcType=VARCHAR},
+        #{categoryUnmatch,jdbcType=VARCHAR},
+        #{ratingCount,jdbcType=INTEGER},
+        #{worthPercent,jdbcType=INTEGER})
+    </insert>
+    <select id="selectAll" resultMap="BaseResultMap" >
+        select id,title_match,title_unmatch,category_match,category_unmatch,rating_count,worth_percent from commodity_filter
+    </select>
+</mapper>
