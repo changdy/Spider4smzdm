@@ -8,12 +8,15 @@
         <result property="titleUnmatch" column="title_unmatch" javaType="java.lang.String" jdbcType="VARCHAR"/>
         <result property="categoryMatch" column="category_match" javaType="java.lang.String" jdbcType="VARCHAR"/>
         <result property="categoryUnmatch" column="category_unmatch" javaType="java.lang.String" jdbcType="VARCHAR"/>
+        <result property="categoryMatchIds" column="category_match_ids" javaType="java.lang.String" jdbcType="VARCHAR"/>
+        <result property="categoryUnmatchIds" column="category_unmatch_ids" javaType="java.lang.String" jdbcType="VARCHAR"/>
         <result property="ratingCount" column="rating_count" javaType="java.lang.Integer" jdbcType="INTEGER"/>
         <result property="worthPercent" column="worth_percent" javaType="java.lang.Integer" jdbcType="INTEGER"/>
+        <result property="ignoreComment" column="ignore_comment" javaType="java.lang.Integer" jdbcType="INTEGER"/>
     </resultMap>
     <insert id="insert" parameterType="com.smzdm.model.CommodityFilter">
         insert into commodity_filter
-        (id,name,title_match,title_unmatch,category_match,category_unmatch,rating_count,worth_percent)
+        (id,name,title_match,title_unmatch,category_match,category_unmatch,category_match_ids,category_unmatch_ids,rating_count,worth_percent,ignore_comment)
         values
         (#{id,jdbcType=BIGINT},
         #{name,jdbcType=VARCHAR},
@@ -21,10 +24,13 @@
         #{titleUnmatch,jdbcType=VARCHAR},
         #{categoryMatch,jdbcType=VARCHAR},
         #{categoryUnmatch,jdbcType=VARCHAR},
+        #{categoryMatchIds,jdbcType=VARCHAR},
+        #{categoryUnmatchIds,jdbcType=VARCHAR},
         #{ratingCount,jdbcType=INTEGER},
         #{worthPercent,jdbcType=INTEGER})
+        #{ignoreComment,jdbcType=INTEGER})
     </insert>
     <select id="selectAll" resultMap="BaseResultMap" >
-        select id,name,title_match,title_unmatch,category_match,category_unmatch,rating_count,worth_percent from commodity_filter
+        select id,name,title_match,title_unmatch,category_match,category_unmatch,category_match_ids,category_unmatch_ids,rating_count,worth_percent,ignore_comment from commodity_filter
     </select>
 </mapper>

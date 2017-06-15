@@ -10,13 +10,16 @@ public class CommodityFilter {
     private String titleUnmatch;
     private String categoryMatch;
     private String categoryUnmatch;
+    private String categoryMatchIds;
+    private String categoryUnmatchIds;
     private Integer ratingCount;
     private Integer worthPercent;
+    private Integer ignoreComment;
 
     public CommodityFilter() {
     }
 
-    public CommodityFilter(Long id, String name, String titleMatch, String titleUnmatch, String categoryMatch, String categoryUnmatch, Integer ratingCount, Integer worthPercent) {
+    public CommodityFilter(Long id, String name, String titleMatch, String titleUnmatch, String categoryMatch, String categoryUnmatch, String categoryMatchIds, String categoryUnmatchIds, Integer ratingCount, Integer worthPercent, Integer ignoreComment) {
 
         this.id = id;
         this.name = name;
@@ -24,8 +27,11 @@ public class CommodityFilter {
         this.titleUnmatch = titleUnmatch;
         this.categoryMatch = categoryMatch;
         this.categoryUnmatch = categoryUnmatch;
+        this.categoryMatchIds = categoryMatchIds;
+        this.categoryUnmatchIds = categoryUnmatchIds;
         this.ratingCount = ratingCount;
         this.worthPercent = worthPercent;
+        this.ignoreComment = ignoreComment;
     }
 
     public Long getId() {
@@ -76,6 +82,22 @@ public class CommodityFilter {
         this.categoryUnmatch = categoryUnmatch;
     }
 
+    public String getCategoryMatchIds() {
+        return categoryMatchIds;
+    }
+
+    public void setCategoryMatchIds(String categoryMatchIds) {
+        this.categoryMatchIds = categoryMatchIds;
+    }
+
+    public String getCategoryUnmatchIds() {
+        return categoryUnmatchIds;
+    }
+
+    public void setCategoryUnmatchIds(String categoryUnmatchIds) {
+        this.categoryUnmatchIds = categoryUnmatchIds;
+    }
+
     public Integer getRatingCount() {
         return ratingCount;
     }
@@ -92,6 +114,14 @@ public class CommodityFilter {
         this.worthPercent = worthPercent;
     }
 
+    public Integer getIgnoreComment() {
+        return ignoreComment;
+    }
+
+    public void setIgnoreComment(Integer ignoreComment) {
+        this.ignoreComment = ignoreComment;
+    }
+
     @Override
     public String toString() {
         return "CommodityFilter{" +
@@ -101,8 +131,11 @@ public class CommodityFilter {
                 ", titleUnmatch='" + titleUnmatch + '\'' +
                 ", categoryMatch='" + categoryMatch + '\'' +
                 ", categoryUnmatch='" + categoryUnmatch + '\'' +
+                ", categoryMatchIds='" + categoryMatchIds + '\'' +
+                ", categoryUnmatchIds='" + categoryUnmatchIds + '\'' +
                 ", ratingCount=" + ratingCount +
                 ", worthPercent=" + worthPercent +
+                ", ignoreComment=" + ignoreComment +
                 '}';
     }
 }
