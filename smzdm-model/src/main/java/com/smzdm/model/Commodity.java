@@ -250,4 +250,32 @@ public class Commodity {
     public void setCreateDate(LocalDateTime createDate) {
         this.createDate = createDate;
     }
+
+    @Override
+    public String toString() {
+        return "Commodity{" +
+                "id=" + id +
+                ", articleId=" + articleId +
+                ", discoveryFlag=" + discoveryFlag +
+                ", title='" + title + '\'' +
+                ", content='" + content + '\'' +
+                ", tags='" + tags + '\'' +
+                ", infoTitle='" + infoTitle + '\'' +
+                ", brand='" + brand + '\'' +
+                ", priceString='" + priceString + '\'' +
+                ", priceNumber=" + priceNumber +
+                ", topCategoryId=" + topCategoryId +
+                ", categories='" + categories + '\'' +
+                ", referralName='" + referralName + '\'' +
+                ", picUrl='" + picUrl + '\'' +
+                ", infoUrl='" + infoUrl + '\'' +
+                ", channelId=" + channelId +
+                ", mall='" + mall + '\'' +
+                ", mallUrl='" + mallUrl + '\'' +
+                ", shoppingUrl='" + shoppingUrl + '\'' +
+                ", referralDate=" + referralDate +
+                ", timeSort=" + timeSort +
+                ", createDate=" + createDate +
+                '}';
+    }
 }
