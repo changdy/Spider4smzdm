@@ -1,6 +1,8 @@
 package com.smzdm.service;
 
 import com.smzdm.model.Commodity;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import javax.mail.Session;
@@ -17,7 +19,7 @@ import java.util.Properties;
 //http://blog.csdn.net/xietansheng/article/details/51673073
 @Service
 public class EmailHandler {
-
+    private static Logger logger = LoggerFactory.getLogger(EmailHandler.class);
     private static final String EMAILACCOUNT = "117969632@qq.com";
     private static final String PASSWORD = "";
     private static final String SMTPHOST = "smtp.qq.com";
@@ -51,7 +53,7 @@ public class EmailHandler {
     public void sendMsg(String title, String content) throws Exception {
         Properties properties = getProperties();
         Session session = Session.getDefaultInstance(properties);
-        session.setDebug(true);
+        session.setDebug(false);
         MimeMessage message = createMimeMessage(session, title, content);
         Transport transport = session.getTransport();
         transport.connect(EMAILACCOUNT, PASSWORD);
@@ -78,6 +80,7 @@ public class EmailHandler {
                 } else {
                     sendMsg("捕获到" + matchList.size() + "条优惠信息", content.toString());
                 }
+                logger.info("此次捕捉到" + matchList.size());
             } catch (Exception e) {
                 e.printStackTrace();
             }
