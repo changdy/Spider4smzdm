@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:v-on="http://www.w3.org/1999/xhtml">
+<html lang="en" xmlns:v-on="http://www.w3.org/1999/xhtml" xmlns:v-bind="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="utf-8">
     <title>爬虫</title>
@@ -55,7 +55,7 @@
         <span v-else>未找到记录</span>
         <ul class="pagination" style="margin: 0;" v-if="itemCount!=0">
             <li v-if="currentPageNo!=1"><a href="javascript:void(0);" @click="jumpPage(currentPageNo-1)">&laquo;</a></li>
-            <li v-for="page in pageList"><a href="javascript:void(0);" @click="jumpPage(page)">{{page}}</a></li>
+            <li v-for="page in pageList" v-bind:class="{ active: page===currentPageNo }"><a href="javascript:void(0);" @click="jumpPage(page)">{{page}}</a></li>
             <li v-if="currentPageNo!=pageCount"><a href="javascript:void(0);" @click="jumpPage(currentPageNo+1)">&raquo;</a></li>
             <li><input type="text" v-model.number="jumpPageNo" placeholder="跳转" v-on:keyup.13="submit"></li>
         </ul>
