@@ -3,6 +3,7 @@
  */
 $(document).ready(function () {
     window.onresize = adjust;
+    $('.add-lazyload').addClass('lazyload');
     page = new Vue({
         el: '#pagination',
         data: {

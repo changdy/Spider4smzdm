@@ -22,7 +22,7 @@
         <div v-for="item in items">
             <div class="commodity">
                 <div class="commodity-img" style="position: relative">
-                    <img :src="item.picUrl"/>
+                    <img class='add-lazyload' :data-src="item.picUrl"/>
                     <span class="channel-title">{{item.channelTitle}}</span>
                     <span class="referral-date"  v-if="!config.pcWeb">{{item.referralDate|timeHandler}}</span>
                 </div>
@@ -61,6 +61,7 @@
         </ul>
     </div>
 </div>
+<script src="../js/lazysizes.js"  async=""></script>
 <script src="../js/jquery-3.1.1.js"></script>
 <script src="../js/bootstrap-3.3.7-dist/js/bootstrap.js"></script>
 <script src="../js/bootstrap-table-develop/dist/bootstrap-table.js"></script>
