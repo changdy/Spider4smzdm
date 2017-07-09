@@ -21,6 +21,7 @@
     </div>
 </div>
 <script src="js/jquery-3.1.1.js"></script>
+<script src='js/custom/global-config.js'></script>
 <script src="js/bootstrap-3.3.7-dist/js/bootstrap.js"></script>
 <script src="js/bootstrap-table-develop/dist/bootstrap-table.js"></script>
 <script src="js/bootstrap-table-develop/dist/locale/bootstrap-table-zh-CN.js"></script>
@@ -37,7 +38,7 @@
     //table初始化
     let $table = $('#table');
     $table.bootstrapTable({
-        url: 'query-list',
+        url: reqBashPath + 'query-list',
         dataType: "json",
         striped: true,                      //是否显示行间隔色
         singleSelect: true,

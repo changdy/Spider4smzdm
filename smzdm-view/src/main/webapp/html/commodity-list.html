@@ -17,6 +17,7 @@
     <div>
         <input id="search-title" type="text" placeholder="输入关键字">
         <button class="btn btn-default" type="button" id="search-btn"><span class="glyphicon glyphicon-search"></span> 搜索</button>
+        <div class="btn btn-default" id="filter-btn">过滤管理</div>
     </div>
     <div class="commodity-list">
         <div v-for="item in items">
@@ -24,7 +25,7 @@
                 <div class="commodity-img" style="position: relative">
                     <img class='add-lazyload' :data-src="item.picUrl"/>
                     <span class="channel-title">{{item.channelTitle}}</span>
-                    <span class="referral-date"  v-if="!config.pcWeb">{{item.referralDate|timeHandler}}</span>
+                    <span class="referral-date" v-if="!config.pcWeb">{{item.referralDate|timeHandler}}</span>
                 </div>
                 <div class="commodity-panel">
                     <a class="commodity-title" :href="item.articleId|hrefHandler">{{item.title}}</a>
@@ -43,7 +44,8 @@
                             <a class="btn btn-info" v-if="config.pcWeb"><span class="glyphicon glyphicon-tag"></span> {{item.category}}</a>
                             <a class="btn btn-info" v-if="config.pcWeb"><span class="glyphicon glyphicon-time"></span> {{item.referralDate|timeHandler}}</a>
                         </div>
-                        <a class="btn btn-danger pull-right" :href="item.shoppingUrl" target="_blank" v-if="config.pcWeb"><span class="glyphicon glyphicon-shopping-cart"></span>剁手</a>
+                        <a class="btn btn-danger pull-right" :href="item.shoppingUrl" target="_blank" v-if="config.pcWeb"><span
+                                class="glyphicon glyphicon-shopping-cart"></span>剁手</a>
                     </div>
                 </div>
             </div>
@@ -61,8 +63,40 @@
         </ul>
     </div>
 </div>
-<script src="../js/lazysizes.js"  async=""></script>
+<div class="modal fade" id="login-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title" id="myModalLabel">登录框</h4>
+            </div>
+            <div class="modal-body">
+                <div class="fade-alert">
+                    <div class="alert alert-danger alert-dismissable">
+                        <button type="button" class="close">&times;</button>
+                        账号或密码错误,请重试!
+                    </div>
+                </div>
+                <div class="input-box">
+                    <div class="input-placeholder">请输入用户名</div>
+                    <input type="text" class="form-control" id="user-name">
+                </div>
+                <div class="input-box">
+                    <div class="input-placeholder">请输入密码</div>
+                    <input type="password" class="form-control" id="user-pwd">
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                <button type="button" class="btn btn-primary" id="login-btn">登录</button>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="../js/lazysizes.js" async=""></script>
 <script src="../js/jquery-3.1.1.js"></script>
+<script src='../js/custom/global-config.js'></script>
+<script src='../js/js.cookie.js'></script>
 <script src="../js/bootstrap-3.3.7-dist/js/bootstrap.js"></script>
 <script src="../js/bootstrap-table-develop/dist/bootstrap-table.js"></script>
 <script src="../js/bootstrap-table-develop/dist/locale/bootstrap-table-zh-CN.js"></script>

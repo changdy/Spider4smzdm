@@ -140,3 +140,35 @@ input:focus, .btn:focus, .btn > :focus {
     border-top-right-radius: 4px;
     border-bottom-right-radius: 4px;
 }
+
+.fade-alert {
+    overflow: hidden;
+    height: 0;
+    -webkit-transition: all linear .4s;
+    transition: all linear .4s;
+}
+
+.fade-alert.on-alert {
+    height: 52px;
+}
+
+.input-box {
+    margin: 15px 10px;
+    position: relative
+}
+
+.input-box .input-placeholder {
+    position: absolute;
+    color: #999;
+    top: 8px;
+    left: 11px;
+    background-color: #fff;
+    padding: 0 3px;
+    -webkit-transition: all linear .2s;
+    transition: all linear .2s;
+}
+
+.input-box.focus-on .input-placeholder {
+    color: #66afe9;
+    top: -10px;
+}

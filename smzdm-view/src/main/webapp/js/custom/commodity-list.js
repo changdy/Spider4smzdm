@@ -59,7 +59,7 @@ $(document).ready(function () {
             },
             jumpPage: function (pageNo) {
                 getList(pageNo);
-                scrollTo(0,0);
+                scrollTo(0, 0);
             },
             submit: function () {
                 if (typeof(this.jumpPageNo) === "number" && this.jumpPageNo < this.pageCount) {
@@ -112,6 +112,7 @@ $(document).ready(function () {
         );
     }
 
+    //搜索
     $("#search-btn").click(function () {
         page.searchInfo.title = $("#search-title").val().trim();
         getList(1);
@@ -127,4 +128,51 @@ $(document).ready(function () {
             $(".container").removeClass("mobile-adupt");
         }
     }
+
+    //过滤接口
+    $('#filter-btn').click(function () {
+        let name = Cookies.get('user-name');
+        if (typeof name !== 'undefined') {
+            window.location.href = 'filter-list.html';
+        } else {
+            $('#login-modal').modal();
+        }
+    });
+    //登录按钮
+    $("#login-btn").click(function () {
+        loginIn();
+    });
+    //点X隐藏
+    $('.alert-dismissable button').click(function () {
+        $(this).closest('.fade-alert').removeClass('on-alert');
+    });
+    //input效果
+    $('.input-box').click(function () {
+        $(this).addClass('focus-on');
+        $(this).children('input').focus();
+    });
+    $('.input-box input').blur(function () {
+        if ($(this).val() === '') {
+            $(this).parent().removeClass('focus-on');
+        }
+    }).focus(function () {
+        $(this).parent().addClass('focus-on');
+    });
 });
+//登录接口
+function loginIn() {
+    $.ajax({
+        url: location.origin + "/login-controller",
+        dataType: "json",
+        data: {
+            name: $('#user-name').val(),
+            pwd: $('#user-pwd').val(),
+        },
+    }).then(function (data) {
+        if (data.result === true) {
+            window.location.href = 'filter-list.html';
+        } else {
+            $('#login-modal').find('.fade-alert').addClass('on-alert');
+        }
+    });
+}
