@@ -102,7 +102,7 @@ $(document).ready(function () {
     });
 
     function getList(pageNo) {
-        $.get(location.origin + "/query-list",
+        $.get(reqBashPath + "query-commodity",
             {sort: "id", order: "desc", offset: (pageNo - 1) * page.defaultPageSize, limit: page.defaultPageSize, search: page.searchInfo.title},
             function (data) {
                 listVue.items = data.rows;
@@ -162,7 +162,7 @@ $(document).ready(function () {
 //登录接口
 function loginIn() {
     $.ajax({
-        url: location.origin + "/login-controller",
+        url: reqBashPath + "user-login",
         dataType: "json",
         data: {
             name: $('#user-name').val(),

@@ -17,14 +17,14 @@ import java.util.Map;
  */
 @Service
 @Transactional
-public class QueryCommodityService {
+public class CommodityService {
     private final CommodityMapper commodityMapper;
 
 
-    private static Logger logger = LogManager.getLogger(QueryCommodityService.class.getName());
+    private static Logger logger = LogManager.getLogger(CommodityService.class.getName());
 
     @Autowired
-    public QueryCommodityService(CommodityMapper commodityMapper) {
+    public CommodityService(CommodityMapper commodityMapper) {
         this.commodityMapper = commodityMapper;
     }
 
