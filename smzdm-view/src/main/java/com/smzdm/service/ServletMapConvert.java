@@ -11,11 +11,15 @@ import java.util.Map;
  */
 @Service
 public class ServletMapConvert {
-    public HashMap<String, String> mapConvert(HttpServletRequest httpServletRequest) {
+    public HashMap<String, Object> mapConvert(HttpServletRequest httpServletRequest) {
         Map<String, String[]> parameterMap = httpServletRequest.getParameterMap();
-        HashMap<String, String> convertedMap = new HashMap<>();
+        HashMap<String, Object> convertedMap = new HashMap<>();
         parameterMap.forEach((key, value) -> {
-            convertedMap.put(key, value[0]);
+            if (key.equals("offset") || key.equals("limit")) {
+                convertedMap.put(key, Long.valueOf(value[0]));
+            } else {
+                convertedMap.put(key, value[0]);
+            }
         });
         return convertedMap;
     }

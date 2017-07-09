@@ -33,4 +33,27 @@
     <select id="selectAll" resultMap="BaseResultMap" >
         select id,name,title_match,title_unmatch,category_match,category_unmatch,category_match_ids,category_unmatch_ids,rating_count,worth_percent,ignore_comment from commodity_filter
     </select>
+    <select id="getCount"  resultType="int">
+        SELECT COUNT(*) FROM commodity_filter
+        <where>
+            <if test="search!=null and search!=''">
+                name LIKE CONCAT(CONCAT('%', #{search, jdbcType=VARCHAR}),'%')
+            </if>
+        </where>
+    </select>
+
+    <select id="queryList" resultMap="BaseResultMap">
+        select id,name,title_match,title_unmatch,category_match,category_unmatch,category_match_ids,category_unmatch_ids,rating_count,worth_percent,ignore_comment from commodity_filter
+        <where>
+            <if test="search!=null and search!=''">
+                name LIKE CONCAT(CONCAT('%', #{search, jdbcType=VARCHAR}),'%')
+            </if>
+        </where>
+        order by id desc
+        <choose>
+            <when test="offset!=null and limit!=null">limit #{offset},#{limit}</when>
+            <otherwise>limit 25</otherwise>
+        </choose>
+    </select>
+
 </mapper>
