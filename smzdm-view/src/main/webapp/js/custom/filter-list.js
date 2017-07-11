@@ -24,7 +24,7 @@ $(document).ready(function () {
             align: 'center',
             valign: 'middle',
             title: '序号',
-            width:70,
+            width: 70,
             visible: false
         }, {
             field: 'name',
@@ -66,9 +66,7 @@ $(document).ready(function () {
     $remove = $('#delete-item');
     $table.on('check.bs.table uncheck.bs.table ' + 'check-all.bs.table uncheck-all.bs.table', function () {
         $remove.prop('disabled', !$table.bootstrapTable('getSelections').length);
-        // save your data, here just save the current page
-        let selections = getIdSelections();
-        // push or splice the selections if you want to save all data selections
+        $('#operate-item').prop('disabled', $table.bootstrapTable('getSelections').length !== 1);
     });
     $remove.click(function () {
         let ids = getIdSelections();
