@@ -63,18 +63,20 @@ $(document).ready(function () {
             title: '点赞百分比',
         }]
     });
-    $remove = $('#delete-item');
-    $table.on('check.bs.table uncheck.bs.table ' + 'check-all.bs.table uncheck-all.bs.table', function () {
-        $remove.prop('disabled', !$table.bootstrapTable('getSelections').length);
-        $('#operate-item').prop('disabled', $table.bootstrapTable('getSelections').length !== 1);
+    let $remove = $('#delete-item');
+    let $operate = $('#operate-item');
+    $table.on('check.bs.table uncheck.bs.table check-all.bs.table uncheck-all.bs.table', function () {
+        let selectArrLength = $table.bootstrapTable('getSelections').length;
+        $remove.prop('disabled', !selectArrLength);
+        $operate.prop('disabled', selectArrLength !== 1);
     });
     $remove.click(function () {
-        let ids = getIdSelections();
         $table.bootstrapTable('remove', {
             field: 'id',
-            values: ids
+            values: getIdSelections()
         });
         $remove.prop('disabled', true);
+        $operate.prop('disabled', true);
     });
     function getIdSelections() {
         return $.map($table.bootstrapTable('getSelections'), function (row) {
