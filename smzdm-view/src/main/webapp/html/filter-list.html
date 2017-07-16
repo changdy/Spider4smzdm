@@ -7,7 +7,25 @@
     <link href="../css/font-awesome-4.7.0/css/font-awesome.css" rel="stylesheet">
     <link href="../css/custom/commodity-list.css" rel="stylesheet">
     <link href="../js/bootstrap-table-develop/dist/bootstrap-table.css" rel="stylesheet">
+    <link href="../js/sweetalert-master/dist/sweetalert.css" rel="stylesheet">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        #smzdm-frame {
+            position: fixed;
+            left: 0;
+            width: 100%;
+            bottom: 0;
+            background-color: #fff;
+            border: 0;
+            height: 0;
+            transition: all 2s;
+            opacity: 0.5;
+        }
+        #smzdm-frame.on-show{
+            height: 100%;
+            opacity: 1;
+        }
+    </style>
 </head>
 <body>
 <div class="container">
@@ -34,6 +52,7 @@
         </div>
     </div>
 </div>
+<iframe id='smzdm-frame' src="http://www.smzdm.com/fenlei/"></iframe>
 </body>
 <script src="../js/lazysizes.js" async=""></script>
 <script src="../js/jquery-3.1.1.js"></script>
@@ -42,6 +61,7 @@
 <script src="../js/bootstrap-3.3.7-dist/js/bootstrap.js"></script>
 <script src="../js/bootstrap-table-develop/dist/bootstrap-table.js"></script>
 <script src="../js/bootstrap-table-develop/dist/locale/bootstrap-table-zh-CN.js"></script>
+<script src="../js/sweetalert-master/dist/sweetalert-dev.js"></script>
 <script src="../js/moment.js"></script>
 <script src="../js/vue.js"></script>
 <script src="../js/custom/filter-list.js"></script>
