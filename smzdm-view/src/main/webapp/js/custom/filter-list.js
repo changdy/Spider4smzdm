@@ -84,3 +84,31 @@ $(document).ready(function () {
         });
     }
 });
+document.getElementById('smzdm-frame').onload = function () {
+    let msg = {
+        totalArr: [{
+            title: '手机通讯',
+            id: 1
+        }, {
+            title: '智能手机',
+            id: 2
+        },{
+            title: '运营商',
+            id: 3
+        },{
+            title: '相机',
+            id: 4
+        }],
+        type: 'init',
+        reqBashPath:reqBashPath
+    };
+    window.frames[0].postMessage(msg, 'http://www.smzdm.com/fenlei/');
+};
+
+window.addEventListener('message', function (e) {
+    if (e.data.type === 'redundant') {
+        sweetAlert("以下目录已失效:", e.data.arrInfo, "warning");
+    } else {
+
+    }
+}, false);
