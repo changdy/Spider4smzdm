@@ -8,6 +8,7 @@
     <link href="../css/custom/commodity-list.css" rel="stylesheet">
     <link href="../js/bootstrap-table-develop/dist/bootstrap-table.css" rel="stylesheet">
     <link href="../js/sweetalert-master/dist/sweetalert.css" rel="stylesheet">
+    <link href="../css/custom/common.css" rel="stylesheet">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <style>
         #smzdm-frame {
@@ -40,7 +41,7 @@
         </div>
         <div class="col-md-12">
             <div id="toolbar">
-                <button id="add-item" class="btn btn-default btn-sm"  data-toggle="modal" href="#filter-modal">
+                <button id="add-item" class="btn btn-default btn-sm" data-toggle="modal" href="#filter-modal">
                     <i class="glyphicon glyphicon-plus"></i> 新增
                 </button>
                 <button id="delete-item" class="btn btn-danger btn-sm" disabled>
@@ -59,51 +60,51 @@
         <div class="modal-content" id="filter-info">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                <h4 class="modal-title"></h4>
+                <h4 class="modal-title">{{title}}</h4>
             </div>
             <div class="modal-body">
                 <div class="form-horizontal">
                     <div class="form-group">
                         <span class="col-sm-3 control-label"><span style="margin-right: 27px;">名</span><span>称</span></span>
                         <div class="col-sm-9">
-                            <input type="text" class="form-control" placeholder="起个名字呗,比如航空母舰">
+                            <input type="text" class="form-control" v-model="name" placeholder="起个名字呗,比如航空母舰">
                         </div>
                     </div>
                     <div class="form-group">
                         <span class="col-sm-3 control-label">标题匹配</span>
                         <div class="col-sm-9">
-                            <input type="text" class="form-control" placeholder="逗号分割">
+                            <input type="text" class="form-control" v-model="titleMatch" placeholder="逗号分割">
                         </div>
                     </div>
                     <div class="form-group">
                         <span class="col-sm-3 control-label">标题排除</span>
                         <div class="col-sm-9">
-                            <input type="text" class="form-control" placeholder="逗号分割">
+                            <input type="text" class="form-control" v-model="titleUnmatch" placeholder="逗号分割">
                         </div>
                     </div>
                     <div class="form-group">
                         <span class="col-sm-3 control-label">目录匹配</span>
                         <div class="col-sm-9">
-                            <input type="text" class="form-control" disabled>
+                            <input type="text" class="form-control cursor-pointer" v-model="categoryMatch" readonly>
                         </div>
                     </div>
                     <div class="form-group">
                         <span class="col-sm-3 control-label">目录排除</span>
                         <div class="col-sm-9">
-                            <input type="text" class="form-control" disabled>
+                            <input type="text" class="form-control cursor-pointer" v-model="categoryUnmatchObj.str" readonly>
                         </div>
                     </div>
                     <div class="form-group">
                         <span class="col-sm-3 control-label">评论情况</span>
                         <div class="col-sm-9">
-                            <input type="text" class="form-control" placeholder="值、评论、收藏累加">
+                            <input type="text" class="form-control" v-model="ratingCount" placeholder="值、评论、收藏累加">
                         </div>
                     </div>
                     <div class="form-group">
                         <span class="col-sm-3 control-label">点赞比例</span>
                         <div class="col-sm-9">
                             <div class="input-group">
-                                <input type="text" class="form-control" placeholder="整数">
+                                <input type="text" class="form-control" v-model="worthPercent" placeholder="整数">
                                 <div class="input-group-addon">%</div>
                             </div>
                         </div>
