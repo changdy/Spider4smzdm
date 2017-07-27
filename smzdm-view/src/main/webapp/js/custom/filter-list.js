@@ -83,6 +83,38 @@ $(document).ready(function () {
             return row.id
         });
     }
+
+    let app = new Vue({
+        el: '#filter-info',
+        data: {
+            message: '',
+            titleUnmatch: '',
+            titleMatch: '',
+            categoryMatchArr: [],
+            categoryUnmatchArr: [],
+            ratingCount: null,
+            worthPercent: null
+        },
+        computed: {
+            categoryUnmatchObj: function () {
+                if (this.categoryUnmatchArr.length === 0) {
+                    return {
+                        titles: '',
+                        ids: ''
+                    };
+                } else {
+                    let titles = '', ids = '';
+                    for (let category of this.categoryUnmatchArr) {
+                        titles += category.title + ',';
+                        ids += category.id + ',';
+                    }
+                }
+            }
+        },
+        method:function () {
+            
+        }
+    })
 });
 document.getElementById('smzdm-frame').onload = function () {
     let msg = {
@@ -92,15 +124,15 @@ document.getElementById('smzdm-frame').onload = function () {
         }, {
             title: '智能手机',
             id: 2
-        },{
+        }, {
             title: '运营商',
             id: 3
-        },{
+        }, {
             title: '相机',
             id: 4
         }],
         type: 'init',
-        reqBashPath:reqBashPath
+        reqBashPath: reqBashPath
     };
     window.frames[0].postMessage(msg, 'http://www.smzdm.com/fenlei/');
 };
