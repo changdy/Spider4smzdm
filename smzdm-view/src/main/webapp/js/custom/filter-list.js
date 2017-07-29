@@ -87,7 +87,8 @@ $(document).ready(function () {
     let app = new Vue({
         el: '#filter-info',
         data: {
-            message: '',
+            message: '新增记录',
+            name: '',
             titleUnmatch: '',
             titleMatch: '',
             categoryMatchArr: [],
@@ -97,22 +98,24 @@ $(document).ready(function () {
         },
         computed: {
             categoryUnmatchObj: function () {
-                if (this.categoryUnmatchArr.length === 0) {
-                    return {
-                        titles: '',
-                        ids: ''
-                    };
-                } else {
-                    let titles = '', ids = '';
-                    for (let category of this.categoryUnmatchArr) {
-                        titles += category.title + ',';
-                        ids += category.id + ',';
-                    }
-                }
+                return this.getCategoryInfo(this.categoryUnmatchArr);
+            },
+            categoryMatchObj: function () {
+                return this.getCategoryInfo(this.categoryMatchArr);
             }
         },
-        method:function () {
-            
+        methods: {
+            getCategoryInfo: function (arr) {
+                let titles = '', ids = '';
+                for (let category of arr) {
+                    titles += category.title + ',';
+                    ids += category.id + ',';
+                }
+                return {
+                    titles: titles.endTrim(','),
+                    ids: ids.endTrim(',')
+                }
+            }
         }
     })
 });

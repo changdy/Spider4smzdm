@@ -22,6 +22,7 @@
             transition: all 2s;
             opacity: 0.5;
             z-index: 1051;
+            overflow: hidden;
         }
 
         #smzdm-frame.on-show {
@@ -60,7 +61,7 @@
         <div class="modal-content" id="filter-info">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                <h4 class="modal-title">{{title}}</h4>
+                <h4 class="modal-title">{{message}}</h4>
             </div>
             <div class="modal-body">
                 <div class="form-horizontal">
@@ -85,13 +86,13 @@
                     <div class="form-group">
                         <span class="col-sm-3 control-label">目录匹配</span>
                         <div class="col-sm-9">
-                            <input type="text" class="form-control cursor-pointer" v-model="categoryMatch" readonly>
+                            <input type="text" class="form-control cursor-pointer" v-model="categoryMatchObj.titles" readonly>
                         </div>
                     </div>
                     <div class="form-group">
                         <span class="col-sm-3 control-label">目录排除</span>
                         <div class="col-sm-9">
-                            <input type="text" class="form-control cursor-pointer" v-model="categoryUnmatchObj.str" readonly>
+                            <input type="text" class="form-control cursor-pointer" v-model="categoryUnmatchObj.titles" readonly>
                         </div>
                     </div>
                     <div class="form-group">
