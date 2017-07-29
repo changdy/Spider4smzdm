@@ -3,6 +3,7 @@ package com.smzdm.mapper;
 import com.smzdm.model.Category;
 
 import java.util.List;
+import java.util.Map;
 
 public interface CategoryMapper {
     int insert(Category record);
@@ -13,4 +14,5 @@ public interface CategoryMapper {
 
     int insertCategoryList(List<Category> categoryList);
 
+    List<Map> getMainIfo();
 }

@@ -2,6 +2,105 @@
  * Created by changdy on 2017/7/9.
  */
 $(document).ready(function () {
+    let modal = new Vue({
+        el: '#filter-info',
+        data: {
+            id: -1,
+            name: '',
+            titleUnmatch: '',
+            titleMatch: '',
+            categoryMatchArr: [],
+            categoryUnmatchArr: [],
+            ratingCount: '',
+            worthPercent: ''
+        },
+        computed: {
+            categoryUnmatchObj: {
+                get: function () {
+                    return this.getCategoryInfo(this.categoryUnmatchArr);
+                },
+                set: function (obj) {
+                    this.categoryUnmatchArr = this.getCategoryArr(obj);
+                }
+            },
+            categoryMatchObj: {
+                get: function () {
+                    return this.getCategoryInfo(this.categoryMatchArr);
+                },
+                set: function (obj) {
+                    this.categoryMatchArr = this.getCategoryArr(obj);
+                }
+            },
+            message: function () {
+                return this.id === -1 ? '新增过滤' : '修改过滤';
+            }
+        },
+        methods: {
+            getCategoryInfo: function (arr) {
+                let titles = '', ids = '';
+                for (let category of arr) {
+                    titles += category.title + ',';
+                    ids += category.id + ',';
+                }
+                return {
+                    titles: titles.endTrim(','),
+                    ids: ids.endTrim(',')
+                }
+            },
+            getCategoryArr: function (obj) {
+                let idArr = obj.ids.split(',');
+                let titleArr = obj.titles.split(',');
+                let category = [];
+                if (idArr.length === titleArr.length) {
+                    idArr.forEach(v => category.push({id: v}));
+                    titleArr.forEach((v, i) => category[i].title = v);
+                } else {
+                    sweetAlert("id和title长度不一", '', "warning");
+                }
+                return category;
+            },
+            match: function () {
+                this.sendToIframe(this.categoryMatchArr, true);
+            },
+            unMatch: function () {
+                this.sendToIframe(this.categoryUnmatchArr, false);
+            },
+            sendToIframe: function (arr, matchFlag) {
+                let msg = {
+                    selectArr: arr,
+                    type: 'reset',
+                    matchFlag: matchFlag
+                };
+                $('#smzdm-frame').addClass('on-show')[0].contentWindow.postMessage(msg, '*');
+            },
+            reset: function () {
+                this.id = -1;
+                this.name = '';
+                this.titleUnmatch = '';
+                this.titleMatch = '';
+                this.categoryMatchArr = [];
+                this.categoryUnmatchArr = [];
+                this.ratingCount = '';
+                this.worthPercent = '';
+            },
+            initVal: function (row) {
+                this.id = row.id;
+                this.name = row.name;
+                this.titleUnmatch = row.titleUnmatch;
+                this.titleMatch = row.titleMatch;
+                this.categoryMatchObj = {
+                    ids: row.categoryMatchIds,
+                    titles: row.categoryMatch
+                };
+                this.categoryUnmatchObj = {
+                    ids: row.categoryUnmatchIds,
+                    titles: row.categoryUnmatch
+                };
+                this.ratingCount = row.ratingCount;
+                this.worthPercent = row.worthPercent;
+            }
+        }
+    });
     let $table = $('#filter-table');
     $table.bootstrapTable({
         url: reqBashPath + 'query-filter',
@@ -60,11 +159,10 @@ $(document).ready(function () {
             field: 'worthPercent',
             align: 'center',
             valign: 'middle',
-            title: '点赞百分比',
+            title: '点赞比例',
         }]
     });
-    let $remove = $('#delete-item');
-    let $operate = $('#operate-item');
+    let $remove = $('#delete-item'), $operate = $('#operate-item'), $addItem = $('#add-item');
     $table.on('check.bs.table uncheck.bs.table check-all.bs.table uncheck-all.bs.table', function () {
         let selectArrLength = $table.bootstrapTable('getSelections').length;
         $remove.prop('disabled', !selectArrLength);
@@ -78,46 +176,18 @@ $(document).ready(function () {
         $remove.prop('disabled', true);
         $operate.prop('disabled', true);
     });
+    $addItem.click(function () {
+        modal.reset();
+    });
+    $operate.click(function () {
+        let row = $table.bootstrapTable('getSelections')[0];
+        modal.initVal(row);
+    });
     function getIdSelections() {
         return $.map($table.bootstrapTable('getSelections'), function (row) {
             return row.id
         });
     }
-
-    let app = new Vue({
-        el: '#filter-info',
-        data: {
-            message: '新增记录',
-            name: '',
-            titleUnmatch: '',
-            titleMatch: '',
-            categoryMatchArr: [],
-            categoryUnmatchArr: [],
-            ratingCount: null,
-            worthPercent: null
-        },
-        computed: {
-            categoryUnmatchObj: function () {
-                return this.getCategoryInfo(this.categoryUnmatchArr);
-            },
-            categoryMatchObj: function () {
-                return this.getCategoryInfo(this.categoryMatchArr);
-            }
-        },
-        methods: {
-            getCategoryInfo: function (arr) {
-                let titles = '', ids = '';
-                for (let category of arr) {
-                    titles += category.title + ',';
-                    ids += category.id + ',';
-                }
-                return {
-                    titles: titles.endTrim(','),
-                    ids: ids.endTrim(',')
-                }
-            }
-        }
-    })
 });
 document.getElementById('smzdm-frame').onload = function () {
     let msg = {
@@ -135,9 +205,8 @@ document.getElementById('smzdm-frame').onload = function () {
             id: 4
         }],
         type: 'init',
-        reqBashPath: reqBashPath
     };
-    window.frames[0].postMessage(msg, 'http://www.smzdm.com/fenlei/');
+    $('#smzdm-frame')[0].contentWindow.postMessage(msg, '*');
 };
 
 window.addEventListener('message', function (e) {

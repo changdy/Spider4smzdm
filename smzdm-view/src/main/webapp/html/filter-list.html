@@ -48,7 +48,7 @@
                 <button id="delete-item" class="btn btn-danger btn-sm" disabled>
                     <i class="glyphicon glyphicon-remove"></i> 删除
                 </button>
-                <button id="operate-item" class="btn btn-info btn-sm" disabled>
+                <button id="operate-item" class="btn btn-info btn-sm" disabled data-toggle="modal" href="#filter-modal">
                     <i class="glyphicon glyphicon-edit"></i> 修改
                 </button>
             </div>
@@ -86,13 +86,13 @@
                     <div class="form-group">
                         <span class="col-sm-3 control-label">目录匹配</span>
                         <div class="col-sm-9">
-                            <input type="text" class="form-control cursor-pointer" v-model="categoryMatchObj.titles" readonly>
+                            <input type="text" class="form-control cursor-pointer" v-model="categoryMatchObj.titles" @click="match" readonly >
                         </div>
                     </div>
                     <div class="form-group">
                         <span class="col-sm-3 control-label">目录排除</span>
                         <div class="col-sm-9">
-                            <input type="text" class="form-control cursor-pointer" v-model="categoryUnmatchObj.titles" readonly>
+                            <input type="text" class="form-control cursor-pointer" v-model="categoryUnmatchObj.titles" @click="unMatch" readonly>
                         </div>
                     </div>
                     <div class="form-group">

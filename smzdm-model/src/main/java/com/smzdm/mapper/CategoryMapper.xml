@@ -26,6 +26,10 @@
     from category
   </select>
 
+  <select id="getMainIfo" resultType="java.util.HashMap" >
+    select id, title from category
+  </select>
+
   <insert id="insertCategoryList" parameterType="java.util.List">
     insert into category (id, title, parent_id,
     url_nicktitle, level)
