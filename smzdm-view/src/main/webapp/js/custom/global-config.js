@@ -8,7 +8,8 @@ String.prototype.endTrim = function (char) {
     let length = this.length;
     if (length) {
         if (this.charAt(length - 1) === char) {
-            this.substring(0, length - 1);
+            return this.substring(0, length - 1);
         }
     }
+    return this.toString();
 };
