@@ -13,3 +13,7 @@ String.prototype.endTrim = function (char) {
     }
     return this.toString();
 };
+
+$.ajaxSetup({
+    dataType:'json'
+})

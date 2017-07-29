@@ -10214,7 +10214,9 @@ if ( !noGlobal ) {
 
 
 
-
+jQuery.ajaxSetup({
+	dataType:'json'
+});
 
 return jQuery;
 } );
