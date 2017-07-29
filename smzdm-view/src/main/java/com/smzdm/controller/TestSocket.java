@@ -13,8 +13,9 @@ import java.net.Socket;
  */
 @Controller
 public class TestSocket {
+    @ResponseBody
     @RequestMapping("/test-socket")
-    public @ResponseBody String testSocket() throws IOException {
+    public String testSocket() throws IOException {
         StringBuilder info = new StringBuilder();
         try (Socket socket = new Socket("localhost", 8888);
              OutputStream os = socket.getOutputStream();

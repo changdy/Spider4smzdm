@@ -17,8 +17,9 @@ import java.util.Map;
  */
 @Controller
 public class LoginController {
+    @ResponseBody
     @RequestMapping("/user-login")
-    public @ResponseBody String testSession(HttpServletRequest request, HttpServletResponse response) {
+    public String testSession(HttpServletRequest request, HttpServletResponse response) {
         HttpSession session = request.getSession();
         Map<String, Object> resultMap = new HashMap<>();
         String name = request.getParameter("name");

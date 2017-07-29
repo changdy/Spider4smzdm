@@ -29,8 +29,9 @@ public class CommodityFilterController {
     }
 
 
+    @ResponseBody
     @RequestMapping("/query-filter")
-    public @ResponseBody String queryFilter(HttpServletRequest httpServletRequest) {
+    public String queryFilter(HttpServletRequest httpServletRequest) {
         Map<String, Object> result = new HashMap<>();
         result.put("rows", commodityFilterMapper.queryList(servletMapConvert.mapConvert(httpServletRequest)));
         result.put("total", commodityFilterMapper.getCount(servletMapConvert.mapConvert(httpServletRequest)));

@@ -20,8 +20,9 @@ public class CommodityController {
         this.commodityService = commodityService;
     }
 
+    @ResponseBody
     @RequestMapping("/query-commodity")
-    public @ResponseBody String queryList(CommodityParams commodityParams) {
+    public String queryList(CommodityParams commodityParams) {
         return JSON.toJSONString(commodityService.queryList(commodityParams));
     }
 }
