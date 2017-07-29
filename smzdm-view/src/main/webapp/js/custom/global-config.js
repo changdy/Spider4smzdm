@@ -6,7 +6,7 @@ window.reqBashPath = location.origin + '/';
 
 String.prototype.endTrim = function (char) {
     let length = this.length;
-    if (length !== 0) {
+    if (length) {
         if (this.charAt(length - 1) === char) {
             this.substring(0, length - 1);
         }
