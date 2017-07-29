@@ -2,7 +2,7 @@
  * Created by changdy on 2017/7/9.
  */
 $(document).ready(function () {
-    let modal = new Vue({
+    window.filterModal = new Vue({
         el: '#filter-info',
         data: {
             id: -1,
@@ -11,8 +11,8 @@ $(document).ready(function () {
             titleMatch: '',
             categoryMatchArr: [],
             categoryUnmatchArr: [],
-            ratingCount: '',
-            worthPercent: ''
+            ratingCount: 0,
+            worthPercent: 0
         },
         computed: {
             categoryUnmatchObj: {
@@ -48,14 +48,16 @@ $(document).ready(function () {
                 }
             },
             getCategoryArr: function (obj) {
-                let idArr = obj.ids.split(',');
-                let titleArr = obj.titles.split(',');
                 let category = [];
-                if (idArr.length === titleArr.length) {
-                    idArr.forEach(v => category.push({id: v}));
-                    titleArr.forEach((v, i) => category[i].title = v);
-                } else {
-                    sweetAlert("id和title长度不一", '', "warning");
+                if (obj.ids !== '' && obj.titles !== '') {
+                    let idArr = obj.ids.split(',');
+                    let titleArr = obj.titles.split(',');
+                    if (idArr.length === titleArr.length) {
+                        idArr.forEach(v => category.push({id: v}));
+                        titleArr.forEach((v, i) => category[i].title = v);
+                    } else {
+                        sweetAlert("id和title长度不一", '', "warning");
+                    }
                 }
                 return category;
             },
@@ -80,8 +82,8 @@ $(document).ready(function () {
                 this.titleMatch = '';
                 this.categoryMatchArr = [];
                 this.categoryUnmatchArr = [];
-                this.ratingCount = '';
-                this.worthPercent = '';
+                this.ratingCount = 0;
+                this.worthPercent = 0;
             },
             initVal: function (row) {
                 this.id = row.id;
@@ -177,11 +179,11 @@ $(document).ready(function () {
         $operate.prop('disabled', true);
     });
     $addItem.click(function () {
-        modal.reset();
+        filterModal.reset();
     });
     $operate.click(function () {
         let row = $table.bootstrapTable('getSelections')[0];
-        modal.initVal(row);
+        filterModal.initVal(row);
     });
     function getIdSelections() {
         return $.map($table.bootstrapTable('getSelections'), function (row) {
@@ -189,30 +191,30 @@ $(document).ready(function () {
         });
     }
 });
+
 document.getElementById('smzdm-frame').onload = function () {
-    let msg = {
-        totalArr: [{
-            title: '手机通讯',
-            id: 1
-        }, {
-            title: '智能手机',
-            id: 2
-        }, {
-            title: '运营商',
-            id: 3
-        }, {
-            title: '相机',
-            id: 4
-        }],
-        type: 'init',
-    };
-    $('#smzdm-frame')[0].contentWindow.postMessage(msg, '*');
+    $.post(reqBashPath + 'get-category').then(data => {
+        let msg = {
+            totalArr: data,
+            type: 'init',
+        };
+        $('#smzdm-frame')[0].contentWindow.postMessage(msg, '*');
+    });
 };
-
 window.addEventListener('message', function (e) {
-    if (e.data.type === 'redundant') {
-        sweetAlert("以下目录已失效:", e.data.arrInfo, "warning");
-    } else {
-
+    let data = e.data;
+    if (data.type === 'redundant') {
+        let arrTitle = '';
+        for (let category of data.arrInfo) {
+            arrTitle += category.title + ',';
+        }
+        sweetAlert("以下目录已失效:", arrTitle.slice(0, -1), "warning");
+    } else if (data.type === 'selection') {
+        $('#smzdm-frame').removeClass('on-show');
+        if (data.matchFlag) {
+            filterModal.categoryMatchArr = data.arr;
+        } else {
+            filterModal.categoryUnmatchArr = data.arr;
+        }
     }
 }, false);
