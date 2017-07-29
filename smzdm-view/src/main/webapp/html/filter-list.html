@@ -19,7 +19,7 @@
             background-color: #fff;
             border: 0;
             height: 0;
-            transition: all 2s;
+            transition: all 1s;
             opacity: 0.5;
             z-index: 1051;
             overflow: hidden;
@@ -98,14 +98,14 @@
                     <div class="form-group">
                         <span class="col-sm-3 control-label">评论情况</span>
                         <div class="col-sm-9">
-                            <input type="text" class="form-control" v-model="ratingCount" placeholder="值、评论、收藏累加">
+                            <input type="text" class="form-control" v-model.number="ratingCount" placeholder="值、评论、收藏累加">
                         </div>
                     </div>
                     <div class="form-group">
                         <span class="col-sm-3 control-label">点赞比例</span>
                         <div class="col-sm-9">
                             <div class="input-group">
-                                <input type="text" class="form-control" v-model="worthPercent" placeholder="整数">
+                                <input type="text" class="form-control" v-model.number="worthPercent" placeholder="整数">
                                 <div class="input-group-addon">%</div>
                             </div>
                         </div>
