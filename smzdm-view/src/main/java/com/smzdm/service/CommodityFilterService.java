@@ -27,7 +27,16 @@ public class CommodityFilterService {
         return commodityFilterMapper.queryList(parameterMap);
     }
 
-    public int getCount(Map<String, Object> parameterMap){
+    public int getCount(Map<String, Object> parameterMap) {
         return commodityFilterMapper.getCount(parameterMap);
     }
+
+    public int insert(CommodityFilter commodityFilter) {
+        return commodityFilterMapper.insert(commodityFilter);
+    }
+
+    public int update(CommodityFilter commodityFilter) {
+        return commodityFilterMapper.update(commodityFilter);
+    }
+
 }

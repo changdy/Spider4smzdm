@@ -27,9 +27,25 @@
         #{categoryMatchIds,jdbcType=VARCHAR},
         #{categoryUnmatchIds,jdbcType=VARCHAR},
         #{ratingCount,jdbcType=INTEGER},
-        #{worthPercent,jdbcType=INTEGER})
+        #{worthPercent,jdbcType=INTEGER},
         #{ignoreComment,jdbcType=INTEGER})
     </insert>
+
+    <insert id="update" parameterType="com.smzdm.model.CommodityFilter">
+        update commodity_filter SET
+            name = #{name,jdbcType=VARCHAR},
+            title_match = #{titleMatch,jdbcType=VARCHAR},
+            title_unmatch = #{titleUnmatch,jdbcType=VARCHAR},
+            category_match = #{categoryMatch,jdbcType=VARCHAR},
+            category_unmatch = #{categoryUnmatch,jdbcType=VARCHAR},
+            category_match_ids = #{categoryMatchIds,jdbcType=VARCHAR},
+            category_unmatch_ids = #{categoryUnmatchIds,jdbcType=VARCHAR},
+            rating_count = #{ratingCount,jdbcType=INTEGER},
+            worth_percent = #{worthPercent,jdbcType=INTEGER},
+            ignore_comment = #{ignoreComment,jdbcType=INTEGER}
+        where id = #{id,jdbcType=BIGINT}
+    </insert>
+
     <select id="selectAll" resultMap="BaseResultMap" >
         select id,name,title_match,title_unmatch,category_match,category_unmatch,category_match_ids,category_unmatch_ids,rating_count,worth_percent,ignore_comment from commodity_filter
     </select>

@@ -13,6 +13,8 @@ public interface CommodityFilterMapper {
 
     int insert(CommodityFilter commodityFilter);
 
+    int update(CommodityFilter commodityFilter);
+
     List<CommodityFilter> selectAll();
 
     List<CommodityFilter> queryList(Map<String, Object> parameterMap);

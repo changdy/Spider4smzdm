@@ -33,6 +33,9 @@ $(document).ready(function () {
             },
             message: function () {
                 return this.id === -1 ? '新增过滤' : '修改过滤';
+            },
+            ignoreComment: function () {
+                return this.ratingCount + this.worthPercent ? 0 : 1;
             }
         },
         methods: {
@@ -100,6 +103,27 @@ $(document).ready(function () {
                 };
                 this.ratingCount = row.ratingCount;
                 this.worthPercent = row.worthPercent;
+            },
+            submit: function () {
+                let str = this.categoryMatchObj.titles + this.categoryUnmatchObj.titles + this.titleUnmatch + this.titleMatch;
+                if (str === '') {
+                    sweetAlert("缺少参数", '筛选条件不能全为空', "warning");
+                    return;
+                }
+                let param = {
+                    id: this.id === -1 ? null : this.id,
+                    categoryMatch: this.categoryMatchObj.titles,
+                    categoryUnmatch: this.categoryUnmatchObj.titles,
+                    categoryMatchIds: this.categoryMatchObj.ids,
+                    categoryUnmatchIds: this.categoryUnmatchObj.ids,
+                    ignoreComment: this.ignoreComment
+                };
+                $.post(reqBashPath + 'operate-filter', $.extend(this.$data, param)).then(data => {
+                    if (data.count > 0) {
+                        $('#filter-modal').modal('hide');
+                        sweetAlert("成功", '', "success");
+                    }
+                }, data => sweetAlert("失败", data, "error"));
             }
         }
     });

@@ -1,6 +1,7 @@
 package com.smzdm.controller;
 
 import com.alibaba.fastjson.JSON;
+import com.smzdm.model.CommodityFilter;
 import com.smzdm.service.CommodityFilterService;
 import com.smzdm.service.ServletMapConvert;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,5 +37,17 @@ public class CommodityFilterController {
         result.put("rows", commodityFilterMapper.queryList(servletMapConvert.mapConvert(httpServletRequest)));
         result.put("total", commodityFilterMapper.getCount(servletMapConvert.mapConvert(httpServletRequest)));
         return JSON.toJSONString(result);
+    }
+
+    @ResponseBody
+    @RequestMapping("/operate-filter")
+    public String addFilter(CommodityFilter commodityFilter) {
+        Map<String,Object> result= new HashMap<>();
+        if (commodityFilter.getId() == null) {
+            result.put("count",commodityFilterMapper.insert(commodityFilter));
+        } else {
+            result.put("count",commodityFilterMapper.update(commodityFilter));
+        }
+        return  JSON.toJSONString(result);
     }
 }
