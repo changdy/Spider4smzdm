@@ -25,8 +25,11 @@ public class CommodityFilterHandler {
 
     private EmailHandler emailService;
 
+    private CommodityFilterMapper commodityFilterMapper;
+
     @Autowired
     public CommodityFilterHandler(CommodityFilterMapper commodityFilterMapper, EmailHandler emailService) {
+        this.commodityFilterMapper = commodityFilterMapper;
         this.commodityFilters = commodityFilterMapper.selectAll();
         this.emailService = emailService;
     }
@@ -140,5 +143,9 @@ public class CommodityFilterHandler {
         for (Commodity commodity : commodityList) {
             readyMap.remove(commodity);
         }
+    }
+
+    public void reset(){
+        commodityFilters =commodityFilterMapper.selectAll();
     }
 }

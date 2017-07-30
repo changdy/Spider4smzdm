@@ -22,14 +22,14 @@ public class SocketServer {
 
     @Autowired
     public SocketServer(CommodityFilterHandler commodityFilterHandler) {
-        initSocket();
         this.commodityFilterHandler = commodityFilterHandler;
+        initSocket();
     }
 
     private void initSocket() {
         try {
             //1.创建一个服务器端Socket，即ServerSocket，指定绑定的端口，并监听此端口
-            ServerSocket serverSocket = new ServerSocket(8888);
+            ServerSocket serverSocket = new ServerSocket(1762);
             //记录客户端的数量
             //循环监听等待客户端的连接
             while (true) {

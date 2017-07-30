@@ -1,8 +1,10 @@
 package com.smzdm.controller;
 
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 import com.smzdm.model.CommodityFilter;
 import com.smzdm.service.CommodityFilterService;
+import com.smzdm.service.SendSocketInfo;
 import com.smzdm.service.ServletMapConvert;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -25,10 +27,13 @@ public class CommodityFilterController {
 
     private ServletMapConvert servletMapConvert;
 
+    private SendSocketInfo sendSocketInfo;
+
     @Autowired
-    public CommodityFilterController(CommodityFilterService commodityFilterMapper, ServletMapConvert servletMapConvert) {
+    public CommodityFilterController(CommodityFilterService commodityFilterMapper, ServletMapConvert servletMapConvert, SendSocketInfo sendSocketInfo) {
         this.commodityFilterMapper = commodityFilterMapper;
         this.servletMapConvert = servletMapConvert;
+        this.sendSocketInfo = sendSocketInfo;
     }
 
 
@@ -41,20 +46,40 @@ public class CommodityFilterController {
     }
 
     @RequestMapping("/operate-filter")
-    public String operateFilter(CommodityFilter commodityFilter) {
+    public String operateFilter(CommodityFilter commodityFilter, HttpServletRequest request) {
         Map<String, Object> result = new HashMap<>();
-        if (commodityFilter.getId() == null) {
-            result.put("count", commodityFilterMapper.insert(commodityFilter));
+        int count;
+        Boolean login = Boolean.valueOf(request.getSession().getAttribute("login").toString());
+        if (login) {
+            if (commodityFilter.getId() == null) {
+                count = commodityFilterMapper.insert(commodityFilter);
+            } else {
+                count = commodityFilterMapper.update(commodityFilter);
+            }
+            JSONObject info = new JSONObject();
+            info.put("type","reset");
+            sendSocketInfo.sendMsg(info.toJSONString());
         } else {
-            result.put("count", commodityFilterMapper.update(commodityFilter));
+            count = -1;
         }
+        result.put("count", count);
         return JSON.toJSONString(result);
     }
 
     @RequestMapping("/remove-filter")
-    public String removeFilter(@RequestParam("ids") String ids) {
+    public String removeFilter(@RequestParam("ids") String ids, HttpServletRequest request) {
         Map<String, Object> result = new HashMap<>();
-        result.put("count", commodityFilterMapper.deleteByIds(ids));
+        int count;
+        Boolean login = Boolean.valueOf(request.getSession().getAttribute("login").toString());
+        if (login) {
+            count = commodityFilterMapper.deleteByIds(ids);
+            JSONObject info = new JSONObject();
+            info.put("type","reset");
+            sendSocketInfo.sendMsg(info.toJSONString());
+        } else {
+            count = -1;
+        }
+        result.put("count", count);
         return JSON.toJSONString(result);
     }
 }

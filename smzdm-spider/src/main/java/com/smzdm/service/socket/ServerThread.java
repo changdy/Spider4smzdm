@@ -1,5 +1,6 @@
 package com.smzdm.service.socket;
 
+import com.alibaba.fastjson.JSONObject;
 import com.smzdm.service.CommodityFilterHandler;
 
 import java.io.*;
@@ -31,7 +32,10 @@ public class ServerThread extends Thread {
             while ((temp = br.readLine()) != null) {//循环读取客户端的信息
                 info.append(temp);
             }
-            System.out.println(info);
+            JSONObject jsonObject = JSONObject.parseObject(info.toString());
+            if (jsonObject.getString("type").equals("reset")) {
+                commodityFilterHandler.reset();
+            }
             socket.shutdownInput();//关闭输入流
             //获取输出流，响应客户端的请求
             bufferedWriter.write("欢迎您！");
