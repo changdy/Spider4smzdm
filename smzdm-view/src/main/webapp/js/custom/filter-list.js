@@ -195,12 +195,19 @@ $(document).ready(function () {
         $operate.prop('disabled', selectArrLength !== 1);
     });
     $remove.click(function () {
-        $table.bootstrapTable('remove', {
-            field: 'id',
-            values: getIdSelections()
+        let ids = getIdSelections().join(',');
+        $.post(reqBashPath + 'remove-filter', {
+            ids: ids
+        }).then(data => {
+            if (data.count) {
+                $table.bootstrapTable('remove', {
+                    field: 'id',
+                    values: getIdSelections()
+                });
+                $remove.prop('disabled', true);
+                $operate.prop('disabled', true);
+            }
         });
-        $remove.prop('disabled', true);
-        $operate.prop('disabled', true);
     });
     $addItem.click(function () {
         filterModal.reset();

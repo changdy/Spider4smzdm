@@ -39,4 +39,8 @@ public class CommodityFilterService {
         return commodityFilterMapper.update(commodityFilter);
     }
 
+    public int deleteByIds(String ids){
+        return commodityFilterMapper.deleteByIds(ids);
+    }
+
 }

@@ -15,6 +15,8 @@ public interface CommodityFilterMapper {
 
     int update(CommodityFilter commodityFilter);
 
+    int deleteByIds(String ids);
+
     List<CommodityFilter> selectAll();
 
     List<CommodityFilter> queryList(Map<String, Object> parameterMap);

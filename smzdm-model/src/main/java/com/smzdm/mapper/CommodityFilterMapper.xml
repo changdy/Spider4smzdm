@@ -31,7 +31,7 @@
         #{ignoreComment,jdbcType=INTEGER})
     </insert>
 
-    <insert id="update" parameterType="com.smzdm.model.CommodityFilter">
+    <update id="update" parameterType="com.smzdm.model.CommodityFilter">
         update commodity_filter SET
             name = #{name,jdbcType=VARCHAR},
             title_match = #{titleMatch,jdbcType=VARCHAR},
@@ -44,7 +44,12 @@
             worth_percent = #{worthPercent,jdbcType=INTEGER},
             ignore_comment = #{ignoreComment,jdbcType=INTEGER}
         where id = #{id,jdbcType=BIGINT}
-    </insert>
+    </update>
+
+    <delete id="deleteByIds">
+        delete from commodity_filter where FIND_IN_SET(id,#{ids})
+    </delete>
+
 
     <select id="selectAll" resultMap="BaseResultMap" >
         select id,name,title_match,title_unmatch,category_match,category_unmatch,category_match_ids,category_unmatch_ids,rating_count,worth_percent,ignore_comment from commodity_filter
