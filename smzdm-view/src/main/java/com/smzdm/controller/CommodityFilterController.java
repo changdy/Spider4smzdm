@@ -48,19 +48,20 @@ public class CommodityFilterController {
     @RequestMapping("/operate-filter")
     public String operateFilter(CommodityFilter commodityFilter, HttpServletRequest request) {
         Map<String, Object> result = new HashMap<>();
-        int count;
-        Boolean login = Boolean.valueOf(request.getSession().getAttribute("login").toString());
-        if (login) {
-            if (commodityFilter.getId() == null) {
-                count = commodityFilterMapper.insert(commodityFilter);
-            } else {
-                count = commodityFilterMapper.update(commodityFilter);
+        int count = -1;
+        Object login = request.getSession().getAttribute("login");
+        if (login != null) {
+            Boolean loginFlag = Boolean.valueOf(login.toString());
+            if (loginFlag) {
+                if (commodityFilter.getId() == null) {
+                    count = commodityFilterMapper.insert(commodityFilter);
+                } else {
+                    count = commodityFilterMapper.update(commodityFilter);
+                }
+                JSONObject info = new JSONObject();
+                info.put("type", "reset");
+                sendSocketInfo.sendMsg(info.toJSONString());
             }
-            JSONObject info = new JSONObject();
-            info.put("type","reset");
-            sendSocketInfo.sendMsg(info.toJSONString());
-        } else {
-            count = -1;
         }
         result.put("count", count);
         return JSON.toJSONString(result);
@@ -69,15 +70,16 @@ public class CommodityFilterController {
     @RequestMapping("/remove-filter")
     public String removeFilter(@RequestParam("ids") String ids, HttpServletRequest request) {
         Map<String, Object> result = new HashMap<>();
-        int count;
-        Boolean login = Boolean.valueOf(request.getSession().getAttribute("login").toString());
-        if (login) {
-            count = commodityFilterMapper.deleteByIds(ids);
-            JSONObject info = new JSONObject();
-            info.put("type","reset");
-            sendSocketInfo.sendMsg(info.toJSONString());
-        } else {
-            count = -1;
+        int count = -1;
+        Object login = request.getSession().getAttribute("login");
+        if (login != null) {
+            Boolean loginFlag = Boolean.valueOf(login.toString());
+            if (loginFlag) {
+                count = commodityFilterMapper.deleteByIds(ids);
+                JSONObject info = new JSONObject();
+                info.put("type", "reset");
+                sendSocketInfo.sendMsg(info.toJSONString());
+            }
         }
         result.put("count", count);
         return JSON.toJSONString(result);
