@@ -14,6 +14,7 @@ public class MainClass {
     private static Logger logger = LoggerFactory.getLogger(MainClass.class);
 
     public static void main(String[] args) {
+        System.setProperty("user.timezone", "Asia/Shanghai");
         logger.info("===========爬虫开始了======");
         ApplicationContext ctx = new ClassPathXmlApplicationContext("spring.xml");
         //StartSpider bean = ctx.getBean(StartSpider.class);
