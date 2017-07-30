@@ -83,7 +83,7 @@ let appendDom = `
     $('#send-select-btn').click(function () {
         sendToParent(selectArr, 'selection');
     });
-    $('#show-select').click(e=>removeSelect(e.target));
+    $('#show-select').click(e => removeSelect(e.target));
 
     // 被选中的数组
     let selectArr = [], parentURL = '', matchFlag;
@@ -97,6 +97,10 @@ let appendDom = `
             resetSelect(e.data.selectArr);
         }
     }, false);
+    //发送事件
+    window.parent.postMessage({
+        type: 'ready'
+    }, '*');
 
     //初始化列表情况
     function initList(arr) {
@@ -179,7 +183,7 @@ let appendDom = `
                 $(this).removeClass('on-select');
             }
         });
-        let arrIndex = getArrIndex(selectArr,$(dom).text());
+        let arrIndex = getArrIndex(selectArr, $(dom).text());
         if (typeof (arrIndex) !== "undefined") {
             selectArr.splice(arrIndex, 1);
             $('#show-select').find('span').eq(arrIndex).remove();

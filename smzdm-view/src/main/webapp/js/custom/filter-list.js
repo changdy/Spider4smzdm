@@ -228,16 +228,6 @@ $(document).ready(function () {
         });
     }
 });
-
-document.getElementById('smzdm-frame').onload = function () {
-    $.post(reqBashPath + 'get-category').then(data => {
-        let msg = {
-            totalArr: data,
-            type: 'init',
-        };
-        $('#smzdm-frame')[0].contentWindow.postMessage(msg, '*');
-    });
-};
 window.addEventListener('message', function (e) {
     let data = e.data;
     if (data.type === 'redundant') {

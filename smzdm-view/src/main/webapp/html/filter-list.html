@@ -30,6 +30,20 @@
             opacity: 1;
         }
     </style>
+    <script src="../js/jquery-3.1.1.js"></script>
+    <script>
+        window.addEventListener('message', function (e) {
+            if (e.data.type === 'ready') {
+                $.post(reqBashPath + 'get-category').then(res=> {
+                    let msg = {
+                        totalArr: res,
+                        type: 'init',
+                    };
+                    $('#smzdm-frame')[0].contentWindow.postMessage(msg, '*');
+                });
+            }
+        });
+    </script>
 </head>
 <body>
 <div class="container">
@@ -122,7 +136,6 @@
 <iframe id='smzdm-frame' src="http://www.smzdm.com/fenlei/"></iframe>
 </body>
 <script src="../js/lazysizes.js" async=""></script>
-<script src="../js/jquery-3.1.1.js"></script>
 <script src='../js/custom/global-config.js'></script>
 <script src='../js/js.cookie.js'></script>
 <script src="../js/bootstrap-3.3.7-dist/js/bootstrap.js"></script>
