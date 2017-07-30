@@ -83,6 +83,8 @@ let appendDom = `
     $('#send-select-btn').click(function () {
         sendToParent(selectArr, 'selection');
     });
+    $('#show-select').click(e=>removeSelect(e.target));
+
     // 被选中的数组
     let selectArr = [], parentURL = '', matchFlag;
     //事件监听
@@ -109,6 +111,7 @@ let appendDom = `
                 $(dom).addClass('no-select');
             }
         });
+        $('#show-select').click(e => console.log);
         sendToParent(arr, 'redundant');
     }
 
@@ -120,7 +123,7 @@ let appendDom = `
             let dom = this;
             let arrIndex = getArrIndex(arr, $(dom).text());
             if (typeof (arrIndex) !== "undefined") {
-                domStr += `<span class="btn btn-event" data-category-id="${arr[arrIndex].id}" onclick="consoleBtn()">${arr[arrIndex].title}</span>`;
+                domStr += `<span class="btn btn-event" data-category-id="${arr[arrIndex].id}" >${arr[arrIndex].title}</span>`;
                 //保证顺序一致
                 selectArr.push(arr[arrIndex]);
                 $(dom).addClass('on-select');
@@ -154,7 +157,7 @@ let appendDom = `
         } else {
             $(dom).addClass('on-select');
             selectArr.push(category);
-            $('#show-select').append(`<span class="btn btn-event" data-category-id="${category.id}" onclick="consoleBtn()">${category.title}</span>`);
+            $('#show-select').append(`<span class="btn btn-event" data-category-id="${category.id}" >${category.title}</span>`);
         }
     }
 
@@ -164,10 +167,24 @@ let appendDom = `
         $.each(arr, function (index, obj) {
             if (obj.title === title) {
                 arrIndex = index;
-                return false;
             }
         });
         return arrIndex;
+    }
+
+    function removeSelect(dom) {
+        let categoryId = dom.dataset.categoryId;
+        $('.indexList .category-selection').each(function () {
+            if (this.dataset.categoryId === categoryId) {
+                $(this).removeClass('on-select');
+            }
+        });
+        let arrIndex = getArrIndex(selectArr,$(dom).text());
+        if (typeof (arrIndex) !== "undefined") {
+            selectArr.splice(arrIndex, 1);
+            $('#show-select').find('span').eq(arrIndex).remove();
+        }
+        $(dom).remove();
     }
 
     //发送消息到父组件
