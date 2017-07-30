@@ -36,7 +36,7 @@ public class CategoryHandler {
         //保存新增的
         List<Category> newCategoryList = new ArrayList<>();
         JSONArray categoryLayer = jsonContent.getJSONArray("category_layer");
-        for (int i = categoryLayer.size() - 1; i >= 1; i--) {
+        for (int i = categoryLayer.size() - 1; i >= 0; i--) {
             Integer id = categoryLayer.getJSONObject(i).getInteger("ID");
             if (!checkInTheList(id)) {
                 String title = categoryLayer.getJSONObject(i).getString("title");
@@ -51,8 +51,6 @@ public class CategoryHandler {
         }
         if (newCategoryList.size() > 1) {
             categoryMapper.insertCategoryList(newCategoryList);
-        } else {
-            categoryMapper.insert(newCategoryList.get(0));
         }
     }
 
