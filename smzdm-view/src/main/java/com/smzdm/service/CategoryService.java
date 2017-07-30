@@ -23,4 +23,8 @@ public class CategoryService {
     public List<Map> getMainIfo() {
         return categoryMapper.getMainIfo();
     }
+
+    public int deleteByIds(String ids) {
+        return categoryMapper.deleteByIds(ids);
+    }
 }

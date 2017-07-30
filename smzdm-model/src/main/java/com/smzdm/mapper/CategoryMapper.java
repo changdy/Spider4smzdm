@@ -15,4 +15,6 @@ public interface CategoryMapper {
     int insertCategoryList(List<Category> categoryList);
 
     List<Map> getMainIfo();
+
+    int deleteByIds(String ids);
 }

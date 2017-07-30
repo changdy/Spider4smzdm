@@ -39,4 +39,9 @@
       #{item.urlNicktitle,jdbcType=VARCHAR}, #{item.level,jdbcType=INTEGER})
     </foreach>
   </insert>
+
+  <delete id="deleteByIds">
+    delete from category where FIND_IN_SET(id,#{ids})
+  </delete>
+
 </mapper>

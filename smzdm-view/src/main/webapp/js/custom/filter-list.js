@@ -198,7 +198,7 @@ $(document).ready(function () {
     });
     $remove.click(function () {
         let ids = getIdSelections().join(',');
-        $.post(reqBashPath + 'remove-filter', {
+        $.post(reqBashPath + 'delete-filter', {
             ids: ids
         }).then(data => {
             if (data.count > 0) {
@@ -239,11 +239,31 @@ document.getElementById('smzdm-frame').onload = function () {
 window.addEventListener('message', function (e) {
     let data = e.data;
     if (data.type === 'redundant') {
-        let arrTitle = '';
+        let arrTitle = '', ids = '';
         for (let category of data.arrInfo) {
             arrTitle += category.title + ',';
+            ids += category.id + ',';
         }
-        sweetAlert("以下目录已失效:", arrTitle.slice(0, -1), "warning");
+        swal({
+                title: "是否删除多余目录",
+                text: arrTitle.endTrim(','),
+                type: "warning",
+                showCancelButton: true,
+                cancelButtonText: '取消',
+                confirmButtonText: "删除",
+                confirmButtonColor: "#DD6B55",
+                showLoaderOnConfirm: true,
+                closeOnConfirm: false
+            },
+            function () {
+                $.post(reqBashPath + 'delete-category', {ids: ids.endTrim(',')}).then(response => {
+                    if (response.count > 0) {
+                        swal("成功", `删除了${data.arrInfo.length}个多余目录`, "success");
+                    }else {
+                        window.location.href = reqBashPath + 'html/commodity-list.html';
+                    }
+                });
+            });
     } else if (data.type === 'selection') {
         $('#smzdm-frame').removeClass('on-show');
         if (data.matchFlag) {
