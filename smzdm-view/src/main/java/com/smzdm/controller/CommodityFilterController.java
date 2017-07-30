@@ -67,7 +67,7 @@ public class CommodityFilterController {
         return JSON.toJSONString(result);
     }
 
-    @RequestMapping("/remove-filter")
+    @RequestMapping("/delete-filter")
     public String removeFilter(@RequestParam("ids") String ids, HttpServletRequest request) {
         Map<String, Object> result = new HashMap<>();
         int count = -1;
