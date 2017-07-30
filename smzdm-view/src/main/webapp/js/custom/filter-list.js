@@ -122,6 +122,8 @@ $(document).ready(function () {
                     if (data.count > 0) {
                         $('#filter-modal').modal('hide');
                         sweetAlert("成功", '', "success");
+                    } else {
+                        window.location.href = reqBashPath + 'html/commodity-list.html';
                     }
                 }, data => sweetAlert("失败", data, "error"));
             }
@@ -199,13 +201,15 @@ $(document).ready(function () {
         $.post(reqBashPath + 'remove-filter', {
             ids: ids
         }).then(data => {
-            if (data.count) {
+            if (data.count > 0) {
                 $table.bootstrapTable('remove', {
                     field: 'id',
                     values: getIdSelections()
                 });
                 $remove.prop('disabled', true);
                 $operate.prop('disabled', true);
+            } else {
+                window.location.href = reqBashPath + 'html/commodity-list.html';
             }
         });
     });
