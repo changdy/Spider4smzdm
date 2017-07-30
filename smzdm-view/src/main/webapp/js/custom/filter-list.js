@@ -123,8 +123,8 @@ $(document).ready(function () {
                         $('#filter-modal').modal('hide');
                         sweetAlert("成功", '', "success");
                     } else {
-                        window.location.href = reqBashPath + 'html/commodity-list.html';
                         Cookies.remove('user-name');
+                        window.location.href = reqBashPath + 'html/commodity-list.html';
                     }
                 }, data => sweetAlert("失败", data, "error"));
             }
@@ -210,8 +210,8 @@ $(document).ready(function () {
                 $remove.prop('disabled', true);
                 $operate.prop('disabled', true);
             } else {
-                window.location.href = reqBashPath + 'html/commodity-list.html';
                 Cookies.remove('user-name');
+                window.location.href = reqBashPath + 'html/commodity-list.html';
             }
         });
     });
@@ -262,8 +262,8 @@ window.addEventListener('message', function (e) {
                     if (response.count > 0) {
                         swal("成功", `删除了${data.arrInfo.length}个多余目录`, "success");
                     }else {
-                        window.location.href = reqBashPath + 'html/commodity-list.html';
                         Cookies.remove('user-name');
+                        window.location.href = reqBashPath + 'html/commodity-list.html';
                     }
                 });
             });
