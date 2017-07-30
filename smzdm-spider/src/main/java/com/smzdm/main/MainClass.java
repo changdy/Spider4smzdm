@@ -1,7 +1,6 @@
 package com.smzdm.main;
 
-import com.smzdm.service.CategoryHandler;
-import com.smzdm.service.ChannelHandler;
+import com.smzdm.service.socket.SocketServer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.ApplicationContext;
@@ -20,5 +19,6 @@ public class MainClass {
         //StartSpider bean = ctx.getBean(StartSpider.class);
         //bean.startDiscoverySpider();
         //bean.startHomePageSpider();
+        ctx.getBean(SocketServer.class).initSocket();
     }
 }

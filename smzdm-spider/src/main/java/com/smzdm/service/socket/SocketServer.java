@@ -23,10 +23,9 @@ public class SocketServer {
     @Autowired
     public SocketServer(CommodityFilterHandler commodityFilterHandler) {
         this.commodityFilterHandler = commodityFilterHandler;
-        initSocket();
     }
 
-    private void initSocket() {
+    public void initSocket() {
         try {
             //1.创建一个服务器端Socket，即ServerSocket，指定绑定的端口，并监听此端口
             ServerSocket serverSocket = new ServerSocket(1762);
