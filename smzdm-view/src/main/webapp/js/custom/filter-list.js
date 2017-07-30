@@ -124,6 +124,7 @@ $(document).ready(function () {
                         sweetAlert("成功", '', "success");
                     } else {
                         window.location.href = reqBashPath + 'html/commodity-list.html';
+                        Cookies.remove('user-name');
                     }
                 }, data => sweetAlert("失败", data, "error"));
             }
@@ -210,6 +211,7 @@ $(document).ready(function () {
                 $operate.prop('disabled', true);
             } else {
                 window.location.href = reqBashPath + 'html/commodity-list.html';
+                Cookies.remove('user-name');
             }
         });
     });
@@ -261,6 +263,7 @@ window.addEventListener('message', function (e) {
                         swal("成功", `删除了${data.arrInfo.length}个多余目录`, "success");
                     }else {
                         window.location.href = reqBashPath + 'html/commodity-list.html';
+                        Cookies.remove('user-name');
                     }
                 });
             });
