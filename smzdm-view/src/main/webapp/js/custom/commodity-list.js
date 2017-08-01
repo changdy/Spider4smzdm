@@ -58,8 +58,7 @@ $(document).ready(function () {
                 this.itemCount = total;
             },
             jumpPage: function (pageNo) {
-                getList(pageNo);
-                scrollTo(0, 0);
+                $("body").animate({scrollTop: 0}, 300, getList(pageNo));
             },
             submit: function () {
                 if (typeof(this.jumpPageNo) === "number" && this.jumpPageNo < this.pageCount) {
