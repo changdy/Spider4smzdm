@@ -10,10 +10,14 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
  * Created by Changdy on 2017/3/7.
  */
 public class MainClass {
-    private static Logger logger = LoggerFactory.getLogger(MainClass.class);
+    private static Logger logger;
+
+    static {
+        System.setProperty("user.timezone", "Asia/Shanghai");
+        logger = LoggerFactory.getLogger(MainClass.class);
+    }
 
     public static void main(String[] args) {
-        System.setProperty("user.timezone", "Asia/Shanghai");
         logger.info("===========爬虫开始了======");
         ApplicationContext ctx = new ClassPathXmlApplicationContext("spring.xml");
         //StartSpider bean = ctx.getBean(StartSpider.class);
