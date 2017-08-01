@@ -35,9 +35,9 @@ public class CommodityService {
             resultMap.put("rows", commodityList);
             if (commodityList != null) {
                 for (Map<String, Object> map : commodityList) {
-                    String comment = map.get("comment").toString();
+                    String comment = map.get("commentInfo").toString();
                     if (comment.equals("0/0/0/0")) {
-                        map.put("comment", 0);
+                        map.put("commentInfo", "-");
                     }
                 }
                 resultMap.put("total", commodityMapper.getCommodityCount(commodityParams));
