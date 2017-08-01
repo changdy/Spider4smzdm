@@ -102,6 +102,7 @@ $(document).ready(function () {
     });
 
     function getList(pageNo) {
+        $('.lazyloaded').addClass('lazyload').removeClass('lazyloaded');
         $.get(reqBashPath + "query-commodity",
             {sort: "id", order: "desc", offset: (pageNo - 1) * page.defaultPageSize, limit: page.defaultPageSize, search: page.searchInfo.title},
             function (data) {
