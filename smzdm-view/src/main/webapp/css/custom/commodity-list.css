@@ -51,6 +51,7 @@
 
 .commodity-img img {
     min-height: 180px;
+    max-width: 200px;
 }
 
 .mobile-adupt .commodity-img img {
