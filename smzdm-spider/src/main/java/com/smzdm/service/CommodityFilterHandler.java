@@ -136,7 +136,7 @@ public class CommodityFilterHandler {
     public void deleteItem(Long id) {
         List<Commodity> commodityList = new ArrayList<>();
         readyMap.forEach((commodity, filterId) -> {
-            if (commodity.getId() < id) {
+            if (commodity.getArticleId() < id) {
                 commodityList.add(commodity);
             }
         });
