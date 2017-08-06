@@ -114,6 +114,7 @@ $(document).ready(function () {
 
     //搜索
     $("#search-btn").click(function () {
+        $('#filter-modal').modal();
     });
 
     $('#search-title').bind('keydown',function(event){
@@ -164,6 +165,8 @@ $(document).ready(function () {
     }).focus(function () {
         $(this).parent().addClass('focus-on');
     });
+
+
 });
 //登录接口
 function loginIn() {
@@ -182,3 +185,42 @@ function loginIn() {
         }
     });
 }
+
+window.addEventListener('message', function (e) {
+    let data = e.data;
+    if (data.type === 'redundant') {
+        let arrTitle = '', ids = '';
+        for (let category of data.arrInfo) {
+            arrTitle += category.title + ',';
+            ids += category.id + ',';
+        }
+        swal({
+                title: "是否删除多余目录",
+                text: arrTitle.endTrim(','),
+                type: "warning",
+                showCancelButton: true,
+                cancelButtonText: '取消',
+                confirmButtonText: "删除",
+                confirmButtonColor: "#DD6B55",
+                showLoaderOnConfirm: true,
+                closeOnConfirm: false
+            },
+            function () {
+                $.post(reqBashPath + 'delete-category', {ids: ids.endTrim(',')}).then(response => {
+                    if (response.count > 0) {
+                        swal("成功", `删除了${data.arrInfo.length}个多余目录`, "success");
+                    }else {
+                        Cookies.remove('user-name');
+                        window.location.href = reqBashPath + 'html/commodity-list.html';
+                    }
+                });
+            });
+    } else if (data.type === 'selection') {
+        $('#smzdm-frame').removeClass('on-show');
+        if (data.matchFlag) {
+            filterModal.categoryMatchArr = data.arr;
+        } else {
+            filterModal.categoryUnmatchArr = data.arr;
+        }
+    }
+}, false);
