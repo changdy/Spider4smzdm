@@ -172,3 +172,21 @@ input:focus, .btn:focus, .btn > :focus {
     color: #66afe9;
     top: -10px;
 }
+#smzdm-frame {
+    position: fixed;
+    left: 0;
+    width: 100%;
+    bottom: 0;
+    background-color: #fff;
+    border: 0;
+    height: 0;
+    transition: all 1s;
+    opacity: 0.5;
+    z-index: 1051;
+    overflow: hidden;
+}
+
+#smzdm-frame.on-show {
+    height: 100%;
+    opacity: 1;
+}
