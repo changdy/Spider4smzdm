@@ -7155,7 +7155,7 @@ Vue$3.prototype.$mount = function (
 
 // devtools global hook
 /* istanbul ignore next */
-setTimeout(function () {
+/*setTimeout(function () {
   if (config.devtools) {
     if (devtools) {
       devtools.emit('init', Vue$3);
@@ -7175,7 +7175,7 @@ setTimeout(function () {
       "See more tips at https://vuejs.org/guide/deployment.html"
     );
   }
-}, 0);
+}, 0);*/
 
 /*  */
 
