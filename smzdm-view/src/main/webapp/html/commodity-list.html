@@ -14,10 +14,10 @@
         <h1>什么值得买爬虫</h1>
         <p>这是一个基于什么值得买的爬虫站点，为了方便您的剁手</p>
     </div>
-    <div>
-        <input id="search-title" type="text" placeholder="输入关键字">
-        <button class="btn btn-default" type="button" id="search-btn"><span class="glyphicon glyphicon-search"></span> 搜索</button>
-        <div class="btn btn-default" id="filter-btn">过滤管理</div>
+    <div class="search-tooltip">
+        <input class="form-control" id="search-title" type="text" placeholder="输入关键字">
+        <button class="btn btn-default" type="button" id="search-btn"><span class="glyphicon glyphicon-search"></span> 高级</button>
+        <button class="btn btn-default" id="filter-btn">过滤管理</button>
     </div>
     <div class="commodity-list">
         <div v-for="item in items">

@@ -114,9 +114,15 @@ $(document).ready(function () {
 
     //搜索
     $("#search-btn").click(function () {
-        page.searchInfo.title = $("#search-title").val().trim();
-        getList(1);
     });
+
+    $('#search-title').bind('keydown',function(event){
+        if(event.keyCode === 13) {
+            page.searchInfo.title = $(this).val().trim();
+            getList(1);
+        }
+    });
+
     getList(1);
     adjust();
     function adjust() {
