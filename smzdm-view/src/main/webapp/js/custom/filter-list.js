@@ -183,7 +183,7 @@ $(document).ready(function () {
             field: 'ratingCount',
             align: 'center',
             valign: 'middle',
-            title: '关注度',
+            title: '关注热度',
         }, {
             field: 'worthPercent',
             align: 'center',
