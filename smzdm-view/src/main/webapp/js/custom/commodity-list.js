@@ -99,30 +99,36 @@ $(document).ready(function () {
                 this.ratingCount = 0;
                 this.sort = 'watch';
                 this.type = '';
-                this.dateRange = '';
+                this.resetDate();
+            },
+            resetDate:function(){
+                $('#search-modal').find('.date-range').flatpickr({
+                    mode: "range",
+                    maxDate: 'today',
+                    locale: 'zh',
+                    wrap: true,
+                    defaultDate: [new Date().fp_incr(-15), "today"]
+                });
+                this.dateRange = $('#search-modal').find('.flatpickr-input').val();
             },
             searchList: function (pageNo) {
+                $('.lazyloaded').addClass('lazyload').removeClass('lazyloaded');
                 let param = $.extend({}, this.$data, {
                     matchTitles: this.categoryMatchObj.titles,
                     unmatchTitles: this.categoryUnmatchObj.titles,
                     startTime: this.startTime,
                     endTime: this.endTime,
+                    pageSize:page.defaultPageSize,
                     pageNo
                 });
-                console.log(param);
-                $.post(reqBashPath + 'operate-filter', param).then(data => {
-                    listVue.items = data.rows;
-                    page.resetPage(data.total, data.rows.length, pageNo);
+                $.post(reqBashPath + 'query-commodity-info', param).then(data => {
+                    // listVue.items = data.rows;
+                    // page.resetPage(data.total, data.rows.length, pageNo);
                 }, data => sweetAlert("失败", data, "error"));
             }
         },
         mounted: function () {
-            $('#search-modal').find('.date-range').flatpickr({
-                mode: "range",
-                maxDate: 'today',
-                locale: 'zh',
-                wrap: true
-            })
+            this.resetDate();
         }
     });
 
@@ -133,10 +139,7 @@ $(document).ready(function () {
             defaultPageSize: 20,
             itemCount: 1601,
             currentResultLength: 20,
-            jumpPageNo: 1,
-            searchInfo: {
-                title: ""
-            }
+            jumpPageNo: 1
         },
         computed: {
             pageCount: function () {
@@ -180,7 +183,7 @@ $(document).ready(function () {
                 this.itemCount = total;
             },
             jumpPage: function (pageNo) {
-                $("body").animate({scrollTop: 0}, 300, getList(pageNo));
+                $("body").animate({scrollTop: 0}, 300, searchModal.searchList(pageNo));
             },
             submit: function () {
                 if (typeof(this.jumpPageNo) === "number" && this.jumpPageNo < this.pageCount) {
@@ -222,17 +225,6 @@ $(document).ready(function () {
         }
     });
 
-    function getList(pageNo) {
-        $('.lazyloaded').addClass('lazyload').removeClass('lazyloaded');
-        $.get(reqBashPath + "query-commodity",
-            {sort: "id", order: "desc", offset: (pageNo - 1) * page.defaultPageSize, limit: page.defaultPageSize, search: page.searchInfo.title},
-            function (data) {
-                listVue.items = data.rows;
-                page.resetPage(data.total, data.rows.length, pageNo);
-            },
-            "json"
-        );
-    }
 
     //搜索
     $("#search-btn").click(function () {
@@ -241,12 +233,11 @@ $(document).ready(function () {
 
     $('#search-title').bind('keydown', function (event) {
         if (event.keyCode === 13) {
-            page.searchInfo.title = $(this).val().trim();
-            getList(1);
+            searchModal.reset($(this).val().trim());
+            searchModal.searchList(1);
         }
     });
 
-    getList(1);
     adjust();
     function adjust() {
         if ($(window).width() <= 768) {
