@@ -7,7 +7,8 @@
 }
 
 .search-tooltip #search-title{
-    flex: 0 1 150px;
+    flex:1;
+    max-width: 220px;
 }
 
 .commodity {
@@ -172,6 +173,21 @@ input:focus, .btn:focus, .btn > :focus {
     color: #66afe9;
     top: -10px;
 }
+
+.radio-div{
+    padding: 6px 12px;
+    font-size: 14px;
+    height: 34px;
+    display: flex
+}
+
+.radio-div>span{
+    flex: 1;
+}
+.radio-div>span label{
+    font-weight: 400;
+}
+
 #smzdm-frame {
     position: fixed;
     left: 0;

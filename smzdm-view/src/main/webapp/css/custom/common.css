@@ -1,3 +1,6 @@
 .cursor-pointer{
     cursor:pointer;
 }
+.flatpickr-day.selected.endRange.inRange:hover{
+    border-radius: 50%
+}
