@@ -6,7 +6,25 @@
     <link href="../js/bootstrap-3.3.7-dist/css/bootstrap.css" rel="stylesheet">
     <link href="../css/font-awesome-4.7.0/css/font-awesome.css" rel="stylesheet">
     <link href="../css/custom/commodity-list.css" rel="stylesheet">
+    <link href="../css/custom/common.css" rel="stylesheet">
+    <link href="../css/magic-check.css" rel="stylesheet">
+    <link href="../js/flatpickr/flatpickr.css" rel="stylesheet">
+    <link href="../js/flatpickr/themes/material_blue.css" rel="stylesheet" >
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="../js/jquery-3.1.1.js"></script>
+    <script>
+        window.addEventListener('message', function (e) {
+            if (e.data.type === 'ready') {
+                $.post(reqBashPath + 'get-category').then(res=> {
+                    let msg = {
+                        totalArr: res,
+                        type: 'init',
+                    };
+                    $('#smzdm-frame')[0].contentWindow.postMessage(msg, '*');
+                });
+            }
+        });
+    </script>
 </head>
 <body>
 <div class="container">
@@ -93,21 +111,15 @@
         </div>
     </div>
 </div>
-<div class="modal fade" id="filter-modal">
+<div class="modal fade" id="search-modal">
     <div class="modal-dialog" style="width: 480px">
-        <div class="modal-content" id="filter-info">
+        <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                <h4 class="modal-title">{{message}}</h4>
+                <h4 class="modal-title">高级搜索</h4>
             </div>
             <div class="modal-body">
                 <div class="form-horizontal">
-                    <div class="form-group">
-                        <span class="col-sm-3 control-label"><span style="margin-right: 27px;">名</span><span>称</span></span>
-                        <div class="col-sm-9">
-                            <input type="text" class="form-control" v-model="name" placeholder="起个名字呗,比如航空母舰">
-                        </div>
-                    </div>
                     <div class="form-group">
                         <span class="col-sm-3 control-label">标题匹配</span>
                         <div class="col-sm-9">
@@ -133,12 +145,29 @@
                         </div>
                     </div>
                     <div class="form-group">
-                        <span class="col-sm-3 control-label">评论情况</span>
-                        <div class="col-sm-9">
-                            <input type="text" class="form-control" v-model.number="ratingCount" placeholder="值、评论、收藏累加">
+                        <span class="col-sm-3 control-label">频道类型</span>
+                        <div class="col-sm-9 radio-div">
+                            <span>
+                                <input class="magic-radio" type="radio" name="type-radio" id="type-all" v-model="type" value="">
+                                <label for="type-all">全部</label>
+                            </span>
+                            <span>
+                                <input class="magic-radio" type="radio" name="type-radio" id="type-homepage" v-model="type" value="0">
+                                <label for="type-homepage">首页</label>
+                            </span>
+                            <span>
+                                <input class="magic-radio" type="radio" name="type-radio" id="type-discovery" v-model="type" value="1">
+                                <label for="type-discovery">发现</label>
+                            </span>
                         </div>
                     </div>
                     <div class="form-group">
+                        <span class="col-sm-3 control-label">关注热度</span>
+                        <div class="col-sm-9">
+                            <input type="text" class="form-control " v-model.number="ratingCount" placeholder="值、评论、收藏累加">
+                        </div>
+                    </div>
+                    <div class="form-group" hidden>
                         <span class="col-sm-3 control-label">点赞比例</span>
                         <div class="col-sm-9">
                             <div class="input-group">
@@ -147,22 +176,50 @@
                             </div>
                         </div>
                     </div>
+                    <div class="form-group">
+                        <span class="col-sm-3 control-label">时间范围</span>
+                        <div class="col-sm-9">
+                            <div class='input-group date-range'>
+                                <input class="form-control  cursor-pointer" v-model="dateRange" data-input>
+                                <span class="input-group-addon cursor-pointer" data-clear><span class="glyphicon glyphicon-remove"></span></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <span class="col-sm-3 control-label">排序方式</span>
+                        <div class="col-sm-9 radio-div">
+                            <span>
+                                <input class="magic-radio" type="radio" name="sort-radio" id="sort-watch" v-model="sort" value="watch">
+                                <label for="sort-watch">关注热度</label>
+                            </span>
+                            <span>
+                                <input class="magic-radio" type="radio" name="sort-radio" id="sort-time" v-model="sort" value="time">
+                                <label for="sort-time">时间</label>
+                            </span>
+                            <span v-if="false">
+                                <input class="magic-radio" type="radio" name="sort-radio" id="sort-like" v-model="sort" value="like" >
+                                <label for="sort-like">好评率</label>
+                            </span>
+                        </div>
+                    </div>
                 </div>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-                <button type="button" class="btn btn-primary" @click="submit">提交更改</button>
+                <button type="button" class="btn btn-primary" @click="searchList(1)">搜索</button>
             </div>
         </div>
     </div>
 </div>
+<iframe id='smzdm-frame' src="http://www.smzdm.com/fenlei/"></iframe>
 <script src="../js/lazysizes.js" async=""></script>
-<script src="../js/jquery-3.1.1.js"></script>
 <script src='../js/custom/global-config.js'></script>
 <script src='../js/js.cookie.js'></script>
 <script src="../js/bootstrap-3.3.7-dist/js/bootstrap.js"></script>
 <script src="../js/moment.js"></script>
 <script src="../js/vue.js"></script>
+<script src="../js/flatpickr/flatpickr.js"></script>
+<script src="../js/flatpickr/zh.js"></script>
 <script src="../js/custom/commodity-list.js"></script>
 </body>
 </html>

@@ -4,6 +4,128 @@
 $(document).ready(function () {
     window.onresize = adjust;
     $('.add-lazyload').addClass('lazyload');
+    window.searchModal = new Vue({
+        el: '#search-modal',
+        data: {
+            titleUnmatch: '',
+            titleMatch: '',
+            categoryMatchArr: [],
+            categoryUnmatchArr: [],
+            type: '',
+            ratingCount: 0,
+            worthPercent: 0,
+            dateRange: '',
+            sort: 'watch',
+        },
+        computed: {
+            categoryUnmatchObj: {
+                get: function () {
+                    return this.getCategoryInfo(this.categoryUnmatchArr);
+                },
+                set: function (obj) {
+                    this.categoryUnmatchArr = this.getCategoryArr(obj);
+                }
+            },
+            categoryMatchObj: {
+                get: function () {
+                    return this.getCategoryInfo(this.categoryMatchArr);
+                },
+                set: function (obj) {
+                    this.categoryMatchArr = this.getCategoryArr(obj);
+                }
+            },
+            startTime: function () {
+                let arr = this.dateRange.split(' 至 ');
+                if (arr.length) {
+                    return arr[0];
+                } else {
+                    return '';
+                }
+            },
+            endTime: function () {
+                let arr = this.dateRange.split(' 至 ');
+                if (arr.length) {
+                    return arr[1];
+                } else {
+                    return '';
+                }
+            }
+        },
+        methods: {
+            getCategoryInfo: function (arr) {
+                let titles = '', ids = '';
+                for (let category of arr) {
+                    titles += category.title + ',';
+                    ids += category.id + ',';
+                }
+                return {
+                    titles: titles.endTrim(','),
+                    ids: ids.endTrim(',')
+                }
+            },
+            getCategoryArr: function (obj) {
+                let category = [];
+                if (obj.ids !== '' && obj.titles !== '') {
+                    let idArr = obj.ids.split(',');
+                    let titleArr = obj.titles.split(',');
+                    if (idArr.length === titleArr.length) {
+                        idArr.forEach(v => category.push({id: v}));
+                        titleArr.forEach((v, i) => category[i].title = v);
+                    } else {
+                        sweetAlert("id和title长度不一", '', "warning");
+                    }
+                }
+                return category;
+            },
+            match: function () {
+                this.sendToIframe(this.categoryMatchArr, true);
+            },
+            unMatch: function () {
+                this.sendToIframe(this.categoryUnmatchArr, false);
+            },
+            sendToIframe: function (arr, matchFlag) {
+                let msg = {
+                    selectArr: arr,
+                    type: 'reset',
+                    matchFlag: matchFlag
+                };
+                $('#smzdm-frame').addClass('on-show')[0].contentWindow.postMessage(msg, '*');
+            },
+            reset: function (title = '') {
+                this.titleUnmatch = '';
+                this.titleMatch = title;
+                this.categoryMatchArr = [];
+                this.categoryUnmatchArr = [];
+                this.ratingCount = 0;
+                this.sort = 'watch';
+                this.type = '';
+                this.dateRange = '';
+            },
+            searchList: function (pageNo) {
+                let param = $.extend({}, this.$data, {
+                    matchTitles: this.categoryMatchObj.titles,
+                    unmatchTitles: this.categoryUnmatchObj.titles,
+                    startTime: this.startTime,
+                    endTime: this.endTime,
+                    pageNo
+                });
+                console.log(param);
+                $.post(reqBashPath + 'operate-filter', param).then(data => {
+                    listVue.items = data.rows;
+                    page.resetPage(data.total, data.rows.length, pageNo);
+                }, data => sweetAlert("失败", data, "error"));
+            }
+        },
+        mounted: function () {
+            $('#search-modal').find('.date-range').flatpickr({
+                mode: "range",
+                maxDate: 'today',
+                locale: 'zh',
+                wrap: true
+            })
+        }
+    });
+
     page = new Vue({
         el: '#pagination',
         data: {
@@ -114,11 +236,11 @@ $(document).ready(function () {
 
     //搜索
     $("#search-btn").click(function () {
-        $('#filter-modal').modal();
+        $('#search-modal').modal();
     });
 
-    $('#search-title').bind('keydown',function(event){
-        if(event.keyCode === 13) {
+    $('#search-title').bind('keydown', function (event) {
+        if (event.keyCode === 13) {
             page.searchInfo.title = $(this).val().trim();
             getList(1);
         }
@@ -209,7 +331,7 @@ window.addEventListener('message', function (e) {
                 $.post(reqBashPath + 'delete-category', {ids: ids.endTrim(',')}).then(response => {
                     if (response.count > 0) {
                         swal("成功", `删除了${data.arrInfo.length}个多余目录`, "success");
-                    }else {
+                    } else {
                         Cookies.remove('user-name');
                         window.location.href = reqBashPath + 'html/commodity-list.html';
                     }
@@ -218,9 +340,9 @@ window.addEventListener('message', function (e) {
     } else if (data.type === 'selection') {
         $('#smzdm-frame').removeClass('on-show');
         if (data.matchFlag) {
-            filterModal.categoryMatchArr = data.arr;
+            searchModal.categoryMatchArr = data.arr;
         } else {
-            filterModal.categoryUnmatchArr = data.arr;
+            searchModal.categoryUnmatchArr = data.arr;
         }
     }
 }, false);
