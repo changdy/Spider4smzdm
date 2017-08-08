@@ -178,7 +178,13 @@ DELETE FROM smzdm_commodity.commodity WHERE  article_id IN
 
 
     <select id="queryListInfo" parameterType="com.smzdm.model.CommoditySearch" resultType="Map">
-        SELECT ch.title channelTitle , commodityInfo.* FROM  (<include refid="commodity-info"/>) AS commodityInfo,channel ch WHERE ch.id = commodityInfo.channelId;
+        SELECT ch.title channelTitle , commodityInfo.* FROM  (<include refid="commodity-info"/>) AS commodityInfo,channel ch WHERE ch.id = commodityInfo.channelId
+        <if test="sort!=null">
+            <choose>
+                <when test="sort =='hot'">ORDER BY ratingCount DESC</when>
+                <otherwise>ORDER BY commodityInfo.id DESC</otherwise>
+            </choose>
+        </if>
     </select>
 
     <select id="getListCount" parameterType="com.smzdm.model.CommoditySearch" resultType="java.lang.Integer">
