@@ -4,6 +4,10 @@
 //路径
 window.reqBashPath = location.origin + '/';
 
+$.ajaxSetup({
+    dataType: 'json'
+});
+
 String.prototype.endTrim = function (char) {
     let length = this.length;
     if (length) {
@@ -14,6 +18,11 @@ String.prototype.endTrim = function (char) {
     return this.toString();
 };
 
-$.ajaxSetup({
-    dataType:'json'
-})
+String.prototype.mysplit = function () {
+    if (this.length) {
+        let str = this.endTrim(',');
+        return str.split(',');
+    } else {
+        return []
+    }
+};
