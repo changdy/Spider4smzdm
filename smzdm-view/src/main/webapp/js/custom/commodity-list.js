@@ -118,6 +118,7 @@ $(document).ready(function () {
                 let title = this.titleMatch;
                 $.post(reqBashPath + 'query-commodity-info', {data:JSON.stringify(param)}).then(data => {
                     $('.lazyloaded').addClass('lazyload').removeClass('lazyloaded');
+                    $('.lazyloading').addClass('lazyload').removeClass('lazyloading');
                     listVue.items = data.rows;
                     page.resetPage(data.total, data.rows.length, pageNo);
                     $('#search-modal').modal('hide');
