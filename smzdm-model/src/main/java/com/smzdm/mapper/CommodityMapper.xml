@@ -88,7 +88,7 @@
         FROM commodity_last_info info,channel ch,
         (select * from commodity
         <if test="search!=null and search!=''">
-            where title LIKE CONCAT(CONCAT('%', #{search, jdbcType=VARCHAR}),'%')
+            where title LIKE CONCAT('%', #{search, jdbcType=VARCHAR},'%')
         </if>
         order by id desc
         <choose>
@@ -101,7 +101,7 @@
         SELECT COUNT(*) FROM commodity
         <where>
             <if test="search!=null and search!=''">
-                title LIKE CONCAT(CONCAT('%', #{search, jdbcType=VARCHAR}),'%')
+                title LIKE CONCAT('%', #{search, jdbcType=VARCHAR},'%')
             </if>
         </where>
     </select>
@@ -110,4 +110,78 @@ DELETE FROM smzdm_commodity.commodity WHERE  article_id IN
 (SELECT * FROM (select article_id from smzdm_commodity.commodity  where create_date >#{time} GROUP BY article_id HAVING  count(article_id)>1) as temp) and discovery_flag =1
 </delete>
 
+
+    <sql id="query-commodity">
+        SELECT
+            id,
+            mall,
+            tags,
+            title,
+            content,
+            categories,
+            pic_url AS picUrl,
+            article_id AS articleId,
+            shopping_url AS shoppingUrl,
+            referral_date AS referralDate,
+            channel_id as channelId,
+            price_string AS priceString
+        FROM commodity
+        <where>
+            <if test="type!=null and type!= -1">
+                AND discovery_flag = #{type, jdbcType=VARCHAR}
+            </if>
+            <if test="startTime!=null and startTime !=''">
+                AND date_format(referral_date, '%Y-%m-%d') >= #{startTime, jdbcType=VARCHAR}
+            </if>
+            <if test="endTime!=null and endTime !=''">
+                AND #{endTime, jdbcType=VARCHAR} >= date_format(referral_date, '%Y-%m-%d')
+            </if>
+            <foreach collection="titleMatch" item="item" open="AND" separator="AND">
+                title LIKE CONCAT('%', #{item, jdbcType=VARCHAR},'%')
+            </foreach>
+            <foreach collection="titleUnmatch" item="item" open="AND" separator="AND">
+                title NOT LIKE CONCAT('%', #{item, jdbcType=VARCHAR},'%')
+            </foreach>
+            <foreach collection="categoryUnmatchTitle" item="item" open="AND" separator="AND">
+                categories NOT LIKE CONCAT('%', #{item, jdbcType=VARCHAR},'%')
+            </foreach>
+            <foreach collection="categoryMatchTitle" item="item" open="AND (" separator="OR" close=")">
+                categories LIKE CONCAT('%', #{item, jdbcType=VARCHAR},'%')
+            </foreach>
+        </where>
+        <if test="sort!=null and sort=='time'">
+            ORDER BY id DESC
+            <choose>
+                <when test="offset!=null and limit!=null">limit #{offset},#{limit}</when>
+                <otherwise>limit 25</otherwise>
+            </choose>
+        </if>
+    </sql>
+
+    <sql id="commodity-info">
+        SELECT commodity.*,info.worthy,info.unworthy,info.comment,info.collection
+        <if test="(ratingCount !=null and ratingCount !=0) or (sort!=null and sort=='hot')">
+            ,info.collection+info.worthy+info.comment AS ratingCount
+        </if>
+        FROM (<include refid="query-commodity"/>) AS commodity,commodity_last_info AS info WHERE info.article_id = commodity.articleId
+        <if test="ratingCount!=null and ratingCount !=0">
+            HAVING ratingCount> #{ratingCount, jdbcType=INTEGER}
+        </if>
+        <if test="sort!=null and sort=='hot'">
+            ORDER BY ratingCount DESC
+            <choose>
+                <when test="offset!=null and limit!=null">limit #{offset},#{limit}</when>
+                <otherwise>limit 25</otherwise>
+            </choose>
+        </if>
+    </sql>
+
+
+    <select id="queryListInfo" parameterType="com.smzdm.model.CommoditySearch" resultType="Map">
+        SELECT ch.title channelTitle , commodityInfo.* FROM  (<include refid="commodity-info"/>) AS commodityInfo,channel ch WHERE ch.id = commodityInfo.channelId;
+    </select>
+
+    <select id="getListCount" parameterType="com.smzdm.model.CommoditySearch" resultType="java.lang.Integer">
+        SELECT count(*) FROM  (<include refid="commodity-info"/>) AS commodityInfo
+    </select>
 </mapper>

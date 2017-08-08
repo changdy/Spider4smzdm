@@ -2,6 +2,7 @@ package com.smzdm.mapper;
 
 import com.smzdm.model.Commodity;
 import com.smzdm.model.CommodityParams;
+import com.smzdm.model.CommoditySearch;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -19,4 +20,8 @@ public interface CommodityMapper {
     int getCommodityCount(CommodityParams CommodityParams);
 
     int deleteDupl(LocalDateTime time);
+
+    List<Map<String,Object>> queryListInfo(CommoditySearch commoditySearch);
+
+    int getListCount(CommoditySearch commoditySearch);
 }

@@ -11,11 +11,11 @@ $(document).ready(function () {
             titleMatch: '',
             categoryMatchArr: [],
             categoryUnmatchArr: [],
-            type: '',
+            type: -1,
             ratingCount: 0,
             worthPercent: 0,
             dateRange: '',
-            sort: 'watch',
+            sort: 'hot',
         },
         computed: {
             categoryUnmatchObj: {
@@ -34,21 +34,23 @@ $(document).ready(function () {
                     this.categoryMatchArr = this.getCategoryArr(obj);
                 }
             },
-            startTime: function () {
+            param: function () {
+                let param = {};
+                param.titleMatch = this.titleMatch.mysplit();
+                param.titleUnmatch = this.titleUnmatch.mysplit();
+                param.type = this.type;
+                param.ratingCount = this.ratingCount;
+                param.sort = this.sort;
                 let arr = this.dateRange.split(' 至 ');
                 if (arr.length) {
-                    return arr[0];
-                } else {
-                    return '';
+                    param.startTime = arr[0];
+                    param.endTime = arr[1];
                 }
-            },
-            endTime: function () {
-                let arr = this.dateRange.split(' 至 ');
-                if (arr.length) {
-                    return arr[1];
-                } else {
-                    return '';
-                }
+                arr = this.categoryUnmatchObj.titles.mysplit();
+                param.categoryUnmatchTitle = arr.slice();
+                arr = this.categoryMatchObj.titles.mysplit();
+                param.categoryMatchTitle = arr.slice();
+                return param;
             }
         },
         methods: {
@@ -97,11 +99,11 @@ $(document).ready(function () {
                 this.categoryMatchArr = [];
                 this.categoryUnmatchArr = [];
                 this.ratingCount = 0;
-                this.sort = 'watch';
-                this.type = '';
+                this.sort = 'hot';
+                this.type = -1;
                 this.resetDate();
             },
-            resetDate:function(){
+            resetDate: function () {
                 $('#search-modal').find('.date-range').flatpickr({
                     mode: "range",
                     maxDate: 'today',
@@ -112,18 +114,11 @@ $(document).ready(function () {
                 this.dateRange = $('#search-modal').find('.flatpickr-input').val();
             },
             searchList: function (pageNo) {
-                $('.lazyloaded').addClass('lazyload').removeClass('lazyloaded');
-                let param = $.extend({}, this.$data, {
-                    matchTitles: this.categoryMatchObj.titles,
-                    unmatchTitles: this.categoryUnmatchObj.titles,
-                    startTime: this.startTime,
-                    endTime: this.endTime,
-                    pageSize:page.defaultPageSize,
-                    pageNo
-                });
-                $.post(reqBashPath + 'query-commodity-info', param).then(data => {
-                    // listVue.items = data.rows;
-                    // page.resetPage(data.total, data.rows.length, pageNo);
+                let param = $.extend({limit: page.defaultPageSize,offset: (pageNo - 1) * page.defaultPageSize}, this.param);
+                $.post(reqBashPath + 'query-commodity-info', {data:JSON.stringify(param)}).then(data => {
+                    $('.lazyloaded').addClass('lazyload').removeClass('lazyloaded');
+                    listVue.items = data.rows;
+                    page.resetPage(data.total, data.rows.length, pageNo);
                 }, data => sweetAlert("失败", data, "error"));
             }
         },
@@ -225,6 +220,7 @@ $(document).ready(function () {
         }
     });
 
+    searchModal.searchList(1);
 
     //搜索
     $("#search-btn").click(function () {

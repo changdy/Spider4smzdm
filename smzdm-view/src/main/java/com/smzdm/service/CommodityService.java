@@ -2,6 +2,7 @@ package com.smzdm.service;
 
 import com.smzdm.mapper.CommodityMapper;
 import com.smzdm.model.CommodityParams;
+import com.smzdm.model.CommoditySearch;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -48,5 +49,25 @@ public class CommodityService {
             logger.error("ERROR", e);
         }
         return resultMap;
+    }
+
+
+    public Map<String, Object> queryListInfo(CommoditySearch commoditySearch) {
+        Map<String, Object> commodityList = new HashMap<>();
+        List<Map<String, Object>> infoList = commodityMapper.queryListInfo(commoditySearch);
+        infoList.forEach(map -> {
+            String categories = (String) map.get("categories");
+            if (categories != null && !("").equals(categories)) {
+                String[] split = categories.split("/");
+                map.put("category", split[0]);
+            } else {
+                map.put("category", "");
+            }
+        });
+        commoditySearch.setSort(null);
+        int count = commodityMapper.getListCount(commoditySearch);
+        commodityList.put("total", count);
+        commodityList.put("rows", infoList);
+        return commodityList;
     }
 }

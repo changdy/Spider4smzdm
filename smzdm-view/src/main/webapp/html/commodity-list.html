@@ -148,15 +148,15 @@
                         <span class="col-sm-3 control-label">频道类型</span>
                         <div class="col-sm-9 radio-div">
                             <span>
-                                <input class="magic-radio" type="radio" name="type-radio" id="type-all" v-model="type" value="">
+                                <input class="magic-radio" type="radio" name="type-radio" id="type-all" v-model.number="type" value="-1">
                                 <label for="type-all">全部</label>
                             </span>
                             <span>
-                                <input class="magic-radio" type="radio" name="type-radio" id="type-homepage" v-model="type" value="0">
+                                <input class="magic-radio" type="radio" name="type-radio" id="type-homepage" v-model.number="type" value="0">
                                 <label for="type-homepage">首页</label>
                             </span>
                             <span>
-                                <input class="magic-radio" type="radio" name="type-radio" id="type-discovery" v-model="type" value="1">
+                                <input class="magic-radio" type="radio" name="type-radio" id="type-discovery" v-model.number="type" value="1">
                                 <label for="type-discovery">发现</label>
                             </span>
                         </div>
@@ -189,7 +189,7 @@
                         <span class="col-sm-3 control-label">排序方式</span>
                         <div class="col-sm-9 radio-div">
                             <span>
-                                <input class="magic-radio" type="radio" name="sort-radio" id="sort-watch" v-model="sort" value="watch">
+                                <input class="magic-radio" type="radio" name="sort-radio" id="sort-watch" v-model="sort" value="hot">
                                 <label for="sort-watch">关注热度</label>
                             </span>
                             <span>
