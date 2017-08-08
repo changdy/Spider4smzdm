@@ -42,7 +42,7 @@ public abstract class AbsInfoHandler {
         if (articlePic != null) {
             commodity.setPicUrl(articlePic);
         } else {
-            commodity.setPicUrl(content.getString("article_pic_url"));
+            commodity.setPicUrl(content.getString("article_pic_url").replace("tp-y.zdmimg","y.zdmimg"));
         }
         commodity.setInfoUrl(content.getString("article_url"));
         commodity.setMall(content.getString("article_mall"));
