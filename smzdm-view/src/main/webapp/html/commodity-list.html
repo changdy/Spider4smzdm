@@ -10,6 +10,7 @@
     <link href="../css/magic-check.css" rel="stylesheet">
     <link href="../js/flatpickr/flatpickr.css" rel="stylesheet">
     <link href="../js/flatpickr/themes/material_blue.css" rel="stylesheet" >
+    <link href="../js/sweetalert-master/dist/sweetalert.css" rel="stylesheet">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="../js/jquery-3.1.1.js"></script>
     <script>
@@ -37,7 +38,7 @@
         <button class="btn btn-default" type="button" id="search-btn"><span class="glyphicon glyphicon-search"></span> 高级</button>
         <button class="btn btn-default" id="filter-btn">过滤管理</button>
     </div>
-    <div class="commodity-list">
+    <div class="commodity-list" style="display: none">
         <div v-for="item in items">
             <div class="commodity">
                 <div class="commodity-img" style="position: relative">
@@ -70,7 +71,7 @@
             <hr/>
         </div>
     </div>
-    <div id="pagination">
+    <div id="pagination" style="display: none">
         <span v-if="itemCount!=0">共{{itemCount}}条记录,当前为第{{startIndex}}条到第{{endIndex}}条</span>
         <span v-else>未找到记录</span>
         <ul class="pagination" style="margin: 0;" v-if="itemCount!=0">
@@ -220,6 +221,7 @@
 <script src="../js/vue.js"></script>
 <script src="../js/flatpickr/flatpickr.js"></script>
 <script src="../js/flatpickr/zh.js"></script>
+<script src="../js/sweetalert-master/dist/sweetalert-dev.js"></script>
 <script src="../js/custom/commodity-list.js"></script>
 </body>
 </html>

@@ -15,7 +15,7 @@ $(document).ready(function () {
             ratingCount: 0,
             worthPercent: 0,
             dateRange: '',
-            sort: 'hot',
+            sort: 'time',
         },
         computed: {
             categoryUnmatchObj: {
@@ -115,15 +115,19 @@ $(document).ready(function () {
             },
             searchList: function (pageNo) {
                 let param = $.extend({limit: page.defaultPageSize,offset: (pageNo - 1) * page.defaultPageSize}, this.param);
+                let title = this.titleMatch;
                 $.post(reqBashPath + 'query-commodity-info', {data:JSON.stringify(param)}).then(data => {
                     $('.lazyloaded').addClass('lazyload').removeClass('lazyloaded');
                     listVue.items = data.rows;
                     page.resetPage(data.total, data.rows.length, pageNo);
+                    $('#search-modal').modal('hide');
+                    $('#search-title').val(title);
                 }, data => sweetAlert("失败", data, "error"));
             }
         },
         mounted: function () {
             this.resetDate();
+            $('.commodity-list').show();
         }
     });
 
@@ -187,6 +191,9 @@ $(document).ready(function () {
                     this.jumpPageNo = 1;
                 }
             }
+        },
+        mounted: function () {
+            $('#pagination').show();
         }
     });
     const today = new moment();
