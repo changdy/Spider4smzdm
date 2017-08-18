@@ -15,6 +15,12 @@
       <arg column="update_time" jdbcType="TIMESTAMP" javaType="java.util.Date" />
     </constructor>
   </resultMap>
+
+  <resultMap id="main_info" type="com.smzdm.model.CommodityTimeInfo" >
+      <result property="articleId" column="article_id" jdbcType="BIGINT" javaType="java.lang.Long" />
+      <result property="unworthy" column="unworthy" jdbcType="INTEGER" javaType="java.lang.Integer" />
+  </resultMap>
+
   <insert id="insert" parameterType="com.smzdm.model.CommodityTimeInfo" >
     insert into commodity_time_info (id, article_id, comment,
     collection, worthy, unworthy,
@@ -34,6 +40,10 @@
     select id, article_id, comment, collection, worthy, unworthy, sold_out, timeout,discovery_flag,update_time
     from commodity_time_info
   </select>
+  <select id="selectByArticleIds" resultMap="main_info">
+    select article_id,unworthy from commodity_time_info WHERE FIND_IN_SET(article_id,#{articleIds})
+  </select>
+
 
   <insert id="insertList" parameterType="list">
     insert into commodity_time_info (id, article_id, comment,collection, worthy, unworthy,sold_out, timeout,discovery_flag,update_time) values
@@ -51,6 +61,13 @@
     insert into commodity_last_info (id, article_id, comment,collection, worthy, unworthy,sold_out, timeout, discovery_flag,update_time) values
     <foreach collection="list" item="item" separator=",">
       (#{item.id,jdbcType=INTEGER},#{item.articleId,jdbcType=BIGINT},#{item.comment,jdbcType=INTEGER},#{item.collection,jdbcType=INTEGER},#{item.worthy,jdbcType=INTEGER},#{item.unworthy,jdbcType=INTEGER},#{item.soldOut,jdbcType=INTEGER},#{item.timeout,jdbcType=INTEGER},#{item.discoveryFlag,jdbcType=INTEGER},#{item.updateTime,jdbcType=TIMESTAMP})
+    </foreach>
+  </insert>
+
+  <insert id="insertJsonArray" parameterType="list">
+    insert into commodity_last_info (id, article_id, comment,collection, worthy, unworthy,sold_out, timeout, discovery_flag,update_time) values
+    <foreach collection="list" item="item" separator=",">
+      (#{item.id,jdbcType=INTEGER},#{item.article_id,jdbcType=BIGINT},#{item.article_comment,jdbcType=INTEGER},#{item.article_collection,jdbcType=INTEGER},#{item.article_rating,jdbcType=INTEGER},#{item.article_unworth,jdbcType=INTEGER},#{item.is_out,jdbcType=INTEGER},#{item.is_timeout,jdbcType=INTEGER},0,#{item.updateTime,jdbcType=TIMESTAMP})
     </foreach>
   </insert>
 

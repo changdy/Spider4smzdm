@@ -1,5 +1,6 @@
 package com.smzdm.mapper;
 
+import com.alibaba.fastjson.JSONArray;
 import com.smzdm.model.CommodityTimeInfo;
 import org.apache.ibatis.annotations.Param;
 
@@ -16,5 +17,9 @@ public interface CommodityTimeInfoMapper {
 
     int deleteByArticleIds(String articleIds);
 
+    List<CommodityTimeInfo> selectByArticleIds(String articleIds);
+
     int insertListToLast(List<CommodityTimeInfo> commodityTimeInfoList);
+
+    int insertJsonArray(JSONArray jsonArray);
 }
