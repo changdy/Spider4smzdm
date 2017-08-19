@@ -42,7 +42,7 @@
         <div v-for="item in items">
             <div class="commodity">
                 <div class="commodity-img" style="position: relative">
-                    <img class='add-lazyload' :data-src="item.picUrl"/>
+                    <img class='add-lazyload' :data-src="item.picUrl" onerror="loadError(this)" data-retry="1"/>
                     <span class="channel-title">{{item.channelTitle}}</span>
                     <span class="referral-date" v-if="!config.pcWeb">{{item.referralDate|timeHandler}}</span>
                 </div>

@@ -114,11 +114,14 @@ $(document).ready(function () {
                 this.dateRange = $('#search-modal').find('.flatpickr-input').val();
             },
             searchList: function (pageNo) {
-                let param = $.extend({limit: page.defaultPageSize,offset: (pageNo - 1) * page.defaultPageSize}, this.param);
+                let param = $.extend({limit: page.defaultPageSize, offset: (pageNo - 1) * page.defaultPageSize}, this.param);
                 let title = this.titleMatch;
-                $.post(reqBashPath + 'query-commodity-info', {data:JSON.stringify(param)}).then(data => {
-                    $('.lazyloaded').addClass('lazyload').removeClass('lazyloaded');
-                    $('.lazyloading').addClass('lazyload').removeClass('lazyloading');
+                $.post(reqBashPath + 'query-commodity-info', {data: JSON.stringify(param)}).then(data => {
+                    let loadedArr = $('.lazyloaded').addClass('lazyload').removeClass('lazyloaded');
+                    let arrLength = loadedArr.length;
+                    for (let i = 0; i < arrLength; ++i) {
+                        loadedArr[i].dataset.retry = 0;
+                    }
                     listVue.items = data.rows;
                     page.resetPage(data.total, data.rows.length, pageNo);
                     $('#search-modal').modal('hide');
@@ -341,3 +344,30 @@ window.addEventListener('message', function (e) {
         }
     }
 }, false);
+
+const domainArr = [
+    'http://tp-y.zdmimg.com',
+    'http://tp-qny.smzdm.com',
+    'http://y.zdmimg.com',
+    'http://ym.zdmimg.com',
+    'http://qny.smzdm.com',
+    'http://res.smzdm.com'
+];
+
+function loadError(obj) {
+    let retryTimes = parseInt(obj.dataset.retry, 10);
+    let url = obj.src;
+    if (retryTimes >= 6) {
+        return;
+    }
+    if (retryTimes === 0) {
+        if (url.indexOf('smzdm') === -1 && url.indexOf('zdmimg') === -1) {
+            return;
+        }
+    }
+    let index = url.indexOf('com');
+    if (index !== -1) {
+        obj.src = domainArr[retryTimes] + url.substring(index + 3);
+        obj.dataset.retry = ++retryTimes;
+    }
+}
